@@ -26,6 +26,7 @@
 		C8C12A711F29277B00B011FE /* ViewController+ARSCNViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C12A701F29277B00B011FE /* ViewController+ARSCNViewDelegate.swift */; };
 		C8C2AC521F3A545C00E86BA3 /* VirtualObjectInteraction.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C2AC511F3A545C00E86BA3 /* VirtualObjectInteraction.swift */; };
 		C8D71A001F3B7D3D0086AD64 /* VirtualObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8D719FF1F3B7D3D0086AD64 /* VirtualObject.swift */; };
+		DA6D8A5922F5D29700952962 /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6D8A5822F5D29700952962 /* WebView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -43,7 +44,7 @@
 		3929C49E1E89EE4400E00B60 /* Models.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = Models.scnassets; sourceTree = "<group>"; };
 		39C0B9581E9C6B1F003FCA0C /* Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		39D8DC1A1E8ADAE600386B05 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
-		B8695010B869558000000001 /* SampleCode.xcconfig */ = {isa = PBXFileReference; name = SampleCode.xcconfig; path = Configuration/SampleCode.xcconfig; sourceTree = "<group>"; };
+		B8695010B869558000000001 /* SampleCode.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = SampleCode.xcconfig; path = Configuration/SampleCode.xcconfig; sourceTree = "<group>"; };
 		C41366B81EB80DD400EC054A /* StatusViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusViewController.swift; sourceTree = "<group>"; };
 		C42A71BC1E9C0AF200944367 /* FocusSquare.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FocusSquare.swift; sourceTree = "<group>"; };
 		C46356651EF9CB1A0080C8D9 /* VirtualObjectLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtualObjectLoader.swift; sourceTree = "<group>"; };
@@ -52,7 +53,8 @@
 		C8C12A701F29277B00B011FE /* ViewController+ARSCNViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewController+ARSCNViewDelegate.swift"; sourceTree = "<group>"; };
 		C8C2AC511F3A545C00E86BA3 /* VirtualObjectInteraction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtualObjectInteraction.swift; sourceTree = "<group>"; };
 		C8D719FF1F3B7D3D0086AD64 /* VirtualObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtualObject.swift; sourceTree = "<group>"; };
-		F84AB7F0F84AC1A000000001 /* LICENSE.txt */ = {isa = PBXFileReference; includeInIndex = 1; path = LICENSE.txt; sourceTree = "<group>"; };
+		DA6D8A5822F5D29700952962 /* WebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
+		F84AB7F0F84AC1A000000001 /* LICENSE.txt */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -128,6 +130,7 @@
 			children = (
 				3929C48B1E89EC2C00E00B60 /* AppDelegate.swift */,
 				3929C48D1E89EC2C00E00B60 /* ViewController.swift */,
+				DA6D8A5822F5D29700952962 /* WebView.swift */,
 				C8C12A701F29277B00B011FE /* ViewController+ARSCNViewDelegate.swift */,
 				1488323E1EFC378A0043E0AB /* ViewController+Actions.swift */,
 				147D76491EFC36070000FEBF /* ViewController+ObjectSelection.swift */,
@@ -165,7 +168,6 @@
 			children = (
 				F84AB7F0F84AC1A000000001 /* LICENSE.txt */,
 			);
-			name = LICENSE;
 			path = LICENSE;
 			sourceTree = "<group>";
 		};
@@ -179,7 +181,6 @@
 				3929C4841E89EC2C00E00B60 /* Sources */,
 				3929C4851E89EC2C00E00B60 /* Frameworks */,
 				3929C4861E89EC2C00E00B60 /* Resources */,
-				6EC3AAC06EC419C000000001,
 			);
 			buildRules = (
 			);
@@ -202,6 +203,7 @@
 				TargetAttributes = {
 					3929C4871E89EC2C00E00B60 = {
 						CreatedOnToolsVersion = 9.0;
+						DevelopmentTeam = AJHW4478L3;
 						LastSwiftMigration = 0900;
 						ProvisioningStyle = Automatic;
 					};
@@ -245,6 +247,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C812D8681F47628300344E73 /* ThresholdPanGesture.swift in Sources */,
+				DA6D8A5922F5D29700952962 /* WebView.swift in Sources */,
 				11BD822A1F09D750003F11C8 /* ViewController+ObjectSelection.swift in Sources */,
 				1488323F1EFC378A0043E0AB /* ViewController+Actions.swift in Sources */,
 				3929C48E1E89EC2C00E00B60 /* ViewController.swift in Sources */,
@@ -401,7 +404,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = AJHW4478L3;
 				INFOPLIST_FILE = "$(SRCROOT)/ARKitInteraction/Resources/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -423,7 +426,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = AJHW4478L3;
 				INFOPLIST_FILE = "$(SRCROOT)/ARKitInteraction/Resources/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
