@@ -18,7 +18,6 @@ class WebView: UIViewController, WKNavigationDelegate, UIWebViewDelegate
     override func viewDidLoad()
     {
         super.viewDidLoad()
-        
         webView.delegate = self
         webView.loadRequest(URLRequest(url: URL(string: "https://ttyl.ddns.net/ttyl/model/uploads/leroy/")!))
     }

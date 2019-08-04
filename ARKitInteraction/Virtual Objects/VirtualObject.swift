@@ -14,11 +14,30 @@ class VirtualObject: SCNReferenceNode {
     /// The model name derived from the `referenceURL`.
     var modelName: String
     {
-        var models = referenceURL.lastPathComponent.replacingOccurrences(of: ".scn", with: "")
-        models += "test"
-        print(models)
+        let models = referenceURL.lastPathComponent.replacingOccurrences(of: ".scn", with: "")
         return models
     }
+    
+    var docModelName: String
+    {
+        let fileManager = FileManager.default
+        let documentsURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0]
+        do
+        {
+            let fileURLs = try fileManager.contentsOfDirectory(at: documentsURL, includingPropertiesForKeys: nil)
+            // process files
+            let file : NSURL = fileURLs[0] as NSURL
+            var fileName : NSString = NSString(string: file.absoluteString!)
+            fileName = fileName.lastPathComponent as NSString
+            fileName = fileName.replacingOccurrences(of: "%20", with: " ") as NSString
+            return fileName as String
+        }
+        catch
+        {
+            print("Error while enumerating files \(documentsURL.path): \(error.localizedDescription)")
+        }
+    }
+    
     
     /// Use average of recent virtual object distances to avoid rapid changes in object scale.
     private var recentVirtualObjectDistances = [Float]()
