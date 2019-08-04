@@ -27,6 +27,8 @@
 		C8C2AC521F3A545C00E86BA3 /* VirtualObjectInteraction.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C2AC511F3A545C00E86BA3 /* VirtualObjectInteraction.swift */; };
 		C8D71A001F3B7D3D0086AD64 /* VirtualObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8D719FF1F3B7D3D0086AD64 /* VirtualObject.swift */; };
 		DA6D8A5922F5D29700952962 /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6D8A5822F5D29700952962 /* WebView.swift */; };
+		DAB06CBA22F6D0A00035C60B /* FileBrowserTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB06CB822F6D0A00035C60B /* FileBrowserTableViewController.swift */; };
+		DAB06CBB22F6D0A00035C60B /* FileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB06CB922F6D0A00035C60B /* FileTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -54,6 +56,8 @@
 		C8C2AC511F3A545C00E86BA3 /* VirtualObjectInteraction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtualObjectInteraction.swift; sourceTree = "<group>"; };
 		C8D719FF1F3B7D3D0086AD64 /* VirtualObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtualObject.swift; sourceTree = "<group>"; };
 		DA6D8A5822F5D29700952962 /* WebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
+		DAB06CB822F6D0A00035C60B /* FileBrowserTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileBrowserTableViewController.swift; sourceTree = "<group>"; };
+		DAB06CB922F6D0A00035C60B /* FileTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileTableViewCell.swift; sourceTree = "<group>"; };
 		F84AB7F0F84AC1A000000001 /* LICENSE.txt */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -134,6 +138,8 @@
 				C8C12A701F29277B00B011FE /* ViewController+ARSCNViewDelegate.swift */,
 				1488323E1EFC378A0043E0AB /* ViewController+Actions.swift */,
 				147D76491EFC36070000FEBF /* ViewController+ObjectSelection.swift */,
+				DAB06CB822F6D0A00035C60B /* FileBrowserTableViewController.swift */,
+				DAB06CB922F6D0A00035C60B /* FileTableViewCell.swift */,
 				C8C2AC511F3A545C00E86BA3 /* VirtualObjectInteraction.swift */,
 				C812D8671F47628300344E73 /* ThresholdPanGesture.swift */,
 				C46356661EF9CC480080C8D9 /* VirtualObjectARView.swift */,
@@ -247,6 +253,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				C812D8681F47628300344E73 /* ThresholdPanGesture.swift in Sources */,
+				DAB06CBB22F6D0A00035C60B /* FileTableViewCell.swift in Sources */,
+				DAB06CBA22F6D0A00035C60B /* FileBrowserTableViewController.swift in Sources */,
 				DA6D8A5922F5D29700952962 /* WebView.swift in Sources */,
 				11BD822A1F09D750003F11C8 /* ViewController+ObjectSelection.swift in Sources */,
 				1488323F1EFC378A0043E0AB /* ViewController+Actions.swift in Sources */,

@@ -178,8 +178,8 @@ class ViewController: UIViewController{
     }
 
     
-    @IBAction func moreModels(_ sender: UIButton) // 更多
+    @IBAction func moreModels(_ sender: UIButton) // 按下“更多”按鈕
     {
-        print("test")
+        
     }
 }
