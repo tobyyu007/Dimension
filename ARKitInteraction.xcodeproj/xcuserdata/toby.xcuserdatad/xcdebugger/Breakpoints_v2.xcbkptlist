@@ -2,4 +2,134 @@
 <Bucket
    type = "1"
    version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ARKitInteraction/Virtual Objects/VirtualObject.swift"
+            timestampString = "586641426.819993"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "62"
+            endingLineNumber = "62"
+            landmarkName = "modelName"
+            landmarkType = "24">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "ARKitInteraction.VirtualObject.init(url: Foundation.URL) -&gt; Swift.Optional&lt;ARKitInteraction.VirtualObject&gt;"
+                  moduleName = "ARKitInteraction"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/toby/Desktop/Handling3DInteractionAndUIControlsInAugmentedReality%202/ARKitInteraction/Virtual%20Objects/VirtualObject.swift"
+                  timestampString = "586639395.606302"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "87"
+                  endingLineNumber = "87"
+                  offsetFromSymbolStart = "96">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "ARKitInteraction.VirtualObject.init(coder: __C.NSCoder) -&gt; Swift.Optional&lt;ARKitInteraction.VirtualObject&gt;"
+                  moduleName = "ARKitInteraction"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/toby/Desktop/Handling3DInteractionAndUIControlsInAugmentedReality%202/ARKitInteraction/Virtual%20Objects/VirtualObject.swift"
+                  timestampString = "586639395.610211"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "87"
+                  endingLineNumber = "87"
+                  offsetFromSymbolStart = "100">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ARKitInteraction/Virtual Objects/VirtualObject.swift"
+            timestampString = "586641426.8200949"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "48"
+            endingLineNumber = "48"
+            landmarkName = "modelName"
+            landmarkType = "24">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ARKitInteraction/Virtual Objects/VirtualObject.swift"
+            timestampString = "586641426.820171"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "49"
+            endingLineNumber = "49"
+            landmarkName = "modelName"
+            landmarkType = "24">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "ARKitInteraction.VirtualObject.init(url: Foundation.URL) -&gt; Swift.Optional&lt;ARKitInteraction.VirtualObject&gt;"
+                  moduleName = "ARKitInteraction"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/toby/Desktop/Handling3DInteractionAndUIControlsInAugmentedReality%202/ARKitInteraction/Virtual%20Objects/VirtualObject.swift"
+                  timestampString = "586639395.7264611"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "87"
+                  endingLineNumber = "87"
+                  offsetFromSymbolStart = "96">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "ARKitInteraction.VirtualObject.init(coder: __C.NSCoder) -&gt; Swift.Optional&lt;ARKitInteraction.VirtualObject&gt;"
+                  moduleName = "ARKitInteraction"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/toby/Desktop/Handling3DInteractionAndUIControlsInAugmentedReality%202/ARKitInteraction/Virtual%20Objects/VirtualObject.swift"
+                  timestampString = "586639395.732448"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "87"
+                  endingLineNumber = "87"
+                  offsetFromSymbolStart = "100">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ARKitInteraction/Additional View Controllers/VirtualObjectSelection.swift"
+            timestampString = "586641443.064155"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "73"
+            endingLineNumber = "73"
+            landmarkName = "updateObjectAvailability(for:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
 </Bucket>

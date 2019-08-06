@@ -57,16 +57,20 @@ class VirtualObjectSelectionViewController: UITableViewController {
         preferredContentSize = CGSize(width: 250, height: tableView.contentSize.height)
     }
     
-    func updateObjectAvailability(for planeAnchor: ARPlaneAnchor?) {
+    func updateObjectAvailability(for planeAnchor: ARPlaneAnchor?) { // 不用理會，李慧下去就要瘋了
         var newEnabledVirtualObjectRows = Set<Int>()
         for (row, object) in VirtualObject.availableObjects.enumerated() {
+            // 每一個 object (model) 開一個 VirtualObject Class，row 為對應 class 號碼
+            
             // Enable row if item can be placed at the current location
             if object.isPlacementValid(on: planeAnchor) {
                 newEnabledVirtualObjectRows.insert(row)
+                //print(row)
             }
             // Enable row always if item is already placed, in order to allow the user to remove it.
             if selectedVirtualObjectRows.contains(row) {
                 newEnabledVirtualObjectRows.insert(row)
+                //print(": " + String(row))
             }
         }
         
@@ -74,6 +78,7 @@ class VirtualObjectSelectionViewController: UITableViewController {
         let changedRows = newEnabledVirtualObjectRows.symmetricDifference(enabledVirtualObjectRows)
         enabledVirtualObjectRows = newEnabledVirtualObjectRows
         let indexPaths = changedRows.map { row in IndexPath(row: row, section: 0) }
+        // https://medium.com/彼得潘的-swift-ios-app-開發問題解答集/indexpath-在-switch-裡可以當成-array-來比對-e2710de94746
 
         DispatchQueue.main.async {
             self.tableView.reloadRows(at: indexPaths, with: .automatic)

@@ -277,13 +277,13 @@
         <!--File Browser Table View Controller-->
         <scene sceneID="C04-dH-84X">
             <objects>
-                <tableViewController id="blH-cI-md0" customClass="FileBrowserTableViewController" customModule="Simple_Download_Manager" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="blH-cI-md0" customClass="FileBrowserTableViewController" customModule="ARKitInteraction" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="PGS-26-G0R">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" id="vFf-yx-Npd" customClass="FileTableViewCell" customModule="Simple_Download_Manager" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" id="vFf-yx-Npd" customClass="FileTableViewCell" customModule="ARKitInteraction" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="vFf-yx-Npd" id="Lp3-pi-J9z">

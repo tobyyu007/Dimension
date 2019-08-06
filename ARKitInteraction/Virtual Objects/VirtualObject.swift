@@ -9,33 +9,77 @@ import Foundation
 import SceneKit
 import ARKit
 
+var models_arr = [String]()
+var count = 0
+
 class VirtualObject: SCNReferenceNode {
-    
     /// The model name derived from the `referenceURL`.
+    
     var modelName: String
     {
-        let models = referenceURL.lastPathComponent.replacingOccurrences(of: ".scn", with: "")
+        
+        let models = referenceURL.lastPathComponent.replacingOccurrences(of: ".scn", with: "")  // 從 Resouces 中抓 scn 檔名
         return models
-    }
-    
-    var docModelName: String
-    {
+        
+        
+        /*
         let fileManager = FileManager.default
         let documentsURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0]
+        var fileName: NSString
         do
         {
             let fileURLs = try fileManager.contentsOfDirectory(at: documentsURL, includingPropertiesForKeys: nil)
             // process files
             let file : NSURL = fileURLs[0] as NSURL
-            var fileName : NSString = NSString(string: file.absoluteString!)
+            fileName = NSString(string: file.absoluteString!)
             fileName = fileName.lastPathComponent as NSString
             fileName = fileName.replacingOccurrences(of: "%20", with: " ") as NSString
-            return fileName as String
+            //count = 1
+            count = 0
+            var str_fileName = String(fileName)
+            return str_fileName
         }
         catch
         {
             print("Error while enumerating files \(documentsURL.path): \(error.localizedDescription)")
         }
+        /*
+        models_arr.append(referenceURL.lastPathComponent.replacingOccurrences(of: ".scn", with: ""))
+        print(models_arr)
+        if count > 7
+        {
+            let fileManager = FileManager.default
+            let documentsURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0]
+            var fileName: NSString
+            do
+            {
+                let fileURLs = try fileManager.contentsOfDirectory(at: documentsURL, includingPropertiesForKeys: nil)
+                // process files
+                let file : NSURL = fileURLs[0] as NSURL
+                fileName = NSString(string: file.absoluteString!)
+                fileName = fileName.lastPathComponent as NSString
+                fileName = fileName.replacingOccurrences(of: "%20", with: " ") as NSString
+                //count = 1
+                count = 0
+                var str_fileName = String(fileName)
+                models_arr.append(str_fileName)
+                return models_arr
+            }
+            catch
+            {
+                print("Error while enumerating files \(documentsURL.path): \(error.localizedDescription)")
+            }
+        }
+        else
+        {
+            let models = referenceURL.lastPathComponent.replacingOccurrences(of: ".scn", with: "")
+            count += 1
+            return models
+        }
+        return ""
+        */
+        return ""
+        */
     }
     
     
@@ -235,16 +279,16 @@ extension VirtualObject {
     
     /// Loads all the model objects within `Models.scnassets`.
     static let availableObjects: [VirtualObject] = {
-        let modelsURL = Bundle.main.url(forResource: "Models.scnassets", withExtension: nil)!
+        let modelsURL = Bundle.main.url(forResource: "Models.scnassets", withExtension: nil)!  // Model 路徑讀取
 
         let fileEnumerator = FileManager().enumerator(at: modelsURL, includingPropertiesForKeys: [])!
 
         return fileEnumerator.compactMap { element in
             let url = element as! URL
 
-            guard url.pathExtension == "scn" && !url.path.contains("lighting") else { return nil }
+            guard url.pathExtension == "scn" && !url.path.contains("lighting") else { return nil }  //只抓取 scn 檔以及不要抓 "lighting"
 
-            return VirtualObject(url: url)
+            return VirtualObject(url: url)  // 回傳給 VirtualObject 中 modelName 的 referenceURL
         }
     }()
     
