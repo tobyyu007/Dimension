@@ -38,5 +38,38 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if let viewController = self.window?.rootViewController as? ViewController {
             viewController.blurView.isHidden = true
         }
+        
+        copyFilesFromBundleToDocumentsFolderWith(fileExtension: ".scn")
+    }
+    
+    func copyFilesFromBundleToDocumentsFolderWith(fileExtension: String) // 將 resources 的 model 傳到 document
+    {
+        if let resPath = Bundle.main.resourcePath {
+            do {
+                //let resPath = URL(fileURLWithPath:resourcePath).appendingPathComponent("Models.scnassets").path
+                let dirContents = try FileManager.default.contentsOfDirectory(atPath: resPath)
+                let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
+                let filteredFiles = dirContents.filter{ $0.contains(fileExtension)}
+                for fileName in filteredFiles {
+                    if let documentsURL = documentsURL {
+                        let sourceURL = Bundle.main.bundleURL.appendingPathComponent(fileName)
+                        let destURL = documentsURL.appendingPathComponent(fileName)
+                        do { try FileManager.default.copyItem(at: sourceURL, to: destURL) } catch { }
+                    }
+                }
+            } catch { }
+        }
+        print("test")
+        
+        let documentsUrl =  FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        do {
+            let directoryContents = try FileManager.default.contentsOfDirectory(at: documentsUrl, includingPropertiesForKeys: nil)
+            
+            print(directoryContents)
+            // process files
+        } catch {
+            
+        }
+        
     }
 }
