@@ -9,23 +9,18 @@ import Foundation
 import SceneKit
 import ARKit
 
-var models_arr = [String]()
-var count = 0
-
 class VirtualObject: SCNReferenceNode {
     /// The model name derived from the `referenceURL`.
     
     var modelName: String
     {
-        
         let models = referenceURL.lastPathComponent.replacingOccurrences(of: ".scn", with: "")  // 從 Resouces 中抓 scn 檔名
-        
+        //print(referenceURL)
         return models
-        
-        
-        
-        
- 
+    }
+    func url()
+    {
+        print(referenceURL)
     }
     
     
@@ -33,6 +28,7 @@ class VirtualObject: SCNReferenceNode {
     private var recentVirtualObjectDistances = [Float]()
     
     /// Allowed alignments for the virtual object
+    /// 水平面如果是垂直的才可以放 painting，如果是水平的可以放其他以外的，但不可以放 painting
     var allowedAlignments: [ARPlaneAnchor.Alignment] {
         if modelName == "sticky note" {
             return [.horizontal, .vertical]
@@ -223,7 +219,7 @@ class VirtualObject: SCNReferenceNode {
 extension VirtualObject {
     // MARK: Static Properties and Methods
     
-    /// Loads all the model objects within `Models.scnassets`.
+    /// 從 Documents 抓 scn 檔以及 usdz
     static let availableObjects: [VirtualObject] = {
         let fileManager = FileManager.default
         let documentsURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0]
@@ -233,7 +229,7 @@ extension VirtualObject {
         return fileEnumerator.compactMap { element in
             let url = element as! URL
             
-            guard url.pathExtension == "usdz" || url.pathExtension == "scn" && !url.path.contains("lighting") else { return nil }  //只抓取 scn 檔以及不要抓 "lighting"
+            guard url.pathExtension == "usdz" || url.pathExtension == "scn" || url.pathExtension == "dae" && !url.path.contains("lighting") else { return nil }  //只抓取 scn 檔以及不要抓 "lighting"
             
             return VirtualObject(url: url)  // 回傳給 VirtualObject 中 modelName 的 referenceURL
         }

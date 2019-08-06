@@ -61,6 +61,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         print("test")
         
+        // print 出 Documents 下所有的檔案
         let documentsUrl =  FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
         do {
             let directoryContents = try FileManager.default.contentsOfDirectory(at: documentsUrl, includingPropertiesForKeys: nil)
