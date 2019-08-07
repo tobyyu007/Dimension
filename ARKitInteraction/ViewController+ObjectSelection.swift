@@ -19,7 +19,8 @@ extension ViewController: VirtualObjectSelectionViewControllerDelegate {
         guard focusSquare.state != .initializing else {
             statusViewController.showMessage("CANNOT PLACE OBJECT\nTry moving left or right.")
             if let controller = objectsViewController {
-                virtualObjectSelectionViewController(controller, didDeselectObject: virtualObject)
+                print(controller)
+                virtualObjectSelectionViewController(controller, didDeselectObject: virtualObject) // 在這裡 load model
             }
             return
         }
@@ -39,7 +40,7 @@ extension ViewController: VirtualObjectSelectionViewControllerDelegate {
         virtualObjectLoader.loadVirtualObject(object, loadedHandler: { [unowned self] loadedObject in
             
             do {
-                let scene = try SCNScene(url: object.referenceURL, options: nil)
+                let scene = try SCNScene(url: object.referenceURL, options: nil)  // 使用該 object 的 referenceURL 來載入 model
                 self.sceneView.prepare([scene], completionHandler: { _ in
                     DispatchQueue.main.async {
                         self.hideObjectLoadingUI()

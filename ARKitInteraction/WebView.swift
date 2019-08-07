@@ -56,7 +56,8 @@ class WebView: UIViewController, WKNavigationDelegate, UIWebViewDelegate
         let isDownloadable : Bool = (
             (fileType.caseInsensitiveCompare("zip") == ComparisonResult.orderedSame) ||
                 (fileType.caseInsensitiveCompare("rar") == ComparisonResult.orderedSame) ||
-                (fileType.caseInsensitiveCompare("usdz") == ComparisonResult.orderedSame)
+                (fileType.caseInsensitiveCompare("usdz") == ComparisonResult.orderedSame) ||
+                (fileType.caseInsensitiveCompare("scn") == ComparisonResult.orderedSame)
         )
         
         

@@ -11,13 +11,12 @@ import ARKit
 
 class VirtualObject: SCNReferenceNode {
     
-    // 更新 referenceURL 中的資料
+    // 更新 referenceURL 中的資料 (此 function 在 ViewController initialize 時使用)
     static func updateReferenceURL() -> [VirtualObject]
     {
         let fileManager = FileManager.default
         let documentsURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0]
         let fileEnumerator = FileManager().enumerator(at: documentsURL, includingPropertiesForKeys: [])!
-        print("referenced2")
         
         return fileEnumerator.compactMap { element -> VirtualObject? in
             let url = element as! URL
@@ -29,7 +28,7 @@ class VirtualObject: SCNReferenceNode {
         }
     }
     
-    /// The model name derived from the `referenceURL`.
+    /// 從 referenceURL 中抓取 model 檔案名稱
     var modelName: String
     {
         var models = referenceURL.lastPathComponent.replacingOccurrences(of: ".scn", with: "")  // 從 Resouces 中抓 scn 檔名
@@ -41,7 +40,7 @@ class VirtualObject: SCNReferenceNode {
     private var recentVirtualObjectDistances = [Float]()
     
     /// Allowed alignments for the virtual object
-    /// 水平面如果是垂直的才可以放 painting，如果是水平的可以放其他以外的，但不可以放 painting
+    /// 水平面如果是垂直的才可以放 painting，如果是水平的可以放其他以外的 model，但不可以放 painting
     var allowedAlignments: [ARPlaneAnchor.Alignment] {
         if modelName == "sticky note" {
             return [.horizontal, .vertical]
@@ -237,7 +236,6 @@ extension VirtualObject {
         let fileManager = FileManager.default
         let documentsURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0]
         let fileEnumerator = FileManager().enumerator(at: documentsURL, includingPropertiesForKeys: [])!
-        print("referenced1")
         
         return fileEnumerator.compactMap { element in
             let url = element as! URL

@@ -31,7 +31,7 @@ class VirtualObjectLoader {
         // Load the content into the reference node.
         DispatchQueue.global(qos: .userInitiated).async {
             object.reset()
-            object.load()
+            object.load()  // 使用此行 load model
             self.isLoading = false
             loadedHandler(object)
         }
