@@ -81,6 +81,8 @@ class ViewController: UIViewController{
         // Set the delegate to ensure this gesture is only used when there are no virtual objects in the scene.
         tapGesture.delegate = self
         sceneView.addGestureRecognizer(tapGesture)
+        
+        VirtualObject.availableObjects = VirtualObject.updateReferenceURL() // 每次進入首頁時更新 referenceURL -> 為了讓選單出現新的下載項目
     }
 
     override func viewDidAppear(_ animated: Bool) {

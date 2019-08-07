@@ -25,7 +25,6 @@ class VirtualObjectLoader {
     */
     func loadVirtualObject(_ object: VirtualObject, loadedHandler: @escaping (VirtualObject) -> Void) {
         isLoading = true
-        object.url()
         
         loadedObjects.append(object)
         

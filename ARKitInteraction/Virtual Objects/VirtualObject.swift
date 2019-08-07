@@ -10,19 +10,32 @@ import SceneKit
 import ARKit
 
 class VirtualObject: SCNReferenceNode {
-    /// The model name derived from the `referenceURL`.
     
+    // 更新 referenceURL 中的資料
+    static func updateReferenceURL() -> [VirtualObject]
+    {
+        let fileManager = FileManager.default
+        let documentsURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0]
+        let fileEnumerator = FileManager().enumerator(at: documentsURL, includingPropertiesForKeys: [])!
+        print("referenced2")
+        
+        return fileEnumerator.compactMap { element -> VirtualObject? in
+            let url = element as! URL
+            
+            guard url.pathExtension == "usdz" || url.pathExtension == "scn" || url.pathExtension == "dae" && !url.path.contains("lighting") else { return nil }
+            //只抓取 scn 檔以及不要抓 "lighting"
+            
+            return VirtualObject(url: url)  // 回傳給 VirtualObject 中 modelName 的 referenceURL
+        }
+    }
+    
+    /// The model name derived from the `referenceURL`.
     var modelName: String
     {
-        let models = referenceURL.lastPathComponent.replacingOccurrences(of: ".scn", with: "")  // 從 Resouces 中抓 scn 檔名
-        //print(referenceURL)
+        var models = referenceURL.lastPathComponent.replacingOccurrences(of: ".scn", with: "")  // 從 Resouces 中抓 scn 檔名
+        models = models.replacingOccurrences(of: ".usdz", with: "")
         return models
     }
-    func url()
-    {
-        print(referenceURL)
-    }
-    
     
     /// Use average of recent virtual object distances to avoid rapid changes in object scale.
     private var recentVirtualObjectDistances = [Float]()
@@ -218,13 +231,13 @@ class VirtualObject: SCNReferenceNode {
 
 extension VirtualObject {
     // MARK: Static Properties and Methods
-    
-    /// 從 Documents 抓 scn 檔以及 usdz
-    static let availableObjects: [VirtualObject] = {
+
+    /// 從 Documents 抓 scn 檔以及 usdz (只會在第一次時執行)
+    static var availableObjects: [VirtualObject] = {
         let fileManager = FileManager.default
         let documentsURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0]
         let fileEnumerator = FileManager().enumerator(at: documentsURL, includingPropertiesForKeys: [])!
-        print(fileEnumerator)
+        print("referenced1")
         
         return fileEnumerator.compactMap { element in
             let url = element as! URL
@@ -234,6 +247,7 @@ extension VirtualObject {
             return VirtualObject(url: url)  // 回傳給 VirtualObject 中 modelName 的 referenceURL
         }
     }()
+    
     
     /// Returns a `VirtualObject` if one exists as an ancestor to the provided node.
     static func existingObjectContainingNode(_ node: SCNNode) -> VirtualObject? {
