@@ -29,6 +29,8 @@
 		DA6D8A5922F5D29700952962 /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6D8A5822F5D29700952962 /* WebView.swift */; };
 		DAB06CBA22F6D0A00035C60B /* FileBrowserTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB06CB822F6D0A00035C60B /* FileBrowserTableViewController.swift */; };
 		DAB06CBB22F6D0A00035C60B /* FileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB06CB922F6D0A00035C60B /* FileTableViewCell.swift */; };
+		DAF19CB022FB3B85005AF6F2 /* ARLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF19CAF22FB3B85005AF6F2 /* ARLibrary.swift */; };
+		DAF19CB222FB3BDA005AF6F2 /* LibraryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF19CB122FB3BDA005AF6F2 /* LibraryCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -58,6 +60,8 @@
 		DA6D8A5822F5D29700952962 /* WebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
 		DAB06CB822F6D0A00035C60B /* FileBrowserTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileBrowserTableViewController.swift; sourceTree = "<group>"; };
 		DAB06CB922F6D0A00035C60B /* FileTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileTableViewCell.swift; sourceTree = "<group>"; };
+		DAF19CAF22FB3B85005AF6F2 /* ARLibrary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARLibrary.swift; sourceTree = "<group>"; };
+		DAF19CB122FB3BDA005AF6F2 /* LibraryCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryCollectionViewCell.swift; sourceTree = "<group>"; };
 		F84AB7F0F84AC1A000000001 /* LICENSE.txt */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -135,6 +139,8 @@
 				3929C48B1E89EC2C00E00B60 /* AppDelegate.swift */,
 				3929C48D1E89EC2C00E00B60 /* ViewController.swift */,
 				DA6D8A5822F5D29700952962 /* WebView.swift */,
+				DAF19CAF22FB3B85005AF6F2 /* ARLibrary.swift */,
+				DAF19CB122FB3BDA005AF6F2 /* LibraryCollectionViewCell.swift */,
 				C8C12A701F29277B00B011FE /* ViewController+ARSCNViewDelegate.swift */,
 				1488323E1EFC378A0043E0AB /* ViewController+Actions.swift */,
 				147D76491EFC36070000FEBF /* ViewController+ObjectSelection.swift */,
@@ -262,7 +268,9 @@
 				C41366B91EB80DD400EC054A /* StatusViewController.swift in Sources */,
 				39C0B95A1E9C6B1F003FCA0C /* Utilities.swift in Sources */,
 				147062641F06FA790003EE03 /* VirtualObjectSelection.swift in Sources */,
+				DAF19CB222FB3BDA005AF6F2 /* LibraryCollectionViewCell.swift in Sources */,
 				C8C12A711F29277B00B011FE /* ViewController+ARSCNViewDelegate.swift in Sources */,
+				DAF19CB022FB3B85005AF6F2 /* ARLibrary.swift in Sources */,
 				C8C2AC521F3A545C00E86BA3 /* VirtualObjectInteraction.swift in Sources */,
 				C46356671EF9CC500080C8D9 /* VirtualObjectARView.swift in Sources */,
 				148832411EFC3B250043E0AB /* FocusSquareSegment.swift in Sources */,
