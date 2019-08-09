@@ -24,7 +24,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 determine whether to show UI for launching AR experiences.
             """) // For details, see https://developer.apple.com/documentation/arkit
         }
-
+        
+        copyFilesFromBundleToDocumentsFolderWith(fileExtension: ".scn")
+        
         return true
     }
     
@@ -38,8 +40,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if let viewController = self.window?.rootViewController as? ViewController {
             viewController.blurView.isHidden = true
         }
-        
-        copyFilesFromBundleToDocumentsFolderWith(fileExtension: ".scn")
     }
     
     func copyFilesFromBundleToDocumentsFolderWith(fileExtension: String) // 將 resources 的 model 傳到 document
