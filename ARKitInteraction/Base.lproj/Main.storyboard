@@ -442,9 +442,8 @@
                                                                 <rect key="frame" x="0.0" y="0.0" width="107" height="107"/>
                                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                 <subviews>
-                                                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kZC-0H-HcE">
-                                                                        <rect key="frame" x="38" y="25" width="30" height="60"/>
-                                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kZC-0H-HcE">
+                                                                        <rect key="frame" x="0.0" y="0.0" width="107" height="107"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="40"/>
                                                                         <state key="normal" title="X">
                                                                             <color key="titleColor" red="1" green="0.0" blue="0.0" alpha="0.47915774830000002" colorSpace="custom" customColorSpace="sRGB"/>
@@ -454,6 +453,12 @@
                                                                         </connections>
                                                                     </button>
                                                                 </subviews>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="bottom" secondItem="kZC-0H-HcE" secondAttribute="bottom" id="Cj2-8Z-o0H"/>
+                                                                    <constraint firstAttribute="trailing" secondItem="kZC-0H-HcE" secondAttribute="trailing" id="Dmm-9J-IyK"/>
+                                                                    <constraint firstItem="kZC-0H-HcE" firstAttribute="leading" secondItem="R5t-33-B69" secondAttribute="leading" id="Ipl-lH-Mh5"/>
+                                                                    <constraint firstItem="kZC-0H-HcE" firstAttribute="top" secondItem="R5t-33-B69" secondAttribute="top" id="rd9-TZ-wZ0"/>
+                                                                </constraints>
                                                             </view>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="107" id="Ymf-gu-WSD"/>

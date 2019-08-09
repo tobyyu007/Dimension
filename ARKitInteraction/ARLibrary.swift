@@ -12,6 +12,7 @@ import QuickLook
 
 /// ARLibrary Reference: https://www.appcoda.com.tw/ar-quick-look/
 /// Delete Button Reference: https://www.youtube.com/watch?v=FUs9gpk04FA
+
 class ARLibrary: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, QLPreviewControllerDelegate, QLPreviewControllerDataSource
 {
     @IBOutlet var collectionView: UICollectionView!
@@ -70,6 +71,7 @@ class ARLibrary: UIViewController, UICollectionViewDelegate, UICollectionViewDat
             cell.modelTitle.text = models[indexPath.item]  // 列表 model 名稱
             //cell.modelTitle.text = title.capitalized
             
+            //delete button part
             var isEditing: Bool = false
             {
                 didSet
@@ -77,8 +79,8 @@ class ARLibrary: UIViewController, UICollectionViewDelegate, UICollectionViewDat
                     cell.deleteButtonBackground.isHidden = !isEditing
                 }
             }
-            //delete button part
             cell.deleteButtonBackground.isHidden = !isEditing
+            cell.delegate = self
         }
         
         return cell!
@@ -179,6 +181,21 @@ class ARLibrary: UIViewController, UICollectionViewDelegate, UICollectionViewDat
                     cell.deleteButtonBackground.isHidden = !editing
                 }
             }
+        }
+    }
+}
+
+extension ARLibrary: LibraryCollectionViewCellDelegate
+{
+    func delete(cell: LibraryCollectionViewCell)
+    {
+        if let indexPath = collectionView?.indexPath(for: cell)
+        {
+            print(indexPath)
+            //1. delete the photo
+            
+            //2. delete photo cell at that index path from the collection view
+            //collectionView?.deleteItems(at: [indexPath])
         }
     }
 }

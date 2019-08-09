@@ -8,14 +8,19 @@
 
 import UIKit
 
+protocol LibraryCollectionViewCellDelegate: class {
+    func delete(cell: LibraryCollectionViewCell)
+}
+
 class LibraryCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var modelThumbnail: UIImageView!
     @IBOutlet weak var modelTitle: UILabel!
     
     @IBOutlet weak var deleteButtonBackground: UIVisualEffectView!
+    weak var delegate: LibraryCollectionViewCellDelegate?
     
     @IBAction func deleteButtonTap(_ sender: Any)
     {
-        print("deleted")
+        delegate?.delete(cell: self)
     }
 }
