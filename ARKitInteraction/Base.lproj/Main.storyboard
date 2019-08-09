@@ -146,9 +146,8 @@
                             <activityIndicatorView hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="3cb-dQ-oXx">
                                 <rect key="frame" x="166" y="606.5" width="43" height="43"/>
                             </activityIndicatorView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4t5-iR-jCS">
-                                <rect key="frame" x="51" y="610.5" width="31" height="36"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4t5-iR-jCS">
+                                <rect key="frame" x="51" y="616.5" width="31" height="30"/>
                                 <state key="normal" title="更多"/>
                                 <connections>
                                     <action selector="moreModels:" destination="BV1-FR-VrT" eventType="touchUpInside" id="tYk-eD-lLO"/>
@@ -162,6 +161,8 @@
                             <constraint firstAttribute="trailing" secondItem="R5W-V8-6lY" secondAttribute="trailing" id="J42-1v-Ihf"/>
                             <constraint firstItem="3cb-dQ-oXx" firstAttribute="centerX" secondItem="xcf-ic-uGo" secondAttribute="centerX" id="KPf-Pf-2mp"/>
                             <constraint firstItem="tnx-rc-95S" firstAttribute="top" secondItem="GBj-4O-Whc" secondAttribute="top" id="Sdx-fT-fqG"/>
+                            <constraint firstItem="GBj-4O-Whc" firstAttribute="bottom" secondItem="4t5-iR-jCS" secondAttribute="bottom" constant="20.5" id="Uz4-bf-nOu"/>
+                            <constraint firstItem="xcf-ic-uGo" firstAttribute="leading" secondItem="4t5-iR-jCS" secondAttribute="trailing" constant="81.5" id="W7P-7r-y9p"/>
                             <constraint firstItem="R5W-V8-6lY" firstAttribute="leading" secondItem="RLh-bf-1c3" secondAttribute="leading" id="Yj0-Fo-B5n"/>
                             <constraint firstItem="xcf-ic-uGo" firstAttribute="leading" secondItem="GBj-4O-Whc" secondAttribute="leading" constant="163.5" id="ajJ-d9-mOg"/>
                             <constraint firstItem="E6c-py-dvH" firstAttribute="top" secondItem="RLh-bf-1c3" secondAttribute="top" id="boO-ZZ-neH"/>
@@ -396,7 +397,7 @@
             </objects>
             <point key="canvasLocation" x="870" y="880"/>
         </scene>
-        <!--AR Library-->
+        <!--My Dimension Library-->
         <scene sceneID="ekE-RX-rHy">
             <objects>
                 <viewController id="InG-iq-mbU" customClass="ARLibrary" customModule="ARKitInteraction" customModuleProvider="target" sceneMemberID="viewController">
@@ -507,7 +508,9 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="I8r-bq-HzE"/>
                     </view>
-                    <navigationItem key="navigationItem" title="AR Library" id="lii-2I-M6a"/>
+                    <navigationItem key="navigationItem" title="My Dimension Library" id="lii-2I-M6a">
+                        <barButtonItem key="backBarButtonItem" title="Dimension" id="sHf-iQ-Y0z"/>
+                    </navigationItem>
                     <connections>
                         <outlet property="collectionView" destination="k70-tU-pJM" id="EAL-Cx-OEd"/>
                     </connections>

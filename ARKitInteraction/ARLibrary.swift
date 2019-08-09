@@ -17,8 +17,11 @@ class ARLibrary: UIViewController, UICollectionViewDelegate, UICollectionViewDat
 {
     @IBOutlet var collectionView: UICollectionView!
 
+    /// 儲存 models 資訊
+    var models: [String] = []
+    
     /// 從 Documents 中抓 model 列表
-    var models : [String]
+    func getModels()
     {
         let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
         let path:String = documentsURL.path  // URL 轉成 String
@@ -38,7 +41,7 @@ class ARLibrary: UIViewController, UICollectionViewDelegate, UICollectionViewDat
                 }
             }
         }
-        return scnFilePaths
+        models = scnFilePaths
     }
     
     var thumbnails = [UIImage]()
@@ -46,6 +49,7 @@ class ARLibrary: UIViewController, UICollectionViewDelegate, UICollectionViewDat
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        getModels()
         for model in models {
             if let thumbnail = UIImage(named: "\(model).jpg") {
                 thumbnails.append(thumbnail)
@@ -99,7 +103,6 @@ class ARLibrary: UIViewController, UICollectionViewDelegate, UICollectionViewDat
             
             let cancelAction : UIAlertAction = UIAlertAction(title: "了解", style: UIAlertActionStyle.cancel, handler:
             {(alert: UIAlertAction!) in
-                //print("Download Cancelled.")
             })
             downloadAlertController.addAction(cancelAction)
             present(downloadAlertController, animated: true, completion: nil)
@@ -191,11 +194,34 @@ extension ARLibrary: LibraryCollectionViewCellDelegate
     {
         if let indexPath = collectionView?.indexPath(for: cell)
         {
-            print(indexPath)
             //1. delete the photo
+            let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+            var path:String = documentsURL.path  // URL 轉成 String
+            let enumerator = FileManager.default.enumerator(atPath: path)
+            let filePaths = enumerator?.allObjects as! [String]
+            for filepath in filePaths
+            {
+                let urlPath = URL(string: filepath)  // String 轉成 URL
+                if urlPath?.pathExtension == "usdz" || urlPath?.pathExtension == "scn" // 只抓取副檔名為 "usdz" 以及 "scn" 的檔案
+                {
+                    let modelLocation: String = urlPath!.path
+                    if modelLocation.contains(models[indexPath.item])
+                    {
+                        path = path + "/" + filepath  // 結合出完整的路徑
+                    }
+                }
+            }
+            do {
+                try FileManager.default.removeItem(atPath: path)
+            }
+            catch let error as NSError
+            {
+                print(error.localizedDescription)
+            }
+            models.remove(at: indexPath.item)
             
             //2. delete photo cell at that index path from the collection view
-            //collectionView?.deleteItems(at: [indexPath])
+            collectionView?.deleteItems(at: [indexPath])
         }
     }
 }

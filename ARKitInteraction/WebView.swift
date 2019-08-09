@@ -31,7 +31,7 @@ class WebView: UIViewController, WKNavigationDelegate, UIWebViewDelegate
     
     func webView(_ webView: UIWebView, shouldStartLoadWith request: URLRequest, navigationType: UIWebViewNavigationType) -> Bool
     {
-        title = "DIMENSION"
+        title = "Dimension"
         
         print(request)
         if requestIsDownloadable(request: request)
