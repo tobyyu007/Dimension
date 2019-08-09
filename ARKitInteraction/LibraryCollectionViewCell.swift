@@ -11,4 +11,11 @@ import UIKit
 class LibraryCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var modelThumbnail: UIImageView!
     @IBOutlet weak var modelTitle: UILabel!
+    
+    @IBOutlet weak var deleteButtonBackground: UIVisualEffectView!
+    
+    @IBAction func deleteButtonTap(_ sender: Any)
+    {
+        print("deleted")
+    }
 }

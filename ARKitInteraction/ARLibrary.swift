@@ -10,7 +10,8 @@ import UIKit
 import Foundation
 import QuickLook
 
-/// Reference: https://www.appcoda.com.tw/ar-quick-look/
+/// ARLibrary Reference: https://www.appcoda.com.tw/ar-quick-look/
+/// Delete Button Reference: https://www.youtube.com/watch?v=FUs9gpk04FA
 class ARLibrary: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, QLPreviewControllerDelegate, QLPreviewControllerDataSource
 {
     @IBOutlet var collectionView: UICollectionView!
@@ -53,6 +54,8 @@ class ARLibrary: UIViewController, UICollectionViewDelegate, UICollectionViewDat
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.reloadData()
+        
+        navigationItem.rightBarButtonItem = editButtonItem
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -66,10 +69,21 @@ class ARLibrary: UIViewController, UICollectionViewDelegate, UICollectionViewDat
             cell.modelThumbnail.image = thumbnails[3]  // 列表 model 圖片
             cell.modelTitle.text = models[indexPath.item]  // 列表 model 名稱
             //cell.modelTitle.text = title.capitalized
+            
+            var isEditing: Bool = false
+            {
+                didSet
+                {
+                    cell.deleteButtonBackground.isHidden = !isEditing
+                }
+            }
+            //delete button part
+            cell.deleteButtonBackground.isHidden = !isEditing
         }
         
         return cell!
     }
+    
     
     /// 我們設定 thumbnailIndex 的值給使用者點選的 index。這幫助 Quick Look 的 Data Source 方法知道要使用哪一個模型。如果你在 App 中，使用 Quick Look 去預覽任何種類的檔案，你就總是會在 QLPreviewController 顯示預覽。無論檔案是文件、影像、或我們這次需要的 3D 模型，QuickLook 框架都會要求你在 QLPreviewController 中顯示。我們設定 previewController 的 data source 與 delegates 的值為 self，然後顯示這些物件
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -149,5 +163,22 @@ class ARLibrary: UIViewController, UICollectionViewDelegate, UICollectionViewDat
             }
         }
         return documentsURL as QLPreviewItem
+    }
+    
+    // MARK: - Delete Items
+    
+    override func setEditing(_ editing: Bool, animated: Bool) {
+        super.setEditing(editing, animated: animated)
+        
+        if let indexPaths = collectionView?.indexPathsForVisibleItems
+        {
+            for indexPath in indexPaths
+            {
+                if let cell = collectionView?.cellForItem(at: indexPath) as? LibraryCollectionViewCell
+                {
+                    cell.deleteButtonBackground.isHidden = !editing
+                }
+            }
+        }
     }
 }

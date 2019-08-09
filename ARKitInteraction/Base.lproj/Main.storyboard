@@ -436,15 +436,43 @@
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
+                                                        <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sOu-hS-8Tn">
+                                                            <rect key="frame" x="0.0" y="0.0" width="107" height="107"/>
+                                                            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="R5t-33-B69">
+                                                                <rect key="frame" x="0.0" y="0.0" width="107" height="107"/>
+                                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                                <subviews>
+                                                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kZC-0H-HcE">
+                                                                        <rect key="frame" x="38" y="25" width="30" height="60"/>
+                                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                                        <fontDescription key="fontDescription" type="system" pointSize="40"/>
+                                                                        <state key="normal" title="X">
+                                                                            <color key="titleColor" red="1" green="0.0" blue="0.0" alpha="0.47915774830000002" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                        </state>
+                                                                        <connections>
+                                                                            <action selector="deleteButtonTap:" destination="jkG-mn-vDI" eventType="touchUpInside" id="ykf-SK-rPJ"/>
+                                                                        </connections>
+                                                                    </button>
+                                                                </subviews>
+                                                            </view>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="107" id="Ymf-gu-WSD"/>
+                                                                <constraint firstAttribute="width" constant="107" id="gJV-rU-9KI"/>
+                                                            </constraints>
+                                                            <blurEffect style="light"/>
+                                                        </visualEffectView>
                                                     </subviews>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
+                                                        <constraint firstAttribute="bottom" secondItem="sOu-hS-8Tn" secondAttribute="bottom" id="9Gj-Xs-WZa"/>
                                                         <constraint firstItem="5uQ-lz-j72" firstAttribute="bottom" secondItem="CYr-KJ-Afc" secondAttribute="bottom" id="HDM-DA-vaW"/>
                                                         <constraint firstAttribute="bottom" secondItem="5uQ-lz-j72" secondAttribute="bottom" id="LbG-Ln-lnk"/>
                                                         <constraint firstItem="CYr-KJ-Afc" firstAttribute="trailing" secondItem="FPU-PW-hdj" secondAttribute="trailingMargin" id="XgO-pX-XZr"/>
                                                         <constraint firstItem="CYr-KJ-Afc" firstAttribute="leading" secondItem="5uQ-lz-j72" secondAttribute="trailing" constant="8" symbolic="YES" id="ZFX-su-UaP"/>
                                                         <constraint firstItem="5uQ-lz-j72" firstAttribute="leading" secondItem="FPU-PW-hdj" secondAttribute="leading" id="c5d-eI-zaR"/>
                                                         <constraint firstItem="5uQ-lz-j72" firstAttribute="top" secondItem="FPU-PW-hdj" secondAttribute="top" id="eP2-Tr-g8c"/>
+                                                        <constraint firstItem="sOu-hS-8Tn" firstAttribute="top" secondItem="FPU-PW-hdj" secondAttribute="top" id="oXX-VG-tGT"/>
+                                                        <constraint firstItem="sOu-hS-8Tn" firstAttribute="leading" secondItem="FPU-PW-hdj" secondAttribute="leading" id="qev-S1-E8W"/>
                                                         <constraint firstItem="5uQ-lz-j72" firstAttribute="top" secondItem="CYr-KJ-Afc" secondAttribute="top" id="rXc-Vx-s1R"/>
                                                     </constraints>
                                                 </view>
@@ -457,6 +485,7 @@
                                             <constraint firstItem="FPU-PW-hdj" firstAttribute="leading" secondItem="jkG-mn-vDI" secondAttribute="leading" id="YgE-7P-dEn"/>
                                         </constraints>
                                         <connections>
+                                            <outlet property="deleteButtonBackground" destination="sOu-hS-8Tn" id="bfP-iF-CiL"/>
                                             <outlet property="modelThumbnail" destination="5uQ-lz-j72" id="4xJ-jN-XA8"/>
                                             <outlet property="modelTitle" destination="CYr-KJ-Afc" id="rXt-wq-KdT"/>
                                         </connections>
@@ -480,7 +509,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hNf-KB-t1Q" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1746" y="880"/>
+            <point key="canvasLocation" x="1744.8" y="879.31034482758628"/>
         </scene>
     </scenes>
     <resources>
