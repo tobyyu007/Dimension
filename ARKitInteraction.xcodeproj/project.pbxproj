@@ -29,6 +29,9 @@
 		DA6D8A5922F5D29700952962 /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6D8A5822F5D29700952962 /* WebView.swift */; };
 		DAB06CBA22F6D0A00035C60B /* FileBrowserTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB06CB822F6D0A00035C60B /* FileBrowserTableViewController.swift */; };
 		DAB06CBB22F6D0A00035C60B /* FileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB06CB922F6D0A00035C60B /* FileTableViewCell.swift */; };
+		DACB585E2302BAA800640AC0 /* MultipeerSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACB585A2302BAA800640AC0 /* MultipeerSession.swift */; };
+		DACB585F2302BAA800640AC0 /* RoundedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACB585B2302BAA800640AC0 /* RoundedButton.swift */; };
+		DACB58602302BAA800640AC0 /* MultiuserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACB585C2302BAA800640AC0 /* MultiuserViewController.swift */; };
 		DAF19CB022FB3B85005AF6F2 /* ARLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF19CAF22FB3B85005AF6F2 /* ARLibrary.swift */; };
 		DAF19CB222FB3BDA005AF6F2 /* LibraryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF19CB122FB3BDA005AF6F2 /* LibraryCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
@@ -60,6 +63,9 @@
 		DA6D8A5822F5D29700952962 /* WebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
 		DAB06CB822F6D0A00035C60B /* FileBrowserTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileBrowserTableViewController.swift; sourceTree = "<group>"; };
 		DAB06CB922F6D0A00035C60B /* FileTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileTableViewCell.swift; sourceTree = "<group>"; };
+		DACB585A2302BAA800640AC0 /* MultipeerSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultipeerSession.swift; sourceTree = "<group>"; };
+		DACB585B2302BAA800640AC0 /* RoundedButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoundedButton.swift; sourceTree = "<group>"; };
+		DACB585C2302BAA800640AC0 /* MultiuserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultiuserViewController.swift; sourceTree = "<group>"; };
 		DAF19CAF22FB3B85005AF6F2 /* ARLibrary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARLibrary.swift; sourceTree = "<group>"; };
 		DAF19CB122FB3BDA005AF6F2 /* LibraryCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryCollectionViewCell.swift; sourceTree = "<group>"; };
 		F84AB7F0F84AC1A000000001 /* LICENSE.txt */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
@@ -136,6 +142,7 @@
 		3929C48A1E89EC2C00E00B60 /* ARKitInteraction */ = {
 			isa = PBXGroup;
 			children = (
+				DACB58582302BA9600640AC0 /* Multiuser */,
 				3929C48B1E89EC2C00E00B60 /* AppDelegate.swift */,
 				3929C48D1E89EC2C00E00B60 /* ViewController.swift */,
 				DA6D8A5822F5D29700952962 /* WebView.swift */,
@@ -173,6 +180,16 @@
 				C46356651EF9CB1A0080C8D9 /* VirtualObjectLoader.swift */,
 			);
 			path = "Virtual Objects";
+			sourceTree = "<group>";
+		};
+		DACB58582302BA9600640AC0 /* Multiuser */ = {
+			isa = PBXGroup;
+			children = (
+				DACB585A2302BAA800640AC0 /* MultipeerSession.swift */,
+				DACB585B2302BAA800640AC0 /* RoundedButton.swift */,
+				DACB585C2302BAA800640AC0 /* MultiuserViewController.swift */,
+			);
+			path = Multiuser;
 			sourceTree = "<group>";
 		};
 		F84AB380F84AB7B000000001 /* LICENSE */ = {
@@ -258,10 +275,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DACB585E2302BAA800640AC0 /* MultipeerSession.swift in Sources */,
 				C812D8681F47628300344E73 /* ThresholdPanGesture.swift in Sources */,
 				DAB06CBB22F6D0A00035C60B /* FileTableViewCell.swift in Sources */,
 				DAB06CBA22F6D0A00035C60B /* FileBrowserTableViewController.swift in Sources */,
 				DA6D8A5922F5D29700952962 /* WebView.swift in Sources */,
+				DACB585F2302BAA800640AC0 /* RoundedButton.swift in Sources */,
+				DACB58602302BAA800640AC0 /* MultiuserViewController.swift in Sources */,
 				11BD822A1F09D750003F11C8 /* ViewController+ObjectSelection.swift in Sources */,
 				1488323F1EFC378A0043E0AB /* ViewController+Actions.swift in Sources */,
 				3929C48E1E89EC2C00E00B60 /* ViewController.swift in Sources */,

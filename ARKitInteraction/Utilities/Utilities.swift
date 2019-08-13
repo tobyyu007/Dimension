@@ -56,3 +56,24 @@ extension CGPoint {
         return sqrt(x * x + y * y)
     }
 }
+
+extension float4 {
+    var xyz: float3 {
+        return float3(x, y, z)
+    }
+}
+
+extension ARFrame.WorldMappingStatus: CustomStringConvertible {
+    public var description: String {
+        switch self {
+        case .notAvailable:
+            return "Not Available"
+        case .limited:
+            return "Limited"
+        case .extending:
+            return "Extending"
+        case .mapped:
+            return "Mapped"
+        }
+    }
+}
