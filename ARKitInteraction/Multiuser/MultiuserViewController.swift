@@ -1,257 +1,187 @@
 /*
-See LICENSE folder for this sample’s licensing information.
+ See LICENSE folder for this sample’s licensing information.
+ 
+ Abstract:
+ Main view controller for the AR experience.
+ */
 
-Abstract:
-Main view controller for the AR experience.
-*/
-
-import UIKit
-import SceneKit
 import ARKit
-import MultipeerConnectivity
+import SceneKit
+import UIKit
+import WebKit
 
-class MultiuserViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
-    // MARK: - IBOutlets
+class MultiuserViewController: UIViewController{
     
-    @IBOutlet weak var sessionInfoView: UIView!
-    @IBOutlet weak var sessionInfoLabel: UILabel!
-    @IBOutlet weak var sceneView: ARSCNView!
-    @IBOutlet weak var sendMapButton: UIButton!
-    @IBOutlet weak var mappingStatusLabel: UILabel!
+    // MARK: IBOutlets
     
-    // MARK: - View Life Cycle
+    @IBOutlet var sceneView: VirtualObjectARView!
     
-    var multipeerSession: MultipeerSession!
+    @IBOutlet weak var addObjectButton: UIButton!
+    
+    @IBOutlet weak var blurView: UIVisualEffectView!
+    
+    @IBOutlet weak var spinner: UIActivityIndicatorView!
+    
+    // MARK: - UI Elements
+    
+    var focusSquare = FocusSquare()
+    
+    /// The view controller that displays the status and "restart experience" UI.
+    lazy var statusViewController: StatusViewController = {
+        return childViewControllers.lazy.compactMap({ $0 as? StatusViewController }).first!
+    }()
+    
+    /// The view controller that displays the virtual object selection menu.
+    var objectsViewController: VirtualObjectSelectionViewController?
+    
+    // MARK: - ARKit Configuration Properties
+    
+    /// A type which manages gesture manipulation of virtual content in the scene.
+    lazy var virtualObjectInteraction = VirtualObjectInteraction(sceneView: sceneView)
+    
+    /// Coordinates the loading and unloading of reference nodes for virtual objects.
+    let virtualObjectLoader = VirtualObjectLoader()
+    
+    /// Marks if the AR experience is available for restart.
+    var isRestartAvailable = true
+    
+    /// A serial queue used to coordinate adding or removing nodes from the scene.
+    let updateQueue = DispatchQueue(label: "com.example.apple-samplecode.arkitexample.serialSceneKitQueue")
+    
+    var screenCenter: CGPoint {
+        let bounds = sceneView.bounds
+        return CGPoint(x: bounds.midX, y: bounds.midY)
+    }
+    
+    /// Convenience accessor for the session owned by ARSCNView.
+    var session: ARSession {
+        return sceneView.session
+    }
+    
+    // MARK: - View Controller Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        multipeerSession = MultipeerSession(receivedDataHandler: receivedData)
+        sceneView.delegate = self
+        sceneView.session.delegate = self
+        
+        // Set up scene content.
+        setupCamera()
+        sceneView.scene.rootNode.addChildNode(focusSquare)
+        
+        sceneView.setupDirectionalLighting(queue: updateQueue)
+        
+        // Hook up status view controller callback(s).
+        statusViewController.restartExperienceHandler = { [unowned self] in
+            self.restartExperience()
+        }
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(showVirtualObjectSelectionViewController))
+        // Set the delegate to ensure this gesture is only used when there are no virtual objects in the scene.
+        tapGesture.delegate = self
+        sceneView.addGestureRecognizer(tapGesture)
+        
+        VirtualObject.availableObjects = VirtualObject.updateReferenceURL() // 每次進入首頁時更新 referenceURL -> 為了讓選單出現新的下載項目
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        guard ARWorldTrackingConfiguration.isSupported else {
-            fatalError("""
-                ARKit is not available on this device. For apps that require ARKit
-                for core functionality, use the `arkit` key in the key in the
-                `UIRequiredDeviceCapabilities` section of the Info.plist to prevent
-                the app from installing. (If the app can't be installed, this error
-                can't be triggered in a production scenario.)
-                In apps where AR is an additive feature, use `isSupported` to
-                determine whether to show UI for launching AR experiences.
-            """) // For details, see https://developer.apple.com/documentation/arkit
-        }
-        
-        // Start the view's AR session.
-        let configuration = ARWorldTrackingConfiguration()
-        configuration.planeDetection = .horizontal
-        sceneView.session.run(configuration)
-        
-        // Set a delegate to track the number of plane anchors for providing UI feedback.
-        sceneView.session.delegate = self
-        
-        sceneView.debugOptions = [ARSCNDebugOptions.showFeaturePoints]
-        // Prevent the screen from being dimmed after a while as users will likely
-        // have long periods of interaction without touching the screen or buttons.
+        // Prevent the screen from being dimmed to avoid interuppting the AR experience.
         UIApplication.shared.isIdleTimerDisabled = true
         
+        // Start the `ARSession`.
+        resetTracking()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
-        // Pause the view's AR session.
-        sceneView.session.pause()
+        session.pause()
     }
     
-    // MARK: - ARSCNViewDelegate
+    // MARK: - Scene content setup
     
-    func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
-        if let name = anchor.name, name.hasPrefix("panda") {
-            node.addChildNode(loadRedPandaModel())
-        }
-    }
-    
-    // MARK: - ARSessionDelegate
-    
-    func session(_ session: ARSession, cameraDidChangeTrackingState camera: ARCamera) {
-        updateSessionInfoLabel(for: session.currentFrame!, trackingState: camera.trackingState)
-    }
-    
-    /// - Tag: CheckMappingStatus
-    func session(_ session: ARSession, didUpdate frame: ARFrame) {
-        switch frame.worldMappingStatus {
-        case .notAvailable, .limited:
-            sendMapButton.isEnabled = false
-        case .extending:
-            sendMapButton.isEnabled = !multipeerSession.connectedPeers.isEmpty
-        case .mapped:
-            sendMapButton.isEnabled = !multipeerSession.connectedPeers.isEmpty
-        }
-        mappingStatusLabel.text = frame.worldMappingStatus.description
-        updateSessionInfoLabel(for: frame, trackingState: frame.camera.trackingState)
-    }
-    
-    // MARK: - ARSessionObserver
-    
-    func sessionWasInterrupted(_ session: ARSession) {
-        // Inform the user that the session has been interrupted, for example, by presenting an overlay.
-        sessionInfoLabel.text = "Session was interrupted"
-    }
-    
-    func sessionInterruptionEnded(_ session: ARSession) {
-        // Reset tracking and/or remove existing anchors if consistent tracking is required.
-        sessionInfoLabel.text = "Session interruption ended"
-    }
-    
-    func session(_ session: ARSession, didFailWithError error: Error) {
-        sessionInfoLabel.text = "Session failed: \(error.localizedDescription)"
-        guard error is ARError else { return }
-        
-        let errorWithInfo = error as NSError
-        let messages = [
-            errorWithInfo.localizedDescription,
-            errorWithInfo.localizedFailureReason,
-            errorWithInfo.localizedRecoverySuggestion
-        ]
-        
-        // Remove optional error messages.
-        let errorMessage = messages.compactMap({ $0 }).joined(separator: "\n")
-        
-        DispatchQueue.main.async {
-            // Present an alert informing about the error that has occurred.
-            let alertController = UIAlertController(title: "The AR session failed.", message: errorMessage, preferredStyle: .alert)
-            let restartAction = UIAlertAction(title: "Restart Session", style: .default) { _ in
-                alertController.dismiss(animated: true, completion: nil)
-                self.resetTracking(nil)
-            }
-            alertController.addAction(restartAction)
-            self.present(alertController, animated: true, completion: nil)
-        }
-    }
-    
-    // MARK: - Multiuser shared session
-    
-    /// - Tag: PlaceCharacter
-    @IBAction func handleSceneTap(_ sender: UITapGestureRecognizer) {
-        
-        // Hit test to find a place for a virtual object.
-        guard let hitTestResult = sceneView
-            .hitTest(sender.location(in: sceneView), types: [.existingPlaneUsingGeometry, .estimatedHorizontalPlane])
-            .first
-            else { return }
-        
-        // Place an anchor for a virtual character. The model appears in renderer(_:didAdd:for:).
-        let anchor = ARAnchor(name: "panda", transform: hitTestResult.worldTransform)
-        sceneView.session.add(anchor: anchor)
-        
-        // Send the anchor info to peers, so they can place the same content.
-        guard let data = try? NSKeyedArchiver.archivedData(withRootObject: anchor, requiringSecureCoding: true)
-            else { fatalError("can't encode anchor") }
-        self.multipeerSession.sendToAllPeers(data)
-    }
-    
-    /// - Tag: GetWorldMap
-    @IBAction func shareSession(_ button: UIButton) {
-        sceneView.session.getCurrentWorldMap { worldMap, error in
-            guard let map = worldMap
-                else { print("Error: \(error!.localizedDescription)"); return }
-            guard let data = try? NSKeyedArchiver.archivedData(withRootObject: map, requiringSecureCoding: true)
-                else { fatalError("can't encode map") }
-            self.multipeerSession.sendToAllPeers(data)
-        }
-    }
-    
-    var mapProvider: MCPeerID?
-
-    /// - Tag: ReceiveData
-    func receivedData(_ data: Data, from peer: MCPeerID) {
-        
-        do {
-            if let worldMap = try NSKeyedUnarchiver.unarchivedObject(ofClass: ARWorldMap.self, from: data) {
-                // Run the session with the received world map.
-                let configuration = ARWorldTrackingConfiguration()
-                configuration.planeDetection = .horizontal
-                configuration.initialWorldMap = worldMap
-                sceneView.session.run(configuration, options: [.resetTracking, .removeExistingAnchors])
-                
-                // Remember who provided the map for showing UI feedback.
-                mapProvider = peer
-            }
-            else
-            if let anchor = try NSKeyedUnarchiver.unarchivedObject(ofClass: ARAnchor.self, from: data) {
-                // Add anchor to the session, ARSCNView delegate adds visible content.
-                sceneView.session.add(anchor: anchor)
-            }
-            else {
-                print("unknown data recieved from \(peer)")
-            }
-        } catch {
-            print("can't decode data recieved from \(peer)")
-        }
-    }
-    
-    // MARK: - AR session management
-    
-    private func updateSessionInfoLabel(for frame: ARFrame, trackingState: ARCamera.TrackingState) {
-        // Update the UI to provide feedback on the state of the AR experience.
-        let message: String
-        
-        switch trackingState {
-        case .normal where frame.anchors.isEmpty && multipeerSession.connectedPeers.isEmpty:
-            // No planes detected; provide instructions for this app's AR interactions.
-            message = "Move around to map the environment, or wait to join a shared session."
-            
-        case .normal where !multipeerSession.connectedPeers.isEmpty && mapProvider == nil:
-            let peerNames = multipeerSession.connectedPeers.map({ $0.displayName }).joined(separator: ", ")
-            message = "Connected with \(peerNames)."
-            
-        case .notAvailable:
-            message = "Tracking unavailable."
-            
-        case .limited(.excessiveMotion):
-            message = "Tracking limited - Move the device more slowly."
-            
-        case .limited(.insufficientFeatures):
-            message = "Tracking limited - Point the device at an area with visible surface detail, or improve lighting conditions."
-            
-        case .limited(.initializing) where mapProvider != nil,
-             .limited(.relocalizing) where mapProvider != nil:
-            message = "Received map from \(mapProvider!.displayName)."
-            
-        case .limited(.relocalizing):
-            message = "Resuming session — move to where you were when the session was interrupted."
-            
-        case .limited(.initializing):
-            message = "Initializing AR session."
-            
-        default:
-            // No feedback needed when tracking is normal and planes are visible.
-            // (Nor when in unreachable limited-tracking states.)
-            message = ""
-            
+    func setupCamera() {
+        guard let camera = sceneView.pointOfView?.camera else {
+            fatalError("Expected a valid `pointOfView` from the scene.")
         }
         
-        sessionInfoLabel.text = message
-        sessionInfoView.isHidden = message.isEmpty
+        /*
+         Enable HDR camera settings for the most realistic appearance
+         with environmental lighting and physically based materials.
+         */
+        camera.wantsHDR = true
+        camera.exposureOffset = -1
+        camera.minimumExposure = -1
+        camera.maximumExposure = 3
     }
     
-    @IBAction func resetTracking(_ sender: UIButton?) {
+    // MARK: - Session management
+    
+    /// Creates a new AR configuration to run on the `session`.
+    func resetTracking() {
+        virtualObjectInteraction.selectedObject = nil
+        
         let configuration = ARWorldTrackingConfiguration()
-        configuration.planeDetection = .horizontal
-        sceneView.session.run(configuration, options: [.resetTracking, .removeExistingAnchors])
+        configuration.planeDetection = [.horizontal, .vertical]
+        if #available(iOS 12.0, *) {
+            configuration.environmentTexturing = .automatic
+        }
+        session.run(configuration, options: [.resetTracking, .removeExistingAnchors])
+        
+        statusViewController.scheduleMessage("FIND A SURFACE TO PLACE AN OBJECT", inSeconds: 7.5, messageType: .planeEstimation)
     }
     
-    // MARK: - AR session management
-    private func loadRedPandaModel() -> SCNNode {
-        //let sceneURL = Bundle.main.url(forResource: "max", withExtension: "scn", subdirectory: "Assets.scnassets")!
-        let sceneURL = Bundle.main.url(forResource: "max", withExtension: "scn", subdirectory: "Models.scnassets")!
-        let referenceNode = SCNReferenceNode(url: sceneURL)!
-        referenceNode.load()
+    // MARK: - Focus Square
+    
+    func updateFocusSquare(isObjectVisible: Bool) {
+        if isObjectVisible {
+            focusSquare.hide()
+        } else {
+            focusSquare.unhide()
+            statusViewController.scheduleMessage("TRY MOVING LEFT OR RIGHT", inSeconds: 5.0, messageType: .focusSquare)
+        }
         
-        return referenceNode
+        // Perform hit testing only when ARKit tracking is in a good state.
+        if let camera = session.currentFrame?.camera, case .normal = camera.trackingState,
+            let result = self.sceneView.smartHitTest(screenCenter) {
+            updateQueue.async {
+                self.sceneView.scene.rootNode.addChildNode(self.focusSquare)
+                self.focusSquare.state = .detecting(hitTestResult: result, camera: camera)
+            }
+            addObjectButton.isHidden = false
+            statusViewController.cancelScheduledMessage(for: .focusSquare)
+        } else {
+            updateQueue.async {
+                self.focusSquare.state = .initializing
+                self.sceneView.pointOfView?.addChildNode(self.focusSquare)
+            }
+            addObjectButton.isHidden = true
+        }
+    }
+    
+    // MARK: - Error handling
+    
+    func displayErrorMessage(title: String, message: String) {
+        // Blur the background.
+        blurView.isHidden = false
+        
+        // Present an alert informing about the error that has occurred.
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let restartAction = UIAlertAction(title: "Restart Session", style: .default) { _ in
+            alertController.dismiss(animated: true, completion: nil)
+            self.blurView.isHidden = true
+            self.resetTracking()
+        }
+        alertController.addAction(restartAction)
+        present(alertController, animated: true, completion: nil)
+    }
+    
+    
+    @IBAction func moreModels(_ sender: UIButton) // 按下“更多”按鈕
+    {
+        
     }
 }
-

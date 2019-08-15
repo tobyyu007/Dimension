@@ -27,6 +27,9 @@
 		C8C2AC521F3A545C00E86BA3 /* VirtualObjectInteraction.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C2AC511F3A545C00E86BA3 /* VirtualObjectInteraction.swift */; };
 		C8D71A001F3B7D3D0086AD64 /* VirtualObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8D719FF1F3B7D3D0086AD64 /* VirtualObject.swift */; };
 		DA6D8A5922F5D29700952962 /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA6D8A5822F5D29700952962 /* WebView.swift */; };
+		DAA5C2832305CE4000988D6C /* MultiuserViewController+ARSCNViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA5C2802305CE4000988D6C /* MultiuserViewController+ARSCNViewDelegate.swift */; };
+		DAA5C2842305CE4000988D6C /* MultiuserViewController+ObjectSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA5C2812305CE4000988D6C /* MultiuserViewController+ObjectSelection.swift */; };
+		DAA5C2852305CE4000988D6C /* MultiuserViewController+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA5C2822305CE4000988D6C /* MultiuserViewController+Actions.swift */; };
 		DAB06CBA22F6D0A00035C60B /* FileBrowserTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB06CB822F6D0A00035C60B /* FileBrowserTableViewController.swift */; };
 		DAB06CBB22F6D0A00035C60B /* FileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB06CB922F6D0A00035C60B /* FileTableViewCell.swift */; };
 		DACB585E2302BAA800640AC0 /* MultipeerSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACB585A2302BAA800640AC0 /* MultipeerSession.swift */; };
@@ -61,6 +64,9 @@
 		C8C2AC511F3A545C00E86BA3 /* VirtualObjectInteraction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtualObjectInteraction.swift; sourceTree = "<group>"; };
 		C8D719FF1F3B7D3D0086AD64 /* VirtualObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtualObject.swift; sourceTree = "<group>"; };
 		DA6D8A5822F5D29700952962 /* WebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
+		DAA5C2802305CE4000988D6C /* MultiuserViewController+ARSCNViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MultiuserViewController+ARSCNViewDelegate.swift"; sourceTree = "<group>"; };
+		DAA5C2812305CE4000988D6C /* MultiuserViewController+ObjectSelection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MultiuserViewController+ObjectSelection.swift"; sourceTree = "<group>"; };
+		DAA5C2822305CE4000988D6C /* MultiuserViewController+Actions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MultiuserViewController+Actions.swift"; sourceTree = "<group>"; };
 		DAB06CB822F6D0A00035C60B /* FileBrowserTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileBrowserTableViewController.swift; sourceTree = "<group>"; };
 		DAB06CB922F6D0A00035C60B /* FileTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileTableViewCell.swift; sourceTree = "<group>"; };
 		DACB585A2302BAA800640AC0 /* MultipeerSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultipeerSession.swift; sourceTree = "<group>"; };
@@ -185,6 +191,9 @@
 		DACB58582302BA9600640AC0 /* Multiuser */ = {
 			isa = PBXGroup;
 			children = (
+				DAA5C2822305CE4000988D6C /* MultiuserViewController+Actions.swift */,
+				DAA5C2802305CE4000988D6C /* MultiuserViewController+ARSCNViewDelegate.swift */,
+				DAA5C2812305CE4000988D6C /* MultiuserViewController+ObjectSelection.swift */,
 				DACB585A2302BAA800640AC0 /* MultipeerSession.swift */,
 				DACB585B2302BAA800640AC0 /* RoundedButton.swift */,
 				DACB585C2302BAA800640AC0 /* MultiuserViewController.swift */,
@@ -275,8 +284,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DAA5C2832305CE4000988D6C /* MultiuserViewController+ARSCNViewDelegate.swift in Sources */,
 				DACB585E2302BAA800640AC0 /* MultipeerSession.swift in Sources */,
+				DAA5C2852305CE4000988D6C /* MultiuserViewController+Actions.swift in Sources */,
 				C812D8681F47628300344E73 /* ThresholdPanGesture.swift in Sources */,
+				DAA5C2842305CE4000988D6C /* MultiuserViewController+ObjectSelection.swift in Sources */,
 				DAB06CBB22F6D0A00035C60B /* FileTableViewCell.swift in Sources */,
 				DAB06CBA22F6D0A00035C60B /* FileBrowserTableViewController.swift in Sources */,
 				DA6D8A5922F5D29700952962 /* WebView.swift in Sources */,
