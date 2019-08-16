@@ -98,6 +98,21 @@ extension MultiuserViewController: ARSCNViewDelegate, ARSessionDelegate {
         }
     }
     
+    /// - Tag: CheckMappingStatus
+    func session(_ session: ARSession, didUpdate frame: ARFrame) {
+        switch frame.worldMappingStatus {
+        case .notAvailable, .limited:
+            sendMapButton.isEnabled = false
+        case .extending:
+            sendMapButton.isEnabled = !multipeerSession.connectedPeers.isEmpty
+        case .mapped:
+            sendMapButton.isEnabled = !multipeerSession.connectedPeers.isEmpty
+        }
+        //print(for: frame, trackingState: frame.camera.trackingState)
+        mappingStatusLabel.text = frame.worldMappingStatus.description
+        //updateSessionInfoLabel(for: frame, trackingState: frame.camera.trackingState)
+    }
+    
     func sessionWasInterrupted(_ session: ARSession) {
         // Hide content before going into the background.
         virtualObjectLoader.loadedObjects.forEach { $0.isHidden = true }

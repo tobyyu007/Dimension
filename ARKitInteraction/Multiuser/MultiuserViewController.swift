@@ -9,6 +9,7 @@ import ARKit
 import SceneKit
 import UIKit
 import WebKit
+import MultipeerConnectivity
 
 class MultiuserViewController: UIViewController{
     
@@ -21,6 +22,10 @@ class MultiuserViewController: UIViewController{
     @IBOutlet weak var blurView: UIVisualEffectView!
     
     @IBOutlet weak var spinner: UIActivityIndicatorView!
+    
+    @IBOutlet weak var sendMapButton: UIButton!
+    
+    @IBOutlet weak var mappingStatusLabel: UILabel!
     
     // MARK: - UI Elements
     
@@ -60,8 +65,11 @@ class MultiuserViewController: UIViewController{
     
     // MARK: - View Controller Life Cycle
     
+    var multipeerSession: MultipeerSession!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        multipeerSession = MultipeerSession(receivedDataHandler: receivedData)
         
         sceneView.delegate = self
         sceneView.session.delegate = self
@@ -98,6 +106,7 @@ class MultiuserViewController: UIViewController{
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
+        // Pause the view's AR session.
         session.pause()
     }
     
@@ -177,6 +186,51 @@ class MultiuserViewController: UIViewController{
         }
         alertController.addAction(restartAction)
         present(alertController, animated: true, completion: nil)
+    }
+    
+    var mapProvider: MCPeerID?
+    
+    /// - Tag: ReceiveData
+    func receivedData(_ data: Data, from peer: MCPeerID) {
+        do {
+            if let worldMap = try NSKeyedUnarchiver.unarchivedObject(ofClass: ARWorldMap.self, from: data) {
+                // Run the session with the received world map.
+                let configuration = ARWorldTrackingConfiguration()
+                configuration.planeDetection = .horizontal
+                configuration.initialWorldMap = worldMap
+                sceneView.session.run(configuration, options: [.resetTracking, .removeExistingAnchors])
+                
+                // Remember who provided the map for showing UI feedback.
+                mapProvider = peer
+                print("mapProvicer: ", terminator:"")
+                print(mapProvider)
+            }
+            else
+                if let anchor = try NSKeyedUnarchiver.unarchivedObject(ofClass: ARAnchor.self, from: data) {
+                    print("received2")
+                    // Add anchor to the session, ARSCNView delegate adds visible content.
+                    sceneView.session.add(anchor: anchor)
+                }
+                else {
+                    print("unknown data recieved from \(peer)")
+            }
+        } catch {
+            print("can't decode data recieved from \(peer)")
+        }
+    }
+    
+    // MARK: - Multiuser shared session
+    
+    /// - Tag: GetWorldMap
+    @IBAction func shareSession(_ button: UIButton) {
+        print("send")
+        sceneView.session.getCurrentWorldMap { worldMap, error in
+            guard let map = worldMap
+                else { print("Error1: \(error!.localizedDescription)"); return }
+            guard let data = try? NSKeyedArchiver.archivedData(withRootObject: map, requiringSecureCoding: true)
+                else { fatalError("can't encode map") }
+            self.multipeerSession.sendToAllPeers(data)
+        }
     }
     
     
