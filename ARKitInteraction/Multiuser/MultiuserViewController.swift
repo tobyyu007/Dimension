@@ -198,11 +198,13 @@ class MultiuserViewController: UIViewController{
     
     var mapProvider: MCPeerID?
     
+    static var received: Bool = false
     /// - Tag: ReceiveData
     func receivedData(_ data: Data, from peer: MCPeerID) {
         do {
             if let worldMap = try NSKeyedUnarchiver.unarchivedObject(ofClass: ARWorldMap.self, from: data) {
                 // Run the session with the received world map.
+                MultiuserViewController.received = true
                 let configuration = ARWorldTrackingConfiguration()
                 configuration.planeDetection = .horizontal
                 configuration.initialWorldMap = worldMap
@@ -221,7 +223,9 @@ class MultiuserViewController: UIViewController{
                 else {
                     print("unknown data recieved from \(peer)")
             }
-        } catch {
+        }
+        catch
+        {
             print("can't decode data recieved from \(peer)")
         }
     }
@@ -240,7 +244,6 @@ class MultiuserViewController: UIViewController{
         session.add(anchor: anchor)
         
         // Send the anchor info to peers, so they can place the same content.
-        // 這段完全沒有用
         guard let data = try? NSKeyedArchiver.archivedData(withRootObject: anchor, requiringSecureCoding: true)
             else { fatalError("can't encode anchor") }
         self.multipeerSession.sendToAllPeers(data)
@@ -261,13 +264,24 @@ class MultiuserViewController: UIViewController{
         }
     }
     
-    func loadRedPandaModel() -> SCNNode {
+    func loadRedPandaModel(_ anchorName: String) -> SCNNode {
         //let sceneURL = Bundle.main.url(forResource: "max", withExtension: "scn", subdirectory: "Assets.scnassets")!
-        let sceneURL = Bundle.main.url(forResource: VirtualObjectARView.modelName, withExtension: "scn", subdirectory: "Models.scnassets")!
-        let referenceNode = SCNReferenceNode(url: sceneURL)!
-        referenceNode.load()
-        
-        return referenceNode
+        if VirtualObjectARView.modelName != nil
+        {
+            let sceneURL = Bundle.main.url(forResource: VirtualObjectARView.modelName, withExtension: "scn", subdirectory: "Models.scnassets")!
+            let referenceNode = SCNReferenceNode(url: sceneURL)!
+            referenceNode.load()
+            return referenceNode
+        }
+        else
+        {
+            print("anchor Name is")
+            print(anchorName)
+            let sceneURL = Bundle.main.url(forResource: anchorName, withExtension: "scn", subdirectory: "Models.scnassets")!
+            let referenceNode = SCNReferenceNode(url: sceneURL)!
+            referenceNode.load()
+            return referenceNode
+        }
     }
 
     
