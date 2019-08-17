@@ -52,8 +52,12 @@ extension MultiuserViewController: ARSCNViewDelegate, ARSessionDelegate {
             }
         }
         */
-        if let name = anchor.name, name.hasPrefix("panda") {
+        // For tap to add "panda" model
+        
+        if let name = anchor.name, name.hasPrefix("max")
+        {
             node.addChildNode(loadRedPandaModel())
+            print("what the f")
         }
     }
     
@@ -70,6 +74,7 @@ extension MultiuserViewController: ARSCNViewDelegate, ARSessionDelegate {
                 }
             }
         }
+        //print("not again")
     }
     
     func session(_ session: ARSession, cameraDidChangeTrackingState camera: ARCamera) {
@@ -106,11 +111,11 @@ extension MultiuserViewController: ARSCNViewDelegate, ARSessionDelegate {
     /// - Tag: CheckMappingStatus
     func session(_ session: ARSession, didUpdate frame: ARFrame) {
         switch frame.worldMappingStatus {
-        /*
+        
         case .notAvailable, .limited:
             sendMapButton.isEnabled = false
-        */
-        case .extending, .notAvailable, .limited:
+ 
+        case .extending:
             sendMapButton.isEnabled = !multipeerSession.connectedPeers.isEmpty
         case .mapped:
             sendMapButton.isEnabled = !multipeerSession.connectedPeers.isEmpty

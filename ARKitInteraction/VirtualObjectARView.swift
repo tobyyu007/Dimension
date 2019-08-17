@@ -88,6 +88,8 @@ class VirtualObjectARView: ARSCNView {
         }
     }
     
+    static var modelURL: URL!
+    
     // - MARK: Object anchors
     /// - Tag: AddOrUpdateAnchor
     func addOrUpdateAnchor(for object: VirtualObject) {
@@ -97,16 +99,11 @@ class VirtualObjectARView: ARSCNView {
         }
         
         // Create a new anchor with the object's current transform and add it to the session
-        let newAnchor = ARAnchor(transform: object.simdWorldTransform)
+        VirtualObjectARView.modelURL = object.referenceURL
+        let newAnchor = ARAnchor(name: "max", transform: object.simdWorldTransform)
         object.anchor = newAnchor
         session.add(anchor: newAnchor)
         
-        /*
-        // Send the anchor info to peers, so they can place the same content.
-        guard let model = try? NSKeyedArchiver.archivedData(withRootObject: newAnchor, requiringSecureCoding: true)
-            else { fatalError("can't encode anchor") }
-        self.multipeerSession.sendToAllPeers(model)
-        */
     }
     
     // - MARK: Lighting

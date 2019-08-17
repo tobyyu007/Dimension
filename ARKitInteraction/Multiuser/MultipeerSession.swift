@@ -37,7 +37,6 @@ class MultipeerSession: NSObject {
     }
     
     func sendToAllPeers(_ data: Data) {
-        print("trytosend")
         do {
             try session.send(data, toPeers: session.connectedPeers, with: .reliable)
         } catch {

@@ -159,6 +159,7 @@ class MultiuserViewController: UIViewController{
         }
         
         // Perform hit testing only when ARKit tracking is in a good state.
+        /// 在這裡與原本的 ViewController 不同，將原本只在 normal state 才會執行的限制移除，這樣才可以在收到別人的 map 後繼續執行
         if let camera = session.currentFrame?.camera, let result = self.sceneView.smartHitTest(screenCenter)
         {
             updateQueue.async
@@ -199,7 +200,6 @@ class MultiuserViewController: UIViewController{
     
     /// - Tag: ReceiveData
     func receivedData(_ data: Data, from peer: MCPeerID) {
-        print(data)
         do {
             if let worldMap = try NSKeyedUnarchiver.unarchivedObject(ofClass: ARWorldMap.self, from: data) {
                 // Run the session with the received world map.
@@ -236,22 +236,23 @@ class MultiuserViewController: UIViewController{
             else { return }
         
         // Place an anchor for a virtual character. The model appears in renderer(_:didAdd:for:).
-        let anchor = ARAnchor(name: "panda", transform: hitTestResult.worldTransform)
-        sceneView.session.add(anchor: anchor)
+        let anchor = ARAnchor(name: "max", transform: hitTestResult.worldTransform)
+        session.add(anchor: anchor)
         
         // Send the anchor info to peers, so they can place the same content.
+        // 這段完全沒有用
         guard let data = try? NSKeyedArchiver.archivedData(withRootObject: anchor, requiringSecureCoding: true)
             else { fatalError("can't encode anchor") }
         self.multipeerSession.sendToAllPeers(data)
-        print(data)
     }
+    
     
     // MARK: - Multiuser shared session
     
     /// - Tag: GetWorldMap
     @IBAction func shareSession(_ button: UIButton) {
         print("send")
-        sceneView.session.getCurrentWorldMap { worldMap, error in
+        session.getCurrentWorldMap { worldMap, error in
             guard let map = worldMap
                 else { print("Error1: \(error!.localizedDescription)"); return }
             guard let data = try? NSKeyedArchiver.archivedData(withRootObject: map, requiringSecureCoding: true)
@@ -262,8 +263,8 @@ class MultiuserViewController: UIViewController{
     
     func loadRedPandaModel() -> SCNNode {
         //let sceneURL = Bundle.main.url(forResource: "max", withExtension: "scn", subdirectory: "Assets.scnassets")!
-        let sceneURL = Bundle.main.url(forResource: "max", withExtension: "scn", subdirectory: "Models.scnassets")!
-        let referenceNode = SCNReferenceNode(url: sceneURL)!
+        //let sceneURL = Bundle.main.url(forResource: "candle", withExtension: "scn", subdirectory: "Models.scnassets")!
+        let referenceNode = SCNReferenceNode(url: VirtualObjectARView.modelURL)!
         referenceNode.load()
         
         return referenceNode

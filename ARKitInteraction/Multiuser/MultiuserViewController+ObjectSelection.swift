@@ -19,7 +19,6 @@ extension MultiuserViewController: VirtualObjectSelectionViewControllerDelegate 
         guard focusSquare.state != .initializing else {
             statusViewController.showMessage("CANNOT PLACE OBJECT\nTry moving left or right.")
             if let controller = objectsViewController {
-                print(controller)
                 virtualObjectSelectionViewController(controller, didDeselectObject: virtualObject) // 在這裡 load model
             }
             return
@@ -33,12 +32,14 @@ extension MultiuserViewController: VirtualObjectSelectionViewControllerDelegate 
             self.sceneView.addOrUpdateAnchor(for: virtualObject)
         }
     }
-    
+
     // MARK: - VirtualObjectSelectionViewControllerDelegate
     
     func virtualObjectSelectionViewController(_: VirtualObjectSelectionViewController, didSelectObject object: VirtualObject) {
+        print("object is: ")
+        print(object.referenceURL.lastPathComponent.replacingOccurrences(of: ".scn", with: ""))
+        let selectedModelName = object.referenceURL.lastPathComponent.replacingOccurrences(of: ".scn", with: "")
         virtualObjectLoader.loadVirtualObject(object, loadedHandler: { [unowned self] loadedObject in
-            
             do {
                 let scene = try SCNScene(url: object.referenceURL, options: nil)  // 使用該 object 的 referenceURL 來載入 model
                 self.sceneView.prepare([scene], completionHandler: { _ in
