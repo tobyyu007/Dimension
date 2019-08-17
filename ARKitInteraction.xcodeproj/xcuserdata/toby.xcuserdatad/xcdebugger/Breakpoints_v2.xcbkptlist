@@ -58,11 +58,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ARKitInteraction/Multiuser/MultiuserViewController.swift"
-            timestampString = "587757919.260892"
+            timestampString = "587758971.101746"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "241"
-            endingLineNumber = "241"
+            startingLineNumber = "240"
+            endingLineNumber = "240"
             landmarkName = "handleSceneTap(_:)"
             landmarkType = "7">
          </BreakpointContent>

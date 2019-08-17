@@ -90,6 +90,8 @@ class VirtualObjectARView: ARSCNView {
     
     static var modelURL: URL!
     
+    static var modelName: String!
+    
     // - MARK: Object anchors
     /// - Tag: AddOrUpdateAnchor
     func addOrUpdateAnchor(for object: VirtualObject) {
@@ -100,10 +102,10 @@ class VirtualObjectARView: ARSCNView {
         
         // Create a new anchor with the object's current transform and add it to the session
         VirtualObjectARView.modelURL = object.referenceURL
-        let newAnchor = ARAnchor(name: "max", transform: object.simdWorldTransform)
+        VirtualObjectARView.modelName = object.referenceURL.lastPathComponent.replacingOccurrences(of: ".scn", with: "")
+        let newAnchor = ARAnchor(name: VirtualObjectARView.modelName, transform: object.simdWorldTransform)
         object.anchor = newAnchor
         session.add(anchor: newAnchor)
-        
     }
     
     // - MARK: Lighting

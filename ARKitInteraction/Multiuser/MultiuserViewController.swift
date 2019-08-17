@@ -263,8 +263,8 @@ class MultiuserViewController: UIViewController{
     
     func loadRedPandaModel() -> SCNNode {
         //let sceneURL = Bundle.main.url(forResource: "max", withExtension: "scn", subdirectory: "Assets.scnassets")!
-        //let sceneURL = Bundle.main.url(forResource: "candle", withExtension: "scn", subdirectory: "Models.scnassets")!
-        let referenceNode = SCNReferenceNode(url: VirtualObjectARView.modelURL)!
+        let sceneURL = Bundle.main.url(forResource: VirtualObjectARView.modelName, withExtension: "scn", subdirectory: "Models.scnassets")!
+        let referenceNode = SCNReferenceNode(url: sceneURL)!
         referenceNode.load()
         
         return referenceNode

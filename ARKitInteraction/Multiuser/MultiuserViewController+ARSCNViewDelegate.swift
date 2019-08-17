@@ -54,7 +54,7 @@ extension MultiuserViewController: ARSCNViewDelegate, ARSessionDelegate {
         */
         // For tap to add "panda" model
         
-        if let name = anchor.name, name.hasPrefix("max")
+        if let name = anchor.name, name.hasPrefix(VirtualObjectARView.modelName)
         {
             node.addChildNode(loadRedPandaModel())
             print("what the f")
