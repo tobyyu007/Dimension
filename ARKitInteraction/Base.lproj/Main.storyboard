@@ -669,12 +669,14 @@
                         <subviews>
                             <sceneKitView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" wantsMultisampling="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OH2-Z3-Vvr" customClass="VirtualObjectARView" customModule="ARKitInteraction" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <gestureRecognizers/>
                             </sceneKitView>
                             <visualEffectView hidden="YES" opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ej2-0j-ale">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="bw0-nb-Siy">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <gestureRecognizers/>
                                 </view>
                                 <blurEffect style="light"/>
                             </visualEffectView>
@@ -739,6 +741,7 @@
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="b0u-dI-iDx" firstAttribute="centerY" secondItem="7Cj-Ok-XiG" secondAttribute="centerY" id="0FQ-ou-yJ5"/>
                             <constraint firstItem="qhk-OM-tY1" firstAttribute="trailing" secondItem="OH2-Z3-Vvr" secondAttribute="trailing" id="0Mn-eM-ME9"/>

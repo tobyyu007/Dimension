@@ -10,6 +10,8 @@ import ARKit
 
 class VirtualObjectARView: ARSCNView {
 
+    var multipeerSession: MultipeerSession!
+    
     // MARK: Position Testing
     
     /// Hit tests against the `sceneView` to find an object at the provided point.
@@ -98,6 +100,13 @@ class VirtualObjectARView: ARSCNView {
         let newAnchor = ARAnchor(transform: object.simdWorldTransform)
         object.anchor = newAnchor
         session.add(anchor: newAnchor)
+        
+        /*
+        // Send the anchor info to peers, so they can place the same content.
+        guard let model = try? NSKeyedArchiver.archivedData(withRootObject: newAnchor, requiringSecureCoding: true)
+            else { fatalError("can't encode anchor") }
+        self.multipeerSession.sendToAllPeers(model)
+        */
     }
     
     // - MARK: Lighting

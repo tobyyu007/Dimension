@@ -85,11 +85,14 @@ class MultiuserViewController: UIViewController{
             self.restartExperience()
         }
         
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(showVirtualObjectSelectionViewController))
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.handleSceneTap(_:)))
         // Set the delegate to ensure this gesture is only used when there are no virtual objects in the scene.
         tapGesture.delegate = self
         sceneView.addGestureRecognizer(tapGesture)
         
+        
+        //multipeerSession = MultipeerSession(receivedDataHandler: receivedData)
         VirtualObject.availableObjects = VirtualObject.updateReferenceURL() // 每次進入首頁時更新 referenceURL -> 為了讓選單出現新的下載項目
     }
     
@@ -98,6 +101,8 @@ class MultiuserViewController: UIViewController{
         
         // Prevent the screen from being dimmed to avoid interuppting the AR experience.
         UIApplication.shared.isIdleTimerDisabled = true
+        
+        sceneView.debugOptions = [ARSCNDebugOptions.showFeaturePoints]
         
         // Start the `ARSession`.
         resetTracking()
@@ -154,15 +159,17 @@ class MultiuserViewController: UIViewController{
         }
         
         // Perform hit testing only when ARKit tracking is in a good state.
-        if let camera = session.currentFrame?.camera, case .normal = camera.trackingState,
-            let result = self.sceneView.smartHitTest(screenCenter) {
-            updateQueue.async {
+        if let camera = session.currentFrame?.camera, let result = self.sceneView.smartHitTest(screenCenter)
+        {
+            updateQueue.async
+                {
                 self.sceneView.scene.rootNode.addChildNode(self.focusSquare)
                 self.focusSquare.state = .detecting(hitTestResult: result, camera: camera)
-            }
+                }
             addObjectButton.isHidden = false
             statusViewController.cancelScheduledMessage(for: .focusSquare)
-        } else {
+        }
+        else {
             updateQueue.async {
                 self.focusSquare.state = .initializing
                 self.sceneView.pointOfView?.addChildNode(self.focusSquare)
@@ -192,6 +199,7 @@ class MultiuserViewController: UIViewController{
     
     /// - Tag: ReceiveData
     func receivedData(_ data: Data, from peer: MCPeerID) {
+        print(data)
         do {
             if let worldMap = try NSKeyedUnarchiver.unarchivedObject(ofClass: ARWorldMap.self, from: data) {
                 // Run the session with the received world map.
@@ -207,7 +215,6 @@ class MultiuserViewController: UIViewController{
             }
             else
                 if let anchor = try NSKeyedUnarchiver.unarchivedObject(ofClass: ARAnchor.self, from: data) {
-                    print("received2")
                     // Add anchor to the session, ARSCNView delegate adds visible content.
                     sceneView.session.add(anchor: anchor)
                 }
@@ -217,6 +224,26 @@ class MultiuserViewController: UIViewController{
         } catch {
             print("can't decode data recieved from \(peer)")
         }
+    }
+    
+    /// - Tag: PlaceCharacter
+    @objc func handleSceneTap(_ sender: UITapGestureRecognizer) {
+        print("tapped")
+        // Hit test to find a place for a virtual object.
+        guard let hitTestResult = sceneView
+            .hitTest(sender.location(in: sceneView), types: [.existingPlaneUsingGeometry, .estimatedHorizontalPlane])
+            .first
+            else { return }
+        
+        // Place an anchor for a virtual character. The model appears in renderer(_:didAdd:for:).
+        let anchor = ARAnchor(name: "panda", transform: hitTestResult.worldTransform)
+        sceneView.session.add(anchor: anchor)
+        
+        // Send the anchor info to peers, so they can place the same content.
+        guard let data = try? NSKeyedArchiver.archivedData(withRootObject: anchor, requiringSecureCoding: true)
+            else { fatalError("can't encode anchor") }
+        self.multipeerSession.sendToAllPeers(data)
+        print(data)
     }
     
     // MARK: - Multiuser shared session
@@ -232,6 +259,16 @@ class MultiuserViewController: UIViewController{
             self.multipeerSession.sendToAllPeers(data)
         }
     }
+    
+    func loadRedPandaModel() -> SCNNode {
+        //let sceneURL = Bundle.main.url(forResource: "max", withExtension: "scn", subdirectory: "Assets.scnassets")!
+        let sceneURL = Bundle.main.url(forResource: "max", withExtension: "scn", subdirectory: "Models.scnassets")!
+        let referenceNode = SCNReferenceNode(url: sceneURL)!
+        referenceNode.load()
+        
+        return referenceNode
+    }
+
     
     
     @IBAction func moreModels(_ sender: UIButton) // 按下“更多”按鈕

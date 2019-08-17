@@ -37,6 +37,7 @@ extension MultiuserViewController: ARSCNViewDelegate, ARSessionDelegate {
     }
     
     func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
+        /*
         guard let planeAnchor = anchor as? ARPlaneAnchor else { return }
         DispatchQueue.main.async {
             self.statusViewController.cancelScheduledMessage(for: .planeEstimation)
@@ -49,6 +50,10 @@ extension MultiuserViewController: ARSCNViewDelegate, ARSessionDelegate {
             for object in self.virtualObjectLoader.loadedObjects {
                 object.adjustOntoPlaneAnchor(planeAnchor, using: node)
             }
+        }
+        */
+        if let name = anchor.name, name.hasPrefix("panda") {
+            node.addChildNode(loadRedPandaModel())
         }
     }
     
@@ -101,9 +106,11 @@ extension MultiuserViewController: ARSCNViewDelegate, ARSessionDelegate {
     /// - Tag: CheckMappingStatus
     func session(_ session: ARSession, didUpdate frame: ARFrame) {
         switch frame.worldMappingStatus {
+        /*
         case .notAvailable, .limited:
             sendMapButton.isEnabled = false
-        case .extending:
+        */
+        case .extending, .notAvailable, .limited:
             sendMapButton.isEnabled = !multipeerSession.connectedPeers.isEmpty
         case .mapped:
             sendMapButton.isEnabled = !multipeerSession.connectedPeers.isEmpty
