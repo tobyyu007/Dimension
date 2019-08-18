@@ -53,7 +53,6 @@ extension MultiuserViewController: ARSCNViewDelegate, ARSessionDelegate {
         }
         */
         
-        // For tap to add "panda" model
         if VirtualObjectARView.modelName == nil && MultiuserViewController.received == true && anchor.name != nil  // 從別人下載地圖載入模型的情況
         {
             node.addChildNode(loadModel(anchor.name!))

@@ -31,6 +31,9 @@ class MultiuserViewController: UIViewController{
     
     var focusSquare = FocusSquare()
     
+    // mark if it is running Multiuser mode
+    static var multiuser: Bool = true
+    
     /// The view controller that displays the status and "restart experience" UI.
     lazy var statusViewController: StatusViewController = {
         return childViewControllers.lazy.compactMap({ $0 as? StatusViewController }).first!
@@ -69,6 +72,7 @@ class MultiuserViewController: UIViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        MultiuserViewController.multiuser = true
         multipeerSession = MultipeerSession(receivedDataHandler: receivedData)
         
         sceneView.delegate = self
@@ -93,7 +97,7 @@ class MultiuserViewController: UIViewController{
         
         
         //multipeerSession = MultipeerSession(receivedDataHandler: receivedData)
-        VirtualObject.availableObjects = VirtualObject.updateReferenceURL() // 每次進入首頁時更新 referenceURL -> 為了讓選單出現新的下載項目
+        VirtualObject.availableObjects = VirtualObject.updateReferenceURL() // 每次進入首頁時更新 referenceURL -> 為了讓選單不要出現下載項目
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -271,17 +275,41 @@ class MultiuserViewController: UIViewController{
         //let sceneURL = Bundle.main.url(forResource: "max", withExtension: "scn", subdirectory: "Assets.scnassets")!
         if VirtualObjectARView.modelName != nil  // "+" 放置模型的情況
         {
-            let sceneURL = Bundle.main.url(forResource: VirtualObjectARView.modelName, withExtension: "scn", subdirectory: "Models.scnassets")!
-            let referenceNode = SCNReferenceNode(url: sceneURL)!
+            print("model url is: ")
+            print(VirtualObjectARView.modelURL)
+            let referenceNode = SCNReferenceNode(url: VirtualObjectARView.modelURL)!
             referenceNode.load()
             return referenceNode
         }
         else // 從別人下載地圖載入模型的情況
         {
-            print("anchor Name is")
-            print(anchorName)
-            let sceneURL = Bundle.main.url(forResource: anchorName, withExtension: "scn", subdirectory: "Models.scnassets")!
-            let referenceNode = SCNReferenceNode(url: sceneURL)!
+            var modelURL: URL?
+            
+            let documentsURL = Bundle.main.url(forResource: "Models.scnassets", withExtension: nil)!
+            var path:String = documentsURL.path  // URL 轉成 String
+            let enumerator = FileManager.default.enumerator(atPath: path)
+            let filePaths = enumerator?.allObjects as! [String]
+            for filepath in filePaths
+            {
+                let urlPath = URL(string: filepath)  // String 轉成 URL
+                if urlPath?.pathExtension == "usdz" || urlPath?.pathExtension == "scn" // 只抓取副檔名為 "usdz" 以及 "scn" 的檔案
+                {
+                    if urlPath!.lastPathComponent.contains(anchorName)
+                    {
+                        print("urlPath is: " + urlPath!.lastPathComponent)
+                        print("anchorName is: " + anchorName)
+                        let urlPathString: String = urlPath?.path ?? ""
+                        path = "file:///private" + path + "/" + urlPathString  // 結合出完整的路徑
+                        modelURL = URL(string: path)
+                        print("modelURL is1: ")
+                        print(modelURL)
+                    }
+                }
+            }
+            
+            print("modelURL is2: ")
+            print(modelURL)
+            let referenceNode = SCNReferenceNode(url: modelURL!)!
             referenceNode.load()
             return referenceNode
         }

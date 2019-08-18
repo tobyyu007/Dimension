@@ -62,7 +62,7 @@ class ViewController: UIViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        MultiuserViewController.multiuser = false
         sceneView.delegate = self
         sceneView.session.delegate = self
 

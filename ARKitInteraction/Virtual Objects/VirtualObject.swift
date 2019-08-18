@@ -14,17 +14,35 @@ class VirtualObject: SCNReferenceNode {
     // 更新 referenceURL 中的資料 (此 function 在 ViewController initialize 時使用)
     static func updateReferenceURL() -> [VirtualObject]
     {
-        let fileManager = FileManager.default
-        let documentsURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0]
-        let fileEnumerator = FileManager().enumerator(at: documentsURL, includingPropertiesForKeys: [])!
-        
-        return fileEnumerator.compactMap { element -> VirtualObject? in
-            let url = element as! URL
+        if MultiuserViewController.multiuser == true
+        {
+            print("true")
+            let modelsURL = Bundle.main.url(forResource: "Models.scnassets", withExtension: nil)!
             
-            guard url.pathExtension == "usdz" || url.pathExtension == "scn" || url.pathExtension == "dae" && !url.path.contains("lighting") else { return nil }
-            //只抓取 scn 檔以及不要抓 "lighting"
+            let fileEnumerator = FileManager().enumerator(at: modelsURL, includingPropertiesForKeys: [])!
             
-            return VirtualObject(url: url)  // 回傳給 VirtualObject 中 modelName 的 referenceURL
+            return fileEnumerator.compactMap { element in
+                let url = element as! URL
+                
+                guard url.pathExtension == "scn" && !url.path.contains("lighting") else { return nil }
+                
+                return VirtualObject(url: url)
+            }
+        }
+        else
+        {
+            print("false")
+            let fileManager = FileManager.default
+            let documentsURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0]
+            let fileEnumerator = FileManager().enumerator(at: documentsURL, includingPropertiesForKeys: [])!
+            
+            return fileEnumerator.compactMap { element in
+                let url = element as! URL
+                
+                guard url.pathExtension == "usdz" || url.pathExtension == "scn" || url.pathExtension == "dae" && !url.path.contains("lighting") else { return nil }  //只抓取 scn 檔以及不要抓 "lighting"
+                
+                return VirtualObject(url: url)  // 回傳給 VirtualObject 中 modelName 的 referenceURL
+            }
         }
     }
     
@@ -233,16 +251,35 @@ extension VirtualObject {
 
     /// 從 Documents 抓 scn 檔以及 usdz (只會在第一次時執行)
     static var availableObjects: [VirtualObject] = {
-        let fileManager = FileManager.default
-        let documentsURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0]
-        let fileEnumerator = FileManager().enumerator(at: documentsURL, includingPropertiesForKeys: [])!
-        
-        return fileEnumerator.compactMap { element in
-            let url = element as! URL
+        if MultiuserViewController.multiuser == true
+        {
+            print("true")
+            let modelsURL = Bundle.main.url(forResource: "Models.scnassets", withExtension: nil)!
             
-            guard url.pathExtension == "usdz" || url.pathExtension == "scn" || url.pathExtension == "dae" && !url.path.contains("lighting") else { return nil }  //只抓取 scn 檔以及不要抓 "lighting"
+            let fileEnumerator = FileManager().enumerator(at: modelsURL, includingPropertiesForKeys: [])!
             
-            return VirtualObject(url: url)  // 回傳給 VirtualObject 中 modelName 的 referenceURL
+            return fileEnumerator.compactMap { element in
+                let url = element as! URL
+                
+                guard url.pathExtension == "scn" && !url.path.contains("lighting") else { return nil }
+                
+                return VirtualObject(url: url)
+            }
+        }
+        else
+        {
+            print("false")
+            let fileManager = FileManager.default
+            let documentsURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0]
+            let fileEnumerator = FileManager().enumerator(at: documentsURL, includingPropertiesForKeys: [])!
+            
+            return fileEnumerator.compactMap { element in
+                let url = element as! URL
+                
+                guard url.pathExtension == "usdz" || url.pathExtension == "scn" || url.pathExtension == "dae" && !url.path.contains("lighting") else { return nil }  //只抓取 scn 檔以及不要抓 "lighting"
+                
+                return VirtualObject(url: url)  // 回傳給 VirtualObject 中 modelName 的 referenceURL
+            }
         }
     }()
     
