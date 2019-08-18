@@ -52,19 +52,17 @@ extension MultiuserViewController: ARSCNViewDelegate, ARSessionDelegate {
             }
         }
         */
-        // For tap to add "panda" model
         
-        if VirtualObjectARView.modelName == nil && MultiuserViewController.received == true && anchor.name != nil
+        // For tap to add "panda" model
+        if VirtualObjectARView.modelName == nil && MultiuserViewController.received == true && anchor.name != nil  // 從別人下載地圖載入模型的情況
         {
-            print("name is:")
-            print(anchor.name)
-            node.addChildNode(loadRedPandaModel(anchor.name!))
+            node.addChildNode(loadModel(anchor.name!))
         }
-        else
+        else  // "+" 放置模型的情況
         {
             if let name = anchor.name, name.hasPrefix(VirtualObjectARView.modelName)
             {
-                node.addChildNode(loadRedPandaModel(""))
+                node.addChildNode(loadModel(""))
             }
         }
     }
@@ -82,7 +80,6 @@ extension MultiuserViewController: ARSCNViewDelegate, ARSessionDelegate {
                 }
             }
         }
-        //print("not again")
     }
     
     func session(_ session: ARSession, cameraDidChangeTrackingState camera: ARCamera) {

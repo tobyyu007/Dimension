@@ -88,9 +88,9 @@ class VirtualObjectARView: ARSCNView {
         }
     }
     
-    static var modelURL: URL!
+    static var modelURL: URL! // 儲存載入模型的檔案路徑
     
-    static var modelName: String!
+    static var modelName: String! // 儲存載入的模型名稱
     
     // - MARK: Object anchors
     /// - Tag: AddOrUpdateAnchor
@@ -106,6 +106,7 @@ class VirtualObjectARView: ARSCNView {
         let newAnchor = ARAnchor(name: VirtualObjectARView.modelName, transform: object.simdWorldTransform)
         object.anchor = newAnchor
         session.add(anchor: newAnchor)
+        MultiuserViewController.received = false
     }
     
     // - MARK: Lighting

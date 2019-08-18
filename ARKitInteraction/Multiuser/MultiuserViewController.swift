@@ -86,7 +86,7 @@ class MultiuserViewController: UIViewController{
         }
         
         
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.handleSceneTap(_:)))
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(showVirtualObjectSelectionViewController))
         // Set the delegate to ensure this gesture is only used when there are no virtual objects in the scene.
         tapGesture.delegate = self
         sceneView.addGestureRecognizer(tapGesture)
@@ -198,8 +198,10 @@ class MultiuserViewController: UIViewController{
     
     var mapProvider: MCPeerID?
     
-    static var received: Bool = false
+    
     /// - Tag: ReceiveData
+    static var received: Bool = false  // 是否有收到地圖
+    
     func receivedData(_ data: Data, from peer: MCPeerID) {
         do {
             if let worldMap = try NSKeyedUnarchiver.unarchivedObject(ofClass: ARWorldMap.self, from: data) {
@@ -264,16 +266,17 @@ class MultiuserViewController: UIViewController{
         }
     }
     
-    func loadRedPandaModel(_ anchorName: String) -> SCNNode {
+    /// 根據 modelName 載入模型 (同時運作在放置以及下載模型中）
+    func loadModel(_ anchorName: String) -> SCNNode {
         //let sceneURL = Bundle.main.url(forResource: "max", withExtension: "scn", subdirectory: "Assets.scnassets")!
-        if VirtualObjectARView.modelName != nil
+        if VirtualObjectARView.modelName != nil  // "+" 放置模型的情況
         {
             let sceneURL = Bundle.main.url(forResource: VirtualObjectARView.modelName, withExtension: "scn", subdirectory: "Models.scnassets")!
             let referenceNode = SCNReferenceNode(url: sceneURL)!
             referenceNode.load()
             return referenceNode
         }
-        else
+        else // 從別人下載地圖載入模型的情況
         {
             print("anchor Name is")
             print(anchorName)
