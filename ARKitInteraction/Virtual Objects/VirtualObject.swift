@@ -24,7 +24,7 @@ class VirtualObject: SCNReferenceNode {
             return fileEnumerator.compactMap { element in
                 let url = element as! URL
                 
-                guard url.pathExtension == "scn" && !url.path.contains("lighting") else { return nil }
+                guard url.pathExtension == "scn" && !url.path.contains("lighting") && !url.path.contains("CameraSetup") else { return nil }
                 
                 return VirtualObject(url: url)
             }
@@ -39,7 +39,7 @@ class VirtualObject: SCNReferenceNode {
             return fileEnumerator.compactMap { element in
                 let url = element as! URL
                 
-                guard url.pathExtension == "usdz" || url.pathExtension == "scn" || url.pathExtension == "dae" && !url.path.contains("lighting") else { return nil }  //只抓取 scn 檔以及不要抓 "lighting"
+                guard url.pathExtension == "usdz" || url.pathExtension == "scn" || url.pathExtension == "dae" && !url.path.contains("lighting") && !url.path.contains("CameraSetup") else { return nil }  //只抓取 scn 檔以及不要抓 "lighting"
                 
                 return VirtualObject(url: url)  // 回傳給 VirtualObject 中 modelName 的 referenceURL
             }

@@ -301,14 +301,12 @@ class MultiuserViewController: UIViewController{
                         let urlPathString: String = urlPath?.path ?? ""
                         path = "file:///private" + path + "/" + urlPathString  // 結合出完整的路徑
                         modelURL = URL(string: path)
-                        print("modelURL is1: ")
+                        print("modelURL is: ")
                         print(modelURL)
                     }
                 }
             }
             
-            print("modelURL is2: ")
-            print(modelURL)
             let referenceNode = SCNReferenceNode(url: modelURL!)!
             referenceNode.load()
             return referenceNode

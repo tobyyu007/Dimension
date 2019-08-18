@@ -31,7 +31,7 @@ class ARLibrary: UIViewController, UICollectionViewDelegate, UICollectionViewDat
         for path in filePaths
         {
             let urlPath = URL(string: path)  // String 轉成 URL
-            if urlPath?.pathExtension == "usdz" || urlPath?.pathExtension == "scn" // 只抓取副檔名為 "usdz" 以及 "scn" 的檔案
+            if urlPath?.pathExtension == "usdz" || urlPath?.pathExtension == "scn" && !urlPath!.lastPathComponent.contains("lighting") && !urlPath!.lastPathComponent.contains("CameraSetup") // 只抓取副檔名為 "usdz" 以及 "scn" 的檔案
             {
                 var file = String(urlPath?.lastPathComponent.replacingOccurrences(of: ".scn", with: "") ?? "")
                 file = file.replacingOccurrences(of: ".usdz", with: "")
