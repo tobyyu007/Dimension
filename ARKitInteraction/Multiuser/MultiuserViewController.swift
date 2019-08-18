@@ -68,12 +68,12 @@ class MultiuserViewController: UIViewController{
     
     // MARK: - View Controller Life Cycle
     
-    var multipeerSession: MultipeerSession!
+    static var multipeerSession: MultipeerSession!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         MultiuserViewController.multiuser = true
-        multipeerSession = MultipeerSession(receivedDataHandler: receivedData)
+        MultiuserViewController.multipeerSession = MultipeerSession(receivedDataHandler: receivedData)
         
         sceneView.delegate = self
         sceneView.session.delegate = self
@@ -90,7 +90,8 @@ class MultiuserViewController: UIViewController{
         }
         
         
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(showVirtualObjectSelectionViewController))
+        //let tapGesture = UITapGestureRecognizer(target: self, action: #selector(showVirtualObjectSelectionViewController))
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleSceneTap(_:)))
         // Set the delegate to ensure this gesture is only used when there are no virtual objects in the scene.
         tapGesture.delegate = self
         sceneView.addGestureRecognizer(tapGesture)
@@ -205,35 +206,52 @@ class MultiuserViewController: UIViewController{
     
     /// - Tag: ReceiveData
     static var received: Bool = false  // 是否有收到地圖
+    var receivedMap: Bool = false // 是否有收到 worldMap -> 開啟即時傳送功能
     
     func receivedData(_ data: Data, from peer: MCPeerID) {
-        do {
-            if let worldMap = try NSKeyedUnarchiver.unarchivedObject(ofClass: ARWorldMap.self, from: data) {
-                // Run the session with the received world map.
-                MultiuserViewController.received = true
-                let configuration = ARWorldTrackingConfiguration()
-                configuration.planeDetection = .horizontal
-                configuration.initialWorldMap = worldMap
-                sceneView.session.run(configuration, options: [.resetTracking, .removeExistingAnchors])
-                
-                // Remember who provided the map for showing UI feedback.
-                mapProvider = peer
-                print("mapProvicer: ", terminator:"")
-                print(mapProvider)
+        if !receivedMap
+        {
+            do
+            {
+                if let worldMap = try NSKeyedUnarchiver.unarchivedObject(ofClass: ARWorldMap.self, from: data) {
+                    // Run the session with the received world map.
+                    MultiuserViewController.received = true
+                    let configuration = ARWorldTrackingConfiguration()
+                    configuration.planeDetection = .horizontal
+                    configuration.initialWorldMap = worldMap
+                    sceneView.session.run(configuration, options: [.resetTracking, .removeExistingAnchors])
+                    
+                    // Remember who provided the map for showing UI feedback.
+                    mapProvider = peer
+                    print("mapProvicer: ", terminator:"")
+                    print(mapProvider)
+                    receivedMap = true
+                }
             }
-            else
+            catch
+            {
+                print("can't decode data recieved from \(peer)")
+            }
+        }
+        else
+        {
+            do
+            {
                 if let anchor = try NSKeyedUnarchiver.unarchivedObject(ofClass: ARAnchor.self, from: data) {
                     // Add anchor to the session, ARSCNView delegate adds visible content.
+                    MultiuserViewController.received = true
                     sceneView.session.add(anchor: anchor)
                 }
                 else {
                     print("unknown data recieved from \(peer)")
+                }
+            }
+            catch
+            {
+                print("can't decode data recieved from \(peer)")
             }
         }
-        catch
-        {
-            print("can't decode data recieved from \(peer)")
-        }
+        
     }
     
     /// - Tag: PlaceCharacter
@@ -246,13 +264,15 @@ class MultiuserViewController: UIViewController{
             else { return }
         
         // Place an anchor for a virtual character. The model appears in renderer(_:didAdd:for:).
-        let anchor = ARAnchor(name: "max", transform: hitTestResult.worldTransform)
+        let anchor = ARAnchor(name: "VirtualObjectARView.modelName", transform: hitTestResult.worldTransform)
         session.add(anchor: anchor)
+        print("anchor")
+        print(anchor)
         
         // Send the anchor info to peers, so they can place the same content.
         guard let data = try? NSKeyedArchiver.archivedData(withRootObject: anchor, requiringSecureCoding: true)
             else { fatalError("can't encode anchor") }
-        self.multipeerSession.sendToAllPeers(data)
+        MultiuserViewController.multipeerSession.sendToAllPeers(data)
     }
     
     
@@ -266,7 +286,7 @@ class MultiuserViewController: UIViewController{
                 else { print("Error1: \(error!.localizedDescription)"); return }
             guard let data = try? NSKeyedArchiver.archivedData(withRootObject: map, requiringSecureCoding: true)
                 else { fatalError("can't encode map") }
-            self.multipeerSession.sendToAllPeers(data)
+            MultiuserViewController.multipeerSession.sendToAllPeers(data)
         }
     }
     
@@ -275,38 +295,31 @@ class MultiuserViewController: UIViewController{
         //let sceneURL = Bundle.main.url(forResource: "max", withExtension: "scn", subdirectory: "Assets.scnassets")!
         if VirtualObjectARView.modelName != nil  // "+" 放置模型的情況
         {
-            print("model url is: ")
-            print(VirtualObjectARView.modelURL)
             let referenceNode = SCNReferenceNode(url: VirtualObjectARView.modelURL)!
             referenceNode.load()
             return referenceNode
         }
         else // 從別人下載地圖載入模型的情況
         {
+            /// 從內建的 Models.scnassets 中尋找所有模型，使用 anchorName 抓出該 model 的路徑
             var modelURL: URL?
-            
             let documentsURL = Bundle.main.url(forResource: "Models.scnassets", withExtension: nil)!
-            var path:String = documentsURL.path  // URL 轉成 String
+            let path:String = documentsURL.path  // URL 轉成 String
             let enumerator = FileManager.default.enumerator(atPath: path)
             let filePaths = enumerator?.allObjects as! [String]
             for filepath in filePaths
             {
-                let urlPath = URL(string: filepath)  // String 轉成 URL
-                if urlPath?.pathExtension == "usdz" || urlPath?.pathExtension == "scn" // 只抓取副檔名為 "usdz" 以及 "scn" 的檔案
+                if filepath.contains("usdz") || filepath.contains("scn") // 只抓取副檔名為 "usdz" 以及 "scn" 的檔案
                 {
-                    if urlPath!.lastPathComponent.contains(anchorName)
+                    if filepath.contains(anchorName)
                     {
-                        print("urlPath is: " + urlPath!.lastPathComponent)
-                        print("anchorName is: " + anchorName)
-                        let urlPathString: String = urlPath?.path ?? ""
-                        path = "file:///private" + path + "/" + urlPathString  // 結合出完整的路徑
-                        modelURL = URL(string: path)
-                        print("modelURL is: ")
-                        print(modelURL)
+                        var newPath = "file:///private" + path + "/" + filepath  // 結合出完整的路徑
+                        newPath = newPath.replacingOccurrences(of: " ", with: "%20")  // 修正路徑中有空格的問題
+                        modelURL = URL(string: newPath)
+                        break
                     }
                 }
             }
-            
             let referenceNode = SCNReferenceNode(url: modelURL!)!
             referenceNode.load()
             return referenceNode

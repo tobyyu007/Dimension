@@ -10,7 +10,8 @@ import ARKit
 
 class VirtualObjectARView: ARSCNView {
 
-    var multipeerSession: MultipeerSession!
+    //var multipeerSession: MultipeerSession!
+    
     
     // MARK: Position Testing
     
@@ -18,7 +19,6 @@ class VirtualObjectARView: ARSCNView {
     func virtualObject(at point: CGPoint) -> VirtualObject? {
         let hitTestOptions: [SCNHitTestOption: Any] = [.boundingBoxOnly: true]
         let hitTestResults = hitTest(point, options: hitTestOptions)
-        
         return hitTestResults.lazy.compactMap { result in
             return VirtualObject.existingObjectContainingNode(result.node)
         }.first
@@ -104,8 +104,17 @@ class VirtualObjectARView: ARSCNView {
         VirtualObjectARView.modelURL = object.referenceURL
         VirtualObjectARView.modelName = object.referenceURL.lastPathComponent.replacingOccurrences(of: ".scn", with: "")
         let newAnchor = ARAnchor(name: VirtualObjectARView.modelName, transform: object.simdWorldTransform)
-        object.anchor = newAnchor
+        let position = object.simdWorldTransform
+        
         session.add(anchor: newAnchor)
+        
+        // Send the anchor info to peers, so they can place the same content.
+        guard let data = try? NSKeyedArchiver.archivedData(withRootObject: newAnchor, requiringSecureCoding: true)
+            else { fatalError("can't encode anchor") }
+        MultiuserViewController.multipeerSession.sendToAllPeers(data)
+        
+        object.anchor = newAnchor
+        
         MultiuserViewController.received = false
     }
     

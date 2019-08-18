@@ -44,6 +44,8 @@ class ARLibrary: UIViewController, UICollectionViewDelegate, UICollectionViewDat
         models = scnFilePaths
     }
     
+    
+    
     var thumbnails = [UIImage]()
     var thumbnailIndex = 0
     

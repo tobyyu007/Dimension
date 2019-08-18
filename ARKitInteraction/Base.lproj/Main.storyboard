@@ -1080,7 +1080,6 @@
         <image name="restartPressed" width="20" height="23"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="amy-4T-ODC"/>
         <segue reference="a2X-xm-PmA"/>
         <segue reference="pRb-cN-1Bv"/>
         <segue reference="AA4-cJ-aTR"/>

@@ -120,9 +120,9 @@ extension MultiuserViewController: ARSCNViewDelegate, ARSessionDelegate {
             sendMapButton.isEnabled = false
  
         case .extending:
-            sendMapButton.isEnabled = !multipeerSession.connectedPeers.isEmpty
+            sendMapButton.isEnabled = !MultiuserViewController.multipeerSession.connectedPeers.isEmpty
         case .mapped:
-            sendMapButton.isEnabled = !multipeerSession.connectedPeers.isEmpty
+            sendMapButton.isEnabled = !MultiuserViewController.multipeerSession.connectedPeers.isEmpty
         }
         //print(for: frame, trackingState: frame.camera.trackingState)
         mappingStatusLabel.text = frame.worldMappingStatus.description

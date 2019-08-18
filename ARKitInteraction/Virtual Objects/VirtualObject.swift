@@ -251,7 +251,6 @@ extension VirtualObject {
     static var availableObjects: [VirtualObject] = {
         if MultiuserViewController.multiuser == true  // 多人連線載入列表
         {
-            print("true")
             let modelsURL = Bundle.main.url(forResource: "Models.scnassets", withExtension: nil)!
             
             let fileEnumerator = FileManager().enumerator(at: modelsURL, includingPropertiesForKeys: [])!
@@ -266,7 +265,6 @@ extension VirtualObject {
         }
         else  // 單人模式載入列表
         {
-            print("false")
             let fileManager = FileManager.default
             let documentsURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0]
             let fileEnumerator = FileManager().enumerator(at: documentsURL, includingPropertiesForKeys: [])!
