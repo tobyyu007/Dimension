@@ -89,9 +89,8 @@ class MultiuserViewController: UIViewController{
             self.restartExperience()
         }
         
-        
-        //let tapGesture = UITapGestureRecognizer(target: self, action: #selector(showVirtualObjectSelectionViewController))
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleSceneTap(_:)))
+        // let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleSceneTap(_:)))
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(showVirtualObjectSelectionViewController))
         // Set the delegate to ensure this gesture is only used when there are no virtual objects in the scene.
         tapGesture.delegate = self
         sceneView.addGestureRecognizer(tapGesture)
@@ -223,8 +222,6 @@ class MultiuserViewController: UIViewController{
                     
                     // Remember who provided the map for showing UI feedback.
                     mapProvider = peer
-                    print("mapProvicer: ", terminator:"")
-                    print(mapProvider)
                     receivedMap = true
                 }
             }
@@ -326,7 +323,30 @@ class MultiuserViewController: UIViewController{
         }
     }
 
+    // MARK: - AR session management
     
+    func updateSessionInfoLabel(for frame: ARFrame, trackingState: ARCamera.TrackingState) {
+        // Update the UI to provide feedback on the state of the AR experience.
+        let message: String
+        
+        switch trackingState {
+        case .normal where !MultiuserViewController.multipeerSession.connectedPeers.isEmpty && mapProvider == nil:
+            let peerNames = MultiuserViewController.multipeerSession.connectedPeers.map({ $0.displayName }).joined(separator: ", ")
+            message = "Connected with \(peerNames)."
+            
+        case .limited(.initializing) where mapProvider != nil,
+             .limited(.relocalizing) where mapProvider != nil:
+            message = "Received map from \(mapProvider!.displayName)."
+            
+        default:
+            // No feedback needed when tracking is normal and planes are visible.
+            // (Nor when in unreachable limited-tracking states.)
+            message = ""
+            
+        }
+        
+        statusViewController.showMessage(message, autoHide: true)
+    }
     
     @IBAction func moreModels(_ sender: UIButton) // 按下“更多”按鈕
     {

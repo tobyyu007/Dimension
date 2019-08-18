@@ -93,6 +93,7 @@ extension MultiuserViewController: ARSCNViewDelegate, ARSessionDelegate {
             // Unhide content after successful relocalization.
             virtualObjectLoader.loadedObjects.forEach { $0.isHidden = false }
         }
+        updateSessionInfoLabel(for: session.currentFrame!, trackingState: camera.trackingState)
     }
     
     func session(_ session: ARSession, didFailWithError error: Error) {
@@ -126,7 +127,7 @@ extension MultiuserViewController: ARSCNViewDelegate, ARSessionDelegate {
         }
         //print(for: frame, trackingState: frame.camera.trackingState)
         mappingStatusLabel.text = frame.worldMappingStatus.description
-        //updateSessionInfoLabel(for: frame, trackingState: frame.camera.trackingState)
+        updateSessionInfoLabel(for: frame, trackingState: frame.camera.trackingState)
     }
     
     func sessionWasInterrupted(_ session: ARSession) {
