@@ -23,16 +23,19 @@ class ARLibrary: UIViewController, UICollectionViewDelegate, UICollectionViewDat
     /// 從 Documents 中抓 model 列表
     func getModels()
     {
-        let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+        var documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+        documentsURL = documentsURL.appendingPathComponent("Models.scnassets")  // 加入指定檔案路徑
         let path:String = documentsURL.path  // URL 轉成 String
         let enumerator = FileManager.default.enumerator(atPath: path)
         let filePaths = enumerator?.allObjects as! [String]
         var scnFilePaths = [String]()
-        for path in filePaths
+        for filePath in filePaths
         {
-            let urlPath = URL(string: path)  // String 轉成 URL
-            if urlPath?.pathExtension == "usdz" || urlPath?.pathExtension == "scn" && !urlPath!.lastPathComponent.contains("lighting") && !urlPath!.lastPathComponent.contains("CameraSetup") // 只抓取副檔名為 "usdz" 以及 "scn" 的檔案
+            print(filePath)
+            if filePath.contains(".usdz") || filePath.contains(".scn") && !filePath.contains("lighting") && !filePath.contains("CameraSetup") // 只抓取副檔名為 "usdz" 以及 "scn" 的檔案
             {
+                let newfilePath = filePath.replacingOccurrences(of: " ", with: "%20")  // 修正路徑中有空格的問題
+                let urlPath = URL(string: newfilePath)  // String 轉成 URL
                 var file = String(urlPath?.lastPathComponent.replacingOccurrences(of: ".scn", with: "") ?? "")
                 file = file.replacingOccurrences(of: ".usdz", with: "")
                 if file != ""  // 因為 31 行的關係，可能為空值
@@ -73,7 +76,7 @@ class ARLibrary: UIViewController, UICollectionViewDelegate, UICollectionViewDat
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "LibraryCell", for: indexPath) as? LibraryCollectionViewCell
         if let cell = cell {
             //cell.modelThumbnail.image = thumbnails[indexPath.item]
-            cell.modelThumbnail.image = thumbnails[3]  // 列表 model 圖片
+            cell.modelThumbnail.image = thumbnails[4]  // 列表 model 圖片
             cell.modelTitle.text = models[indexPath.item]  // 列表 model 名稱
             //cell.modelTitle.text = title.capitalized
             
@@ -197,19 +200,19 @@ extension ARLibrary: LibraryCollectionViewCellDelegate
         if let indexPath = collectionView?.indexPath(for: cell)
         {
             //1. delete the photo
-            let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+            var documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+            documentsURL = documentsURL.appendingPathComponent("Models.scnassets")  // 加入指定檔案路徑
             var path:String = documentsURL.path  // URL 轉成 String
             let enumerator = FileManager.default.enumerator(atPath: path)
             let filePaths = enumerator?.allObjects as! [String]
-            for filepath in filePaths
+            for filePath in filePaths
             {
-                let urlPath = URL(string: filepath)  // String 轉成 URL
-                if urlPath?.pathExtension == "usdz" || urlPath?.pathExtension == "scn" // 只抓取副檔名為 "usdz" 以及 "scn" 的檔案
+                if filePath.contains(".usdz") || filePath.contains(".scn") // 只抓取副檔名為 "usdz" 以及 "scn" 的檔案
                 {
-                    let modelLocation: String = urlPath!.path
-                    if modelLocation.contains(models[indexPath.item])
+                    let newfilePath = filePath.replacingOccurrences(of: " ", with: "%20")  // 修正路徑中有空格的問題
+                    if newfilePath.contains(models[indexPath.item])
                     {
-                        path = path + "/" + filepath  // 結合出完整的路徑
+                        path = path + "/" + newfilePath  // 結合出完整的路徑
                     }
                 }
             }
@@ -221,6 +224,7 @@ extension ARLibrary: LibraryCollectionViewCellDelegate
                 print(error.localizedDescription)
             }
             models.remove(at: indexPath.item)
+            
             
             //2. delete photo cell at that index path from the collection view
             collectionView?.deleteItems(at: [indexPath])

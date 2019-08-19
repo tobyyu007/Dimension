@@ -88,7 +88,9 @@ class WebView: UIViewController, WKNavigationDelegate, UIWebViewDelegate
                 {
                     let paths : Array = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)
                     let documentsDirectory : String = paths[0]
-                    let filePath : String = String.localizedStringWithFormat("%@/%@", documentsDirectory, urlToDownload.lastPathComponent)
+                    let documentsDirectoryStr = URL(string: documentsDirectory) // String 轉為 URL
+                    let modelassetsdir:String = documentsDirectoryStr!.appendingPathComponent("Models.scnassets").path  // 加入指定檔案路徑
+                    let filePath : String = String.localizedStringWithFormat("%@/%@", modelassetsdir, urlToDownload.lastPathComponent)
                     
                     urlData.write(toFile: filePath, atomically: true)
                     downloadingAlertController.dismiss(animated: true, completion: nil)

@@ -201,6 +201,7 @@ class MultiuserViewController: UIViewController{
     }
     
     var mapProvider: MCPeerID?
+    var modelProvider: MCPeerID?
     
     
     /// - Tag: ReceiveData
@@ -237,6 +238,7 @@ class MultiuserViewController: UIViewController{
                 if let anchor = try NSKeyedUnarchiver.unarchivedObject(ofClass: ARAnchor.self, from: data) {
                     // Add anchor to the session, ARSCNView delegate adds visible content.
                     MultiuserViewController.received = true
+                    modelProvider = peer
                     sceneView.session.add(anchor: anchor)
                 }
                 else {
@@ -333,6 +335,10 @@ class MultiuserViewController: UIViewController{
         case .normal where !MultiuserViewController.multipeerSession.connectedPeers.isEmpty && mapProvider == nil:
             let peerNames = MultiuserViewController.multipeerSession.connectedPeers.map({ $0.displayName }).joined(separator: ", ")
             message = "Connected with \(peerNames)."
+            
+        case .limited(.initializing) where modelProvider != nil,
+             .limited(.relocalizing) where modelProvider != nil:
+            message = "Received model from \(modelProvider!.displayName)."
             
         case .limited(.initializing) where mapProvider != nil,
              .limited(.relocalizing) where mapProvider != nil:
