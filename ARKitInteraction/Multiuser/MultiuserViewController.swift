@@ -74,6 +74,7 @@ class MultiuserViewController: UIViewController{
     override func viewDidLoad() {
         
         super.viewDidLoad()
+        
         MultiuserViewController.multiuser = true
         MultiuserViewController.multipeerSession = MultipeerSession(receivedDataHandler: receivedData)
         
@@ -97,6 +98,26 @@ class MultiuserViewController: UIViewController{
         tapGesture.delegate = self
         sceneView.addGestureRecognizer(tapGesture)
         
+        if multiuserloadScene // 收到 world map 更新
+        {
+            do
+            {
+                let file = try Data(contentsOf: multiuserselectedSceneURL!)
+                if let worldMap = try NSKeyedUnarchiver.unarchivedObject(ofClass: ARWorldMap.self, from: file)
+                {
+                    // Run the session with the received world map.
+                    let configuration = ARWorldTrackingConfiguration()
+                    configuration.planeDetection = .horizontal
+                    configuration.initialWorldMap = worldMap
+                    multiuserloadScene = false
+                }
+            }
+            catch
+            {
+                print("error loading map")
+                print(error.localizedDescription)
+            }
+        }
         
         //multipeerSession = MultipeerSession(receivedDataHandler: receivedData)
         VirtualObject.availableObjects = VirtualObject.updateReferenceURL() // 每次進入首頁時更新 referenceURL -> 為了讓選單不要出現下載項目
@@ -211,7 +232,7 @@ class MultiuserViewController: UIViewController{
     var receivedMap: Bool = false // 是否有收到 worldMap -> 開啟即時傳送功能
     
     func receivedData(_ data: Data, from peer: MCPeerID) {
-        if !receivedMap
+        if !receivedMap  // 收到 world map 更新
         {
             do
             {
@@ -233,7 +254,7 @@ class MultiuserViewController: UIViewController{
                 print("can't decode data recieved from \(peer)")
             }
         }
-        else
+        else  // 收到 model 更新
         {
             do
             {
@@ -286,39 +307,41 @@ class MultiuserViewController: UIViewController{
             MultiuserViewController.multipeerSession.sendToAllPeers(data)
         }
     }
-    
-    func saveModel()
-    {
-        func writeImageToPath()
-        {
-            session.getCurrentWorldMap
-            {
-                worldMap, error in
-                guard let map = worldMap
-                    else { print("Error1: \(error!.localizedDescription)"); return }
-                guard let data = try? NSKeyedArchiver.archivedData(withRootObject: map, requiringSecureCoding: true)
-                    else { fatalError("can't encode map") }
-                
-                let URL = Bundle.main.url(forResource: "scenes", withExtension: nil)!
 
-                if !FileManager.default.fileExists(atPath: URL.path) {
-                    print("File does NOT exist -- \(URL) -- is available for use")
-                    do {
-                        print("Write image")
-                        try data.write(to: URL)
-                    }
-                    catch {
-                        print("Error Writing Image: \(error)")
-                    }
-                }
-                else {
-                    print("This file exists -- something is already placed at this location")
-                }
-            }
+    // MARK: - AR session management
+    
+    func updateSessionInfoLabel(for frame: ARFrame, trackingState: ARCamera.TrackingState) {
+        // Update the UI to provide feedback on the state of the AR experience.
+        let message: String
+        
+        switch trackingState {
+        case .normal where !MultiuserViewController.multipeerSession.connectedPeers.isEmpty && mapProvider == nil:
+            let peerNames = MultiuserViewController.multipeerSession.connectedPeers.map({ $0.displayName }).joined(separator: ", ")
+            message = "Connected with \(peerNames)."
+            
+        case .limited(.initializing) where modelProvider != nil,
+             .limited(.relocalizing) where modelProvider != nil:
+            message = "Received model from \(modelProvider!.displayName)."
+            
+        case .limited(.initializing) where mapProvider != nil,
+             .limited(.relocalizing) where mapProvider != nil:
+            message = "Received map from \(mapProvider!.displayName)."
+            
+        default:
+            // No feedback needed when tracking is normal and planes are visible.
+            // (Nor when in unreachable limited-tracking states.)
+            message = ""
+            
         }
         
-        writeImageToPath()
+        statusViewController.showMessage(message, autoHide: true)
     }
+    
+    @IBAction func moreModels(_ sender: UIButton) // 按下“更多”按鈕
+    {
+        
+    }
+    
     
     /// 根據 modelName 載入模型 (同時運作在放置以及下載模型中）
     func loadModel(_ anchorName: String) -> SCNNode {
@@ -355,38 +378,120 @@ class MultiuserViewController: UIViewController{
             return referenceNode
         }
     }
-
-    // MARK: - AR session management
     
-    func updateSessionInfoLabel(for frame: ARFrame, trackingState: ARCamera.TrackingState) {
-        // Update the UI to provide feedback on the state of the AR experience.
-        let message: String
-        
-        switch trackingState {
-        case .normal where !MultiuserViewController.multipeerSession.connectedPeers.isEmpty && mapProvider == nil:
-            let peerNames = MultiuserViewController.multipeerSession.connectedPeers.map({ $0.displayName }).joined(separator: ", ")
-            message = "Connected with \(peerNames)."
+    // MARK: - 場景控制選單
+    @IBAction func sceneControl(_ sender: Any)
+    {
+        let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        let saveAction = UIAlertAction(title: "場景儲存", style: .default)
+        {
+            action -> Void in
             
-        case .limited(.initializing) where modelProvider != nil,
-             .limited(.relocalizing) where modelProvider != nil:
-            message = "Received model from \(modelProvider!.displayName)."
+            /// 加入 textField 讓使用者輸入想要儲存的場景名稱
+            let controller = UIAlertController(title: "場景儲存", message: "請輸入想要儲存的場景名稱", preferredStyle: .alert)
+            controller.addTextField { (textField) in
+               textField.placeholder = "名稱"
+            }
             
-        case .limited(.initializing) where mapProvider != nil,
-             .limited(.relocalizing) where mapProvider != nil:
-            message = "Received map from \(mapProvider!.displayName)."
+            /// 先輸入場景名稱後執行檔案寫入
+            let okAction = UIAlertAction(title: "OK", style: .default) { (_) in
+               let name = controller.textFields?[0].text
+                
+                // 如果沒有輸入場景名稱則出現警告
+                if name == ""
+                {
+                    let nameError : UIAlertController = UIAlertController(title: "場景儲存", message: "請輸入場景名稱！", preferredStyle: UIAlertControllerStyle.alert)
+                    
+                    let cancelAction : UIAlertAction = UIAlertAction(title: "了解", style: UIAlertActionStyle.cancel, handler:
+                    {(alert: UIAlertAction!) in
+                    })
+                    nameError.addAction(cancelAction)
+                    self.present(nameError, animated: true, completion: nil)
+                    return
+                }
+                                
+                self.writeScene(sceneName: name ?? "")
+            }
             
-        default:
-            // No feedback needed when tracking is normal and planes are visible.
-            // (Nor when in unreachable limited-tracking states.)
-            message = ""
+            let cancelAction = UIAlertAction(title: "取消", style: .cancel, handler: nil)
+            
+            controller.addAction(okAction)
+            controller.addAction(cancelAction)
+            self.present(controller, animated: true, completion: nil)
             
         }
+        let readAction = UIAlertAction(title: "場景庫", style: .default)
+        {
+            action -> Void in
+            // 切換 storyboard 到場景庫
+            self.performSegue(withIdentifier: "multiusercameraToSceneLibrary", sender: self)  // storyboard 從 AR 相機切換到 Scene Library
+        }
+        let cancelAction = UIAlertAction(title: "取消", style: .cancel)
         
-        statusViewController.showMessage(message, autoHide: true)
+        actionSheet.addAction(saveAction)
+        actionSheet.addAction(readAction)
+        actionSheet.addAction(cancelAction)
+        
+        if let popoverController = actionSheet.popoverPresentationController {
+          popoverController.sourceView = self.view
+          popoverController.sourceRect = CGRect(x: 750, y: 50, width: 0, height: 0)
+        }
+        
+        self.present(actionSheet, animated: true, completion: nil)
     }
     
-    @IBAction func moreModels(_ sender: UIButton) // 按下“更多”按鈕
+    /// 負責場景儲存
+    func writeScene(sceneName: String)
     {
-        
+        session.getCurrentWorldMap
+        {
+            worldMap, error in
+            guard let map = worldMap
+                else { // 當場景的特徵不足時無法儲存，顯示提示訊息
+                    print("Error1: \(error!.localizedDescription)")
+                    let sceneError : UIAlertController = UIAlertController(title: "無法儲存場景", message: error!.localizedDescription, preferredStyle: UIAlertControllerStyle.alert)
+                    
+                    let cancelAction : UIAlertAction = UIAlertAction(title: "了解", style: UIAlertActionStyle.cancel, handler:
+                    {(alert: UIAlertAction!) in
+                    })
+                    sceneError.addAction(cancelAction)
+                    self.present(sceneError, animated: true, completion: nil)
+                    return
+            }
+            
+            guard let data = try? NSKeyedArchiver.archivedData(withRootObject: map, requiringSecureCoding: true)
+                else { fatalError("can't encode map") }
+            
+            // Create folder if not exist
+            let fileManager = FileManager.default
+            if let tDocumentDirectory = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first {
+                let filePath =  tDocumentDirectory.appendingPathComponent("scenes")
+                if !fileManager.fileExists(atPath: filePath.path) {
+                    do {
+                        try fileManager.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
+                    } catch {
+                        NSLog("Couldn't create document directory")
+                    }
+                }
+            }
+            
+            let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+            var URL = documentsURL.appendingPathComponent("scenes")  // 加入指定檔案路徑
+            URL = URL.appendingPathComponent(sceneName)
+            
+            if !FileManager.default.fileExists(atPath: URL.path) {
+                print("File does NOT exist -- \(URL) -- is available for use")
+                do {
+                    print("Write scene")
+                    try data.write(to: URL)
+                }
+                catch {
+                    print("Error Writing scene: \(error)")
+                }
+            }
+            else {
+                print("This file exists -- something is already placed at this location")
+            }
+        }
     }
 }

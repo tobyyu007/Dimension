@@ -63,6 +63,28 @@ class ViewController: UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         MultiuserViewController.multiuser = false
+        if loadScene // 收到 world map 更新
+        {
+            do
+            {
+                let file = try Data(contentsOf: selectedSceneURL!)
+                if let worldMap = try NSKeyedUnarchiver.unarchivedObject(ofClass: ARWorldMap.self, from: file)
+                {
+                    // Run the session with the received world map.
+                    let configuration = ARWorldTrackingConfiguration()
+                    configuration.planeDetection = .horizontal
+                    configuration.initialWorldMap = worldMap
+                    sceneView.session.run(configuration, options: [.resetTracking, .removeExistingAnchors])
+                    loadScene = false
+                }
+            }
+            catch
+            {
+                print("error loading map")
+                print(error.localizedDescription)
+            }
+        }
+        
         sceneView.delegate = self
         sceneView.session.delegate = self
 
@@ -179,7 +201,7 @@ class ViewController: UIViewController{
         present(alertController, animated: true, completion: nil)
     }
     
-    // MARK: - 場景控制
+    // MARK: - 場景控制選單
     @IBAction func sceneControl(_ sender: Any)
     {
         let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
@@ -223,10 +245,8 @@ class ViewController: UIViewController{
         let readAction = UIAlertAction(title: "場景庫", style: .default)
         {
             action -> Void in
-            if let controller = self.storyboard?.instantiateViewController(withIdentifier: "Scene Library") {
-                print(controller.storyboard ?? "nil")
-                self.present(controller, animated: true, completion: nil)
-            }
+            // 切換 storyboard 到場景庫
+            self.performSegue(withIdentifier: "cameraToSceneLibrary", sender: self)  // storyboard 從 AR 相機切換到 Scene Library
         }
         let cancelAction = UIAlertAction(title: "取消", style: .cancel)
         
@@ -240,6 +260,7 @@ class ViewController: UIViewController{
         }
         
         self.present(actionSheet, animated: true, completion: nil)
+        
     }
     
     /// 負責場景儲存
@@ -260,7 +281,8 @@ class ViewController: UIViewController{
                     self.present(sceneError, animated: true, completion: nil)
                     return
             }
-            guard let data = try? NSKeyedArchiver.archivedData(withRootObject: map, requiringSecureCoding: true)
+            
+            guard let data = try? NSKeyedArchiver.archivedData(withRootObject: map, requiringSecureCoding: false)
                 else { fatalError("can't encode map") }
             
             // Create folder if not exist
@@ -278,7 +300,7 @@ class ViewController: UIViewController{
             
             let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
             var URL = documentsURL.appendingPathComponent("scenes")  // 加入指定檔案路徑
-            URL = URL.appendingPathComponent(sceneName + ".dim") // 副檔名為 .dim
+            URL = URL.appendingPathComponent(sceneName)
 
             if !FileManager.default.fileExists(atPath: URL.path) {
                 print("File does NOT exist -- \(URL) -- is available for use")

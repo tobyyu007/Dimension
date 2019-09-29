@@ -98,7 +98,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="g9h-Vm-ZUe" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="53.600000000000001" y="-280.20989505247377"/>
+            <point key="canvasLocation" x="57" y="-215"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="tXr-a1-R10">
@@ -166,6 +166,7 @@
                                 <state key="normal" title="場景"/>
                                 <connections>
                                     <action selector="sceneControl:" destination="BV1-FR-VrT" eventType="touchUpInside" id="9IS-I6-vTh"/>
+                                    <action selector="sceneControl:" destination="4fo-ge-ZIM" eventType="touchUpInside" id="MBQ-cr-vzq"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -213,18 +214,20 @@
                         <segue destination="mYv-Qg-jWH" kind="popoverPresentation" identifier="showObjects" popoverAnchorView="xcf-ic-uGo" id="WP3-Hd-cnB">
                             <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
                         </segue>
+                        <segue destination="uCS-NO-W3C" kind="showDetail" identifier="cameraToSceneLibrary" id="79b-Gw-JBL"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SZV-WD-TEh" sceneMemberID="firstResponder"/>
+                <exit id="4fo-ge-ZIM" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="56.249999999999993" y="98.389458272327957"/>
+            <point key="canvasLocation" x="57" y="206"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="VNp-O9-WXA">
             <objects>
                 <navigationController wantsFullScreenLayout="YES" modalPresentationStyle="pageSheet" id="8Vu-0a-2YB" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="djb-kH-nnq">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="56"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
@@ -233,7 +236,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ze9-Jo-6JS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="870" y="99"/>
+            <point key="canvasLocation" x="871" y="206"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="fe0-E8-QuU">
@@ -338,7 +341,7 @@
             <objects>
                 <tableViewController id="cJs-yb-M0A" customClass="SceneLibrary" customModule="ARKitInteraction" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="inG-Oi-UrK">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <prototypes>
@@ -363,17 +366,20 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <segue destination="BV1-FR-VrT" kind="showDetail" identifier="backToCamera" id="rW0-MM-sgp"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Zx0-m9-ggG" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1686" y="770"/>
+            <point key="canvasLocation" x="1686" y="897"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="9jf-gN-fNc">
             <objects>
                 <navigationController storyboardIdentifier="Scene Library" modalPresentationStyle="pageSheet" id="uCS-NO-W3C" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="vZt-hU-q0D">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="56"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
@@ -382,7 +388,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MMJ-7p-eu1" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="870" y="770"/>
+            <point key="canvasLocation" x="870" y="898"/>
         </scene>
         <!--Web Browser-->
         <scene sceneID="PE6-Pg-d3g">
@@ -393,11 +399,11 @@
                         <viewControllerLayoutGuide type="bottom" id="P9G-ib-VxB"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="0Bq-Uo-0Tw">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qrp-HM-VBz">
-                                <rect key="frame" x="0.0" y="623" width="375" height="44"/>
+                                <rect key="frame" x="0.0" y="603" width="375" height="44"/>
                                 <items>
                                     <barButtonItem title=" ❮" id="KoY-i6-mL4" colorLabel="IBBuiltInLabel-Orange">
                                         <connections>
@@ -425,7 +431,7 @@
                                 </items>
                             </toolbar>
                             <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="My9-vQ-Tv2">
-                                <rect key="frame" x="0.0" y="44" width="375" height="579"/>
+                                <rect key="frame" x="0.0" y="56" width="375" height="547"/>
                                 <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </webView>
                         </subviews>
@@ -459,18 +465,18 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2TA-pa-rm7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1686" y="98"/>
+            <point key="canvasLocation" x="1687" y="206"/>
         </scene>
         <!--My Dimension Library-->
         <scene sceneID="ekE-RX-rHy">
             <objects>
                 <viewController modalPresentationStyle="pageSheet" id="InG-iq-mbU" customClass="ARLibrary" customModule="ARKitInteraction" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="OCR-ey-8B0">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="k70-tU-pJM">
-                                <rect key="frame" x="0.0" y="44" width="375" height="623"/>
+                                <rect key="frame" x="0.0" y="56" width="375" height="591"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Ysl-Su-3gD">
                                     <size key="itemSize" width="321" height="107"/>
@@ -581,7 +587,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hNf-KB-t1Q" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2561" y="98"/>
+            <point key="canvasLocation" x="2562" y="206"/>
         </scene>
         <!--Status View Controller-->
         <scene sceneID="wfb-A0-ZE5">
@@ -755,6 +761,16 @@
                                     <segue destination="C50-Ey-w0r" kind="showDetail" id="pRb-cN-1Bv"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9BP-vR-6An">
+                                <rect key="frame" x="278" y="21" width="31" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <state key="normal" title="場景"/>
+                                <connections>
+                                    <action selector="sceneControl:" destination="BV1-FR-VrT" eventType="touchUpInside" id="eVv-Ad-Hec"/>
+                                    <action selector="sceneControl:" destination="gB5-vl-nmG" eventType="touchUpInside" id="kFt-TY-VMd"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
@@ -803,6 +819,7 @@
                         <segue destination="G78-RB-bme" kind="popoverPresentation" identifier="showObjects" popoverAnchorView="8zi-pg-GTr" id="YZS-4C-Wyg">
                             <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
                         </segue>
+                        <segue destination="9cs-9V-eJx" kind="showDetail" identifier="multiusercameraToSceneLibrary" id="DTa-Z9-sMf"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mqN-EZ-8Zk" sceneMemberID="firstResponder"/>
@@ -879,7 +896,7 @@
             <objects>
                 <navigationController wantsFullScreenLayout="YES" modalPresentationStyle="pageSheet" id="pXB-Nf-DCX" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="2F0-jz-IZe">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="56"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
@@ -899,11 +916,11 @@
                         <viewControllerLayoutGuide type="bottom" id="E23-dF-YjV"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="wCJ-Vg-yNw">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dSR-fN-YmP">
-                                <rect key="frame" x="0.0" y="623" width="375" height="44"/>
+                                <rect key="frame" x="0.0" y="603" width="375" height="44"/>
                                 <items>
                                     <barButtonItem title=" ❮" id="EtQ-yM-PrP" colorLabel="IBBuiltInLabel-Orange">
                                         <connections>
@@ -931,7 +948,7 @@
                                 </items>
                             </toolbar>
                             <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xEe-db-A5m">
-                                <rect key="frame" x="0.0" y="44" width="375" height="579"/>
+                                <rect key="frame" x="0.0" y="56" width="375" height="547"/>
                                 <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </webView>
                         </subviews>
@@ -972,11 +989,11 @@
             <objects>
                 <viewController modalPresentationStyle="fullScreen" id="XcN-OJ-TDJ" customClass="ARLibrary" customModule="ARKitInteraction" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="SKu-XQ-OOn">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="pk4-Lb-NUZ">
-                                <rect key="frame" x="0.0" y="44" width="375" height="623"/>
+                                <rect key="frame" x="0.0" y="56" width="375" height="591"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="grC-9n-6rz">
                                     <size key="itemSize" width="321" height="107"/>
@@ -1089,6 +1106,60 @@
             </objects>
             <point key="canvasLocation" x="2561" y="-858"/>
         </scene>
+        <!--場景庫-->
+        <scene sceneID="4sv-kL-TW6">
+            <objects>
+                <tableViewController id="DD4-Cm-Yfv" customClass="multiuserSceneLibrary" customModule="ARKitInteraction" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="zmj-Px-y3C">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" id="OZg-kG-6Si">
+                                <rect key="frame" x="0.0" y="28" width="375" height="43.5"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="OZg-kG-6Si" id="xeG-CM-b4H">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="DD4-Cm-Yfv" id="Pc3-UI-kfn"/>
+                            <outlet property="delegate" destination="DD4-Cm-Yfv" id="b2x-hX-SdH"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="場景庫" id="mTn-PF-59H">
+                        <barButtonItem key="leftBarButtonItem" title="返回" id="YOH-pN-m57">
+                            <connections>
+                                <segue destination="gB5-vl-nmG" kind="showDetail" id="NhY-HK-CWX"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <segue destination="gB5-vl-nmG" kind="showDetail" identifier="multiuserbackToCamera" id="CBf-ON-h0K"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="2DQ-OY-fS7" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1686" y="-1716"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="lJy-Kw-GGe">
+            <objects>
+                <navigationController storyboardIdentifier="Multiuser Scene Library" modalPresentationStyle="pageSheet" id="9cs-9V-eJx" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="958-NO-LwK">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="56"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="DD4-Cm-Yfv" kind="relationship" relationship="rootViewController" id="jnQ-54-pJt"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="AC8-bR-kb2" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="870" y="-1715"/>
+        </scene>
     </scenes>
     <resources>
         <image name="add" width="48" height="48"/>
@@ -1096,8 +1167,8 @@
         <image name="restartPressed" width="20" height="23"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="AOh-jv-CxG"/>
-        <segue reference="7g6-ZU-Tkg"/>
+        <segue reference="CBf-ON-h0K"/>
+        <segue reference="pRb-cN-1Bv"/>
         <segue reference="D1B-0C-nB8"/>
     </inferredMetricsTieBreakers>
 </document>

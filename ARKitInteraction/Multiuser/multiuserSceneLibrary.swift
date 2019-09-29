@@ -8,10 +8,10 @@
 
 import UIKit
 
-var selectedSceneURL = URL(string: "")
-var loadScene = false  // 更新場景指示
+var multiuserselectedSceneURL = URL(string: "")
+var multiuserloadScene = false  // 更新場景指示
 
-class SceneLibrary: UITableViewController
+class multiuserSceneLibrary: UITableViewController
 {
     // MARK: - scene 列表抓取
     
@@ -124,9 +124,9 @@ class SceneLibrary: UITableViewController
         documentsURL = documentsURL.appendingPathComponent("scenes")  // 加入指定檔案路徑
         documentsURL = documentsURL.appendingPathComponent(fileName)
         
-        selectedSceneURL = documentsURL
-        loadScene = true
-        performSegue(withIdentifier: "backToCamera", sender: self)  // 切換 storyboard 回 AR 相機畫面
+        multiuserselectedSceneURL = documentsURL
+        multiuserloadScene = true
+        performSegue(withIdentifier: "multiuserbackToCamera", sender: self)  // 切換 storyboard 回 AR 相機畫面
     }
     
     override func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle
