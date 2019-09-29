@@ -121,6 +121,7 @@ class StatusViewController: UIViewController {
         restartExperienceHandler()
     }
     
+    
     // MARK: - Panel Visibility
     
     private func setMessageHidden(_ hide: Bool, animated: Bool) {

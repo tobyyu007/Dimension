@@ -66,11 +66,13 @@ class MultiuserViewController: UIViewController{
         return sceneView.session
     }
     
+    
     // MARK: - View Controller Life Cycle
     
     static var multipeerSession: MultipeerSession!
     
     override func viewDidLoad() {
+        
         super.viewDidLoad()
         MultiuserViewController.multiuser = true
         MultiuserViewController.multipeerSession = MultipeerSession(receivedDataHandler: receivedData)
@@ -255,7 +257,6 @@ class MultiuserViewController: UIViewController{
     
     /// - Tag: PlaceCharacter
     @objc func handleSceneTap(_ sender: UITapGestureRecognizer) {
-        print("tapped")
         // Hit test to find a place for a virtual object.
         guard let hitTestResult = sceneView
             .hitTest(sender.location(in: sceneView), types: [.existingPlaneUsingGeometry, .estimatedHorizontalPlane])
@@ -265,8 +266,6 @@ class MultiuserViewController: UIViewController{
         // Place an anchor for a virtual character. The model appears in renderer(_:didAdd:for:).
         let anchor = ARAnchor(name: "VirtualObjectARView.modelName", transform: hitTestResult.worldTransform)
         session.add(anchor: anchor)
-        print("anchor")
-        print(anchor)
         
         // Send the anchor info to peers, so they can place the same content.
         guard let data = try? NSKeyedArchiver.archivedData(withRootObject: anchor, requiringSecureCoding: true)
@@ -279,7 +278,6 @@ class MultiuserViewController: UIViewController{
     
     /// - Tag: GetWorldMap
     @IBAction func shareSession(_ button: UIButton) {
-        print("send")
         session.getCurrentWorldMap { worldMap, error in
             guard let map = worldMap
                 else { print("Error1: \(error!.localizedDescription)"); return }
@@ -287,6 +285,39 @@ class MultiuserViewController: UIViewController{
                 else { fatalError("can't encode map") }
             MultiuserViewController.multipeerSession.sendToAllPeers(data)
         }
+    }
+    
+    func saveModel()
+    {
+        func writeImageToPath()
+        {
+            session.getCurrentWorldMap
+            {
+                worldMap, error in
+                guard let map = worldMap
+                    else { print("Error1: \(error!.localizedDescription)"); return }
+                guard let data = try? NSKeyedArchiver.archivedData(withRootObject: map, requiringSecureCoding: true)
+                    else { fatalError("can't encode map") }
+                
+                let URL = Bundle.main.url(forResource: "scenes", withExtension: nil)!
+
+                if !FileManager.default.fileExists(atPath: URL.path) {
+                    print("File does NOT exist -- \(URL) -- is available for use")
+                    do {
+                        print("Write image")
+                        try data.write(to: URL)
+                    }
+                    catch {
+                        print("Error Writing Image: \(error)")
+                    }
+                }
+                else {
+                    print("This file exists -- something is already placed at this location")
+                }
+            }
+        }
+        
+        writeImageToPath()
     }
     
     /// 根據 modelName 載入模型 (同時運作在放置以及下載模型中）

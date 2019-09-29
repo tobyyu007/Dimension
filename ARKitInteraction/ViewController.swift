@@ -178,10 +178,126 @@ class ViewController: UIViewController{
         alertController.addAction(restartAction)
         present(alertController, animated: true, completion: nil)
     }
+    
+    @IBAction func sceneControl(_ sender: Any)
+    {
+        let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        let saveAction = UIAlertAction(title: "場景儲存", style: .default)
+        {
+            action -> Void in
+            
+            /// 加入 textField 讓使用者輸入想要儲存的場景名稱
+            let controller = UIAlertController(title: "場景儲存", message: "請輸入想要儲存的場景名稱", preferredStyle: .alert)
+            controller.addTextField { (textField) in
+               textField.placeholder = "名稱"
+            }
+            
+            /// 先輸入場景名稱後執行檔案寫入
+            let okAction = UIAlertAction(title: "OK", style: .default) { (_) in
+               let name = controller.textFields?[0].text
+                
+                // 如果沒有輸入場景名稱則出現警告
+                if name == ""
+                {
+                    let nameError : UIAlertController = UIAlertController(title: "場景儲存", message: "請輸入場景名稱！", preferredStyle: UIAlertControllerStyle.alert)
+                    
+                    let cancelAction : UIAlertAction = UIAlertAction(title: "了解", style: UIAlertActionStyle.cancel, handler:
+                    {(alert: UIAlertAction!) in
+                    })
+                    nameError.addAction(cancelAction)
+                    self.present(nameError, animated: true, completion: nil)
+                    return
+                }
+                                
+                self.writeScene(sceneName: name ?? "")
+            }
+            
+            let cancelAction = UIAlertAction(title: "取消", style: .cancel, handler: nil)
+            
+            controller.addAction(okAction)
+            controller.addAction(cancelAction)
+            self.present(controller, animated: true, completion: nil)
+            
+        }
+        let readAction = UIAlertAction(title: "場景讀取", style: .default)
+        {
+            action -> Void in
+            if let controller = self.storyboard?.instantiateViewController(withIdentifier: "saveScene") {
+                print(controller.storyboard ?? "nil")
+                self.present(controller, animated: true, completion: nil)
+            }
+        }
+        let cancelAction = UIAlertAction(title: "取消", style: .cancel)
+        
+        actionSheet.addAction(saveAction)
+        actionSheet.addAction(readAction)
+        actionSheet.addAction(cancelAction)
+        
+        if let popoverController = actionSheet.popoverPresentationController {
+          popoverController.sourceView = self.view
+          popoverController.sourceRect = CGRect(x: 750, y: 50, width: 0, height: 0)
+        }
+        
+        self.present(actionSheet, animated: true, completion: nil)
+    }
+    
+    func writeScene(sceneName: String)
+    {
+        session.getCurrentWorldMap
+        {
+            worldMap, error in
+            guard let map = worldMap
+                else { // 當場景的特徵不足時無法儲存，顯示提示訊息
+                    print("Error1: \(error!.localizedDescription)")
+                    let sceneError : UIAlertController = UIAlertController(title: "無法儲存場景", message: error!.localizedDescription, preferredStyle: UIAlertControllerStyle.alert)
+                    
+                    let cancelAction : UIAlertAction = UIAlertAction(title: "了解", style: UIAlertActionStyle.cancel, handler:
+                    {(alert: UIAlertAction!) in
+                    })
+                    sceneError.addAction(cancelAction)
+                    self.present(sceneError, animated: true, completion: nil)
+                    return
+            }
+            guard let data = try? NSKeyedArchiver.archivedData(withRootObject: map, requiringSecureCoding: true)
+                else { fatalError("can't encode map") }
+            
+            // Create folder if not exist
+            let fileManager = FileManager.default
+            if let tDocumentDirectory = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first {
+                let filePath =  tDocumentDirectory.appendingPathComponent("scenes")
+                if !fileManager.fileExists(atPath: filePath.path) {
+                    do {
+                        try fileManager.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
+                    } catch {
+                        NSLog("Couldn't create document directory")
+                    }
+                }
+            }
+            
+            let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+            var URL = documentsURL.appendingPathComponent("scenes")  // 加入指定檔案路徑
+            URL = URL.appendingPathComponent(sceneName + ".dim") // 副檔名為 .dim
 
+            if !FileManager.default.fileExists(atPath: URL.path) {
+                print("File does NOT exist -- \(URL) -- is available for use")
+                do {
+                    print("Write scene")
+                    try data.write(to: URL)
+                }
+                catch {
+                    print("Error Writing scene: \(error)")
+                }
+            }
+            else {
+                print("This file exists -- something is already placed at this location")
+            }
+        }
+    }
+    
     
     @IBAction func moreModels(_ sender: UIButton) // 按下“更多”按鈕
     {
         
     }
+    
 }

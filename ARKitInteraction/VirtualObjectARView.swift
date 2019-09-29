@@ -108,14 +108,17 @@ class VirtualObjectARView: ARSCNView {
         
         session.add(anchor: newAnchor)
         
-        // Send the anchor info to peers, so they can place the same content.
-        guard let data = try? NSKeyedArchiver.archivedData(withRootObject: newAnchor, requiringSecureCoding: true)
-            else { fatalError("can't encode anchor") }
-        MultiuserViewController.multipeerSession.sendToAllPeers(data)
+        if MultiuserViewController.received == true
+        {
+            // Send the anchor info to peers, so they can place the same content.
+            guard let data = try? NSKeyedArchiver.archivedData(withRootObject: newAnchor, requiringSecureCoding: true)
+                else { fatalError("can't encode anchor") }
+            MultiuserViewController.multipeerSession.sendToAllPeers(data)
+            MultiuserViewController.received = false
+        }
+        
         
         object.anchor = newAnchor
-        
-        MultiuserViewController.received = false
     }
     
     // - MARK: Lighting
