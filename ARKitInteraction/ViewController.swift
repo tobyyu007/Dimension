@@ -179,6 +179,7 @@ class ViewController: UIViewController{
         present(alertController, animated: true, completion: nil)
     }
     
+    // MARK: - 場景控制
     @IBAction func sceneControl(_ sender: Any)
     {
         let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
@@ -219,10 +220,10 @@ class ViewController: UIViewController{
             self.present(controller, animated: true, completion: nil)
             
         }
-        let readAction = UIAlertAction(title: "場景讀取", style: .default)
+        let readAction = UIAlertAction(title: "場景庫", style: .default)
         {
             action -> Void in
-            if let controller = self.storyboard?.instantiateViewController(withIdentifier: "saveScene") {
+            if let controller = self.storyboard?.instantiateViewController(withIdentifier: "Scene Library") {
                 print(controller.storyboard ?? "nil")
                 self.present(controller, animated: true, completion: nil)
             }
@@ -241,6 +242,7 @@ class ViewController: UIViewController{
         self.present(actionSheet, animated: true, completion: nil)
     }
     
+    /// 負責場景儲存
     func writeScene(sceneName: String)
     {
         session.getCurrentWorldMap

@@ -13,7 +13,7 @@
             <objects>
                 <viewController id="ri3-7p-e6d" customClass="StatusViewController" customModule="ARKitInteraction" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="RAa-Gm-0Pa">
-                        <rect key="frame" x="0.0" y="0.0" width="834" height="85"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="85"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <visualEffectView hidden="YES" opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" verticalHuggingPriority="1000" verticalCompressionResistancePriority="100" translatesAutoresizingMaskIntoConstraints="NO" id="1uT-CF-YpX" userLabel="Message Panel">
@@ -65,7 +65,7 @@
                                 </userDefinedRuntimeAttributes>
                             </visualEffectView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="bottom" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aSK-t0-G4r" userLabel="Restart Experience Button Icon">
-                                <rect key="frame" x="790" y="0.0" width="44" height="59"/>
+                                <rect key="frame" x="331" y="0.0" width="44" height="59"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="59" id="0Aj-uI-nvb"/>
                                     <constraint firstAttribute="width" constant="44" id="AJj-0E-eVh"/>
@@ -224,7 +224,7 @@
             <objects>
                 <navigationController wantsFullScreenLayout="YES" modalPresentationStyle="pageSheet" id="8Vu-0a-2YB" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="djb-kH-nnq">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="56"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
@@ -333,50 +333,56 @@
             </objects>
             <point key="canvasLocation" x="56" y="737"/>
         </scene>
-        <!--File Browser Table View Controller-->
-        <scene sceneID="C04-dH-84X">
+        <!--場景庫-->
+        <scene sceneID="g6z-Bx-MFF">
             <objects>
-                <tableViewController storyboardIdentifier="saveScene" modalPresentationStyle="fullScreen" id="blH-cI-md0" customClass="FileBrowserTableViewController" customModule="ARKitInteraction" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="PGS-26-G0R">
+                <tableViewController id="cJs-yb-M0A" customClass="SceneLibrary" customModule="ARKitInteraction" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="inG-Oi-UrK">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" id="vFf-yx-Npd" customClass="FileTableViewCell" customModule="ARKitInteraction" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" id="SJ8-na-6cg">
+                                <rect key="frame" x="0.0" y="28" width="375" height="43.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="vFf-yx-Npd" id="Lp3-pi-J9z">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="SJ8-na-6cg" id="NQR-mo-BFx">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6et-i2-QtB">
-                                            <rect key="frame" x="16" y="11.5" width="343" height="21"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                    </subviews>
-                                    <constraints>
-                                        <constraint firstItem="6et-i2-QtB" firstAttribute="trailing" secondItem="Lp3-pi-J9z" secondAttribute="trailingMargin" id="GLY-H2-R3H"/>
-                                        <constraint firstItem="6et-i2-QtB" firstAttribute="leading" secondItem="Lp3-pi-J9z" secondAttribute="leadingMargin" id="Sym-lt-Kub"/>
-                                        <constraint firstItem="6et-i2-QtB" firstAttribute="centerY" secondItem="Lp3-pi-J9z" secondAttribute="centerY" id="c5x-jo-l8a"/>
-                                    </constraints>
                                 </tableViewCellContentView>
-                                <connections>
-                                    <outlet property="fileNameLabel" destination="6et-i2-QtB" id="JHF-cS-RvE"/>
-                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
-                            <outlet property="dataSource" destination="blH-cI-md0" id="qai-ZE-9SI"/>
-                            <outlet property="delegate" destination="blH-cI-md0" id="b0j-YY-qO4"/>
+                            <outlet property="dataSource" destination="cJs-yb-M0A" id="I7A-sl-uAQ"/>
+                            <outlet property="delegate" destination="cJs-yb-M0A" id="j7w-g8-LrM"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="N84-R6-lnP"/>
+                    <navigationItem key="navigationItem" title="場景庫" id="kWH-lY-6fb">
+                        <barButtonItem key="leftBarButtonItem" title="返回" id="Keb-8v-hAK">
+                            <connections>
+                                <segue destination="BV1-FR-VrT" kind="showDetail" id="D1B-0C-nB8"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="j7R-eX-E4V" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Zx0-m9-ggG" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3323" y="99"/>
+            <point key="canvasLocation" x="1686" y="770"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="9jf-gN-fNc">
+            <objects>
+                <navigationController storyboardIdentifier="Scene Library" modalPresentationStyle="pageSheet" id="uCS-NO-W3C" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="vZt-hU-q0D">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="cJs-yb-M0A" kind="relationship" relationship="rootViewController" id="gYO-XP-DgP"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="MMJ-7p-eu1" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="870" y="770"/>
         </scene>
         <!--Web Browser-->
         <scene sceneID="PE6-Pg-d3g">
@@ -387,11 +393,11 @@
                         <viewControllerLayoutGuide type="bottom" id="P9G-ib-VxB"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="0Bq-Uo-0Tw">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qrp-HM-VBz">
-                                <rect key="frame" x="0.0" y="603" width="375" height="44"/>
+                                <rect key="frame" x="0.0" y="623" width="375" height="44"/>
                                 <items>
                                     <barButtonItem title=" ❮" id="KoY-i6-mL4" colorLabel="IBBuiltInLabel-Orange">
                                         <connections>
@@ -419,7 +425,7 @@
                                 </items>
                             </toolbar>
                             <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="My9-vQ-Tv2">
-                                <rect key="frame" x="0.0" y="56" width="375" height="547"/>
+                                <rect key="frame" x="0.0" y="44" width="375" height="579"/>
                                 <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </webView>
                         </subviews>
@@ -460,11 +466,11 @@
             <objects>
                 <viewController modalPresentationStyle="pageSheet" id="InG-iq-mbU" customClass="ARLibrary" customModule="ARKitInteraction" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="OCR-ey-8B0">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="k70-tU-pJM">
-                                <rect key="frame" x="0.0" y="56" width="375" height="591"/>
+                                <rect key="frame" x="0.0" y="44" width="375" height="623"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Ysl-Su-3gD">
                                     <size key="itemSize" width="321" height="107"/>
@@ -582,7 +588,7 @@
             <objects>
                 <viewController id="6CI-nN-JEK" customClass="StatusViewController" customModule="ARKitInteraction" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="qGC-YD-HJv">
-                        <rect key="frame" x="0.0" y="0.0" width="834" height="85"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="85"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <visualEffectView hidden="YES" opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" verticalHuggingPriority="1000" verticalCompressionResistancePriority="100" translatesAutoresizingMaskIntoConstraints="NO" id="roP-wr-ly0" userLabel="Message Panel">
@@ -634,7 +640,7 @@
                                 </userDefinedRuntimeAttributes>
                             </visualEffectView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="bottom" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FI0-Ur-AY9" userLabel="Restart Experience Button Icon">
-                                <rect key="frame" x="790" y="0.0" width="44" height="59"/>
+                                <rect key="frame" x="331" y="0.0" width="44" height="59"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="59" id="OUD-vm-pll"/>
                                     <constraint firstAttribute="width" constant="44" id="g7U-4s-s4o"/>
@@ -873,7 +879,7 @@
             <objects>
                 <navigationController wantsFullScreenLayout="YES" modalPresentationStyle="pageSheet" id="pXB-Nf-DCX" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="2F0-jz-IZe">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="56"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
@@ -893,11 +899,11 @@
                         <viewControllerLayoutGuide type="bottom" id="E23-dF-YjV"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="wCJ-Vg-yNw">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dSR-fN-YmP">
-                                <rect key="frame" x="0.0" y="603" width="375" height="44"/>
+                                <rect key="frame" x="0.0" y="623" width="375" height="44"/>
                                 <items>
                                     <barButtonItem title=" ❮" id="EtQ-yM-PrP" colorLabel="IBBuiltInLabel-Orange">
                                         <connections>
@@ -925,7 +931,7 @@
                                 </items>
                             </toolbar>
                             <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xEe-db-A5m">
-                                <rect key="frame" x="0.0" y="56" width="375" height="547"/>
+                                <rect key="frame" x="0.0" y="44" width="375" height="579"/>
                                 <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </webView>
                         </subviews>
@@ -966,11 +972,11 @@
             <objects>
                 <viewController modalPresentationStyle="fullScreen" id="XcN-OJ-TDJ" customClass="ARLibrary" customModule="ARKitInteraction" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="SKu-XQ-OOn">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="pk4-Lb-NUZ">
-                                <rect key="frame" x="0.0" y="56" width="375" height="591"/>
+                                <rect key="frame" x="0.0" y="44" width="375" height="623"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="grC-9n-6rz">
                                     <size key="itemSize" width="321" height="107"/>
@@ -1092,6 +1098,6 @@
     <inferredMetricsTieBreakers>
         <segue reference="AOh-jv-CxG"/>
         <segue reference="7g6-ZU-Tkg"/>
-        <segue reference="y8p-YB-nlI"/>
+        <segue reference="D1B-0C-nB8"/>
     </inferredMetricsTieBreakers>
 </document>
