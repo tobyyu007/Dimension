@@ -388,7 +388,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MMJ-7p-eu1" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="870" y="898"/>
+            <point key="canvasLocation" x="870" y="939"/>
         </scene>
         <!--Web Browser-->
         <scene sceneID="PE6-Pg-d3g">
@@ -1167,6 +1167,8 @@
         <image name="restartPressed" width="20" height="23"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="79b-Gw-JBL"/>
+        <segue reference="DTa-Z9-sMf"/>
         <segue reference="CBf-ON-h0K"/>
         <segue reference="pRb-cN-1Bv"/>
         <segue reference="D1B-0C-nB8"/>

@@ -22,6 +22,33 @@ class ViewController: UIViewController{
     
     @IBOutlet weak var spinner: UIActivityIndicatorView!
 
+    // 場景路徑
+    var worldMap: URL =
+    {
+        // 如果沒有 scenes 資料夾，新增他
+        let fileManager = FileManager.default
+        if let tDocumentDirectory = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first {
+            let filePath =  tDocumentDirectory.appendingPathComponent("scenes")
+            if !fileManager.fileExists(atPath: filePath.path) {
+                do {
+                    try fileManager.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
+                } catch {
+                    print("Couldn't create document directory")
+                }
+            }
+        }
+        
+        do {
+            var url = try FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true).appendingPathComponent("scenes")
+            return url
+        } catch {
+            fatalError("Error getting world map URL from document directory.")
+        }
+    }()
+    
+    // 完整場景路徑 (加上要儲存的檔案名稱)
+    var worldMapURL: URL!
+    
     // MARK: - UI Elements
     
     var focusSquare = FocusSquare()
@@ -63,27 +90,6 @@ class ViewController: UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         MultiuserViewController.multiuser = false
-        if loadScene // 收到 world map 更新
-        {
-            do
-            {
-                let file = try Data(contentsOf: selectedSceneURL!)
-                if let worldMap = try NSKeyedUnarchiver.unarchivedObject(ofClass: ARWorldMap.self, from: file)
-                {
-                    // Run the session with the received world map.
-                    let configuration = ARWorldTrackingConfiguration()
-                    configuration.planeDetection = .horizontal
-                    configuration.initialWorldMap = worldMap
-                    sceneView.session.run(configuration, options: [.resetTracking, .removeExistingAnchors])
-                    loadScene = false
-                }
-            }
-            catch
-            {
-                print("error loading map")
-                print(error.localizedDescription)
-            }
-        }
         
         sceneView.delegate = self
         sceneView.session.delegate = self
@@ -103,8 +109,48 @@ class ViewController: UIViewController{
         // Set the delegate to ensure this gesture is only used when there are no virtual objects in the scene.
         tapGesture.delegate = self
         sceneView.addGestureRecognizer(tapGesture)
+        sceneView.debugOptions = [.showFeaturePoints]
         
         VirtualObject.availableObjects = VirtualObject.updateReferenceURL() // 每次進入首頁時更新 referenceURL -> 為了讓選單出現新的下載項目
+    }
+    
+    func retrieveWorldMapData(from url: URL) -> Data? {
+        do {
+            return try Data(contentsOf: url)
+        } catch {
+            print("Error retrieving world map data.")
+            return nil
+        }
+    }
+    
+    func unarchive(worldMapData data: Data) -> ARWorldMap? {
+        guard let unarchievedObject = try? NSKeyedUnarchiver.unarchivedObject(ofClass: ARWorldMap.self, from: data),
+            let worldMap = unarchievedObject else { return nil }
+        return worldMap
+    }
+    
+    func resetTrackingConfiguration(with worldMap: ARWorldMap? = nil) {
+        virtualObjectInteraction.selectedObject = nil
+        
+        let configuration = ARWorldTrackingConfiguration()
+        configuration.planeDetection = [.horizontal, .vertical]
+        
+        let options: ARSession.RunOptions = [.resetTracking, .removeExistingAnchors]
+        
+        if #available(iOS 12.0, *) {
+            configuration.environmentTexturing = .automatic
+        }
+        
+        if let worldMap = worldMap {
+            configuration.initialWorldMap = worldMap
+            print("Found saved world map.")
+        } else {
+            print("Move camera around to map your surrounding space.")
+        }
+        
+        sceneView.debugOptions = [.showFeaturePoints]
+        sceneView.session.run(configuration, options: options)
+        statusViewController.scheduleMessage("FIND A SURFACE TO PLACE AN OBJECT", inSeconds: 7.5, messageType: .planeEstimation)
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -112,9 +158,19 @@ class ViewController: UIViewController{
         
         // Prevent the screen from being dimmed to avoid interuppting the AR experience.
         UIApplication.shared.isIdleTimerDisabled = true
-
-        // Start the `ARSession`.
-        resetTracking()
+        
+        if loadScene // 如果是讀取場景
+        {
+            guard let worldMapData = self.retrieveWorldMapData(from: SceneLibrary.selectedSceneURL),
+                let worldMap = self.unarchive(worldMapData: worldMapData) else { return }
+            self.resetTrackingConfiguration(with: worldMap)
+            loadScene = false
+        }
+        else // 正常開啟狀況
+        {
+            // Start the `ARSession`.
+            resetTracking()
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -231,7 +287,8 @@ class ViewController: UIViewController{
                     self.present(nameError, animated: true, completion: nil)
                     return
                 }
-                                
+                
+                self.worldMapURL = self.worldMap.appendingPathComponent(name ?? "")
                 self.writeScene(sceneName: name ?? "")
             }
             
@@ -248,6 +305,7 @@ class ViewController: UIViewController{
             // 切換 storyboard 到場景庫
             self.performSegue(withIdentifier: "cameraToSceneLibrary", sender: self)  // storyboard 從 AR 相機切換到 Scene Library
         }
+
         let cancelAction = UIAlertAction(title: "取消", style: .cancel)
         
         actionSheet.addAction(saveAction)
@@ -260,64 +318,40 @@ class ViewController: UIViewController{
         }
         
         self.present(actionSheet, animated: true, completion: nil)
-        
     }
     
     /// 負責場景儲存
     func writeScene(sceneName: String)
     {
-        session.getCurrentWorldMap
-        {
-            worldMap, error in
-            guard let map = worldMap
-                else { // 當場景的特徵不足時無法儲存，顯示提示訊息
-                    print("Error1: \(error!.localizedDescription)")
-                    let sceneError : UIAlertController = UIAlertController(title: "無法儲存場景", message: error!.localizedDescription, preferredStyle: UIAlertControllerStyle.alert)
-                    
-                    let cancelAction : UIAlertAction = UIAlertAction(title: "了解", style: UIAlertActionStyle.cancel, handler:
-                    {(alert: UIAlertAction!) in
-                    })
-                    sceneError.addAction(cancelAction)
-                    self.present(sceneError, animated: true, completion: nil)
-                    return
+        session.getCurrentWorldMap { (worldMap, error) in
+            guard let worldMap = worldMap
+                else { // 因為特徵不足，無法儲存場景
+                print("Error1: \(error!.localizedDescription)")
+                let sceneError : UIAlertController = UIAlertController(title: "無法儲存場景", message: error!.localizedDescription, preferredStyle: UIAlertControllerStyle.alert)
+                
+                let cancelAction : UIAlertAction = UIAlertAction(title: "了解", style: UIAlertActionStyle.cancel, handler:
+                {(alert: UIAlertAction!) in
+                })
+                sceneError.addAction(cancelAction)
+                self.present(sceneError, animated: true, completion: nil)
+                return
             }
             
-            guard let data = try? NSKeyedArchiver.archivedData(withRootObject: map, requiringSecureCoding: false)
-                else { fatalError("can't encode map") }
-            
-            // Create folder if not exist
-            let fileManager = FileManager.default
-            if let tDocumentDirectory = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first {
-                let filePath =  tDocumentDirectory.appendingPathComponent("scenes")
-                if !fileManager.fileExists(atPath: filePath.path) {
-                    do {
-                        try fileManager.createDirectory(atPath: filePath.path, withIntermediateDirectories: true, attributes: nil)
-                    } catch {
-                        NSLog("Couldn't create document directory")
-                    }
+            do {
+                try self.archive(worldMap: worldMap)
+                DispatchQueue.main.async {
+                    print("World map is saved.")
                 }
-            }
-            
-            let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
-            var URL = documentsURL.appendingPathComponent("scenes")  // 加入指定檔案路徑
-            URL = URL.appendingPathComponent(sceneName)
-
-            if !FileManager.default.fileExists(atPath: URL.path) {
-                print("File does NOT exist -- \(URL) -- is available for use")
-                do {
-                    print("Write scene")
-                    try data.write(to: URL)
-                }
-                catch {
-                    print("Error Writing scene: \(error)")
-                }
-            }
-            else {
-                print("This file exists -- something is already placed at this location")
+            } catch {
+                fatalError("Error saving world map: \(error.localizedDescription)")
             }
         }
     }
     
+    func archive(worldMap: ARWorldMap) throws {
+        let data = try NSKeyedArchiver.archivedData(withRootObject: worldMap, requiringSecureCoding: true)
+        try data.write(to: self.worldMapURL, options: [.atomic])
+    }
     
     @IBAction func moreModels(_ sender: UIButton) // 按下“更多”按鈕
     {

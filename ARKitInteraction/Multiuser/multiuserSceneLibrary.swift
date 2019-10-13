@@ -8,7 +8,6 @@
 
 import UIKit
 
-var multiuserselectedSceneURL = URL(string: "")
 var multiuserloadScene = false  // 更新場景指示
 
 class multiuserSceneLibrary: UITableViewController
@@ -115,16 +114,17 @@ class multiuserSceneLibrary: UITableViewController
         }
     }
     
+    static var multiuserselectedSceneURL: URL!
     
     /// 選擇了一個項目
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
     {
-        let fileName = scenes[indexPath.row] // 要刪除的檔案名稱
+        let fileName = scenes[indexPath.row] // 選擇的檔案名稱
         var documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
         documentsURL = documentsURL.appendingPathComponent("scenes")  // 加入指定檔案路徑
         documentsURL = documentsURL.appendingPathComponent(fileName)
         
-        multiuserselectedSceneURL = documentsURL
+        multiuserSceneLibrary.multiuserselectedSceneURL = documentsURL
         multiuserloadScene = true
         performSegue(withIdentifier: "multiuserbackToCamera", sender: self)  // 切換 storyboard 回 AR 相機畫面
     }

@@ -8,7 +8,6 @@
 
 import UIKit
 
-var selectedSceneURL = URL(string: "")
 var loadScene = false  // 更新場景指示
 
 class SceneLibrary: UITableViewController
@@ -115,6 +114,7 @@ class SceneLibrary: UITableViewController
         }
     }
     
+    static var selectedSceneURL: URL!
     
     /// 選擇了一個項目
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
@@ -124,7 +124,7 @@ class SceneLibrary: UITableViewController
         documentsURL = documentsURL.appendingPathComponent("scenes")  // 加入指定檔案路徑
         documentsURL = documentsURL.appendingPathComponent(fileName)
         
-        selectedSceneURL = documentsURL
+        SceneLibrary.selectedSceneURL = documentsURL
         loadScene = true
         performSegue(withIdentifier: "backToCamera", sender: self)  // 切換 storyboard 回 AR 相機畫面
     }
