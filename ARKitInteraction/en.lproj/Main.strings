@@ -1,0 +1,51 @@
+
+/* Class = "UIBarButtonItem"; title = "Dimension"; ObjectID = "6jx-14-S6F"; */
+"6jx-14-S6F.title" = "Dimension";
+
+/* Class = "UIButton"; normalTitle = "場景"; ObjectID = "9BP-vR-6An"; */
+"9BP-vR-6An.normalTitle" = "場景";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "C9W-A6-asP"; */
+"C9W-A6-asP.text" = "Label";
+
+/* Class = "UIBarButtonItem"; title = " ❮"; ObjectID = "EtQ-yM-PrP"; */
+"EtQ-yM-PrP.title" = " ❮";
+
+/* Class = "UIButton"; normalTitle = "Send World Map"; ObjectID = "KOB-al-gjj"; */
+"KOB-al-gjj.normalTitle" = "Send World Map";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "PYP-LN-Svj"; */
+"PYP-LN-Svj.text" = "Label";
+
+/* Class = "UIBarButtonItem"; title = "返回"; ObjectID = "YOH-pN-m57"; */
+"YOH-pN-m57.title" = "返回";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "abf-9R-q4P"; */
+"abf-9R-q4P.text" = "Label";
+
+/* Class = "UIButton"; normalTitle = "主選單"; ObjectID = "b0u-dI-iDx"; */
+"b0u-dI-iDx.normalTitle" = "主選單";
+
+/* Class = "UILabel"; text = "Tracking status"; ObjectID = "d3c-PE-zwi"; */
+"d3c-PE-zwi.text" = "Tracking status";
+
+/* Class = "UIBarButtonItem"; title = "❯ "; ObjectID = "dNe-V1-3ov"; */
+"dNe-V1-3ov.title" = "❯ ";
+
+/* Class = "UIButton"; normalTitle = "開始"; ObjectID = "h4H-bi-STF"; */
+"h4H-bi-STF.normalTitle" = "開始";
+
+/* Class = "UINavigationItem"; title = "場景庫"; ObjectID = "mTn-PF-59H"; */
+"mTn-PF-59H.title" = "場景庫";
+
+/* Class = "UINavigationItem"; title = "My Dimension Library"; ObjectID = "pRM-Xt-8CI"; */
+"pRM-Xt-8CI.title" = "My Dimension Library";
+
+/* Class = "UIButton"; normalTitle = "X"; ObjectID = "uHK-Cu-p39"; */
+"uHK-Cu-p39.normalTitle" = "X";
+
+/* Class = "UIButton"; normalTitle = "更多"; ObjectID = "wV9-Ui-217"; */
+"wV9-Ui-217.normalTitle" = "更多";
+
+/* Class = "UIViewController"; title = "Multiuser Web Browser"; ObjectID = "y7M-vp-5UF"; */
+"y7M-vp-5UF.title" = "Multiuser Web Browser";

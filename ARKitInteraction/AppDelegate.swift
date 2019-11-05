@@ -29,13 +29,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func applicationWillResignActive(_ application: UIApplication) {
-        if let viewController = self.window?.rootViewController as? ViewController {
+        if let viewController = self.window?.rootViewController as? MultiuserViewController {
             viewController.blurView.isHidden = false
         }
     }
     
     func applicationDidBecomeActive(_ application: UIApplication) {
-        if let viewController = self.window?.rootViewController as? ViewController {
+        if let viewController = self.window?.rootViewController as? MultiuserViewController {
             viewController.blurView.isHidden = true
         }
         

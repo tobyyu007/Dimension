@@ -14,7 +14,7 @@ class VirtualObject: SCNReferenceNode {
     // 更新 referenceURL 中的資料 (此 function 在 ViewController initialize 時使用)
     static func updateReferenceURL() -> [VirtualObject]
     {
-        if MultiuserViewController.multiuser == true  // 多人連線載入列表
+        if MultiuserViewController.receivedata == true  // 多人連線載入列表，不會載入下載項目
         {
             let modelsURL = Bundle.main.url(forResource: "Models.scnassets", withExtension: nil)!
             
@@ -23,12 +23,12 @@ class VirtualObject: SCNReferenceNode {
             return fileEnumerator.compactMap { element in
                 let url = element as! URL
                 
-                guard url.pathExtension == "scn" || url.pathExtension == "usdz" || url.pathExtension == "dae" && !url.path.contains("lighting") && !url.path.contains("CameraSetup") else { return nil }
+                guard url.pathExtension == "scn" || url.pathExtension == "usdz" || url.pathExtension == "dae" && !url.path.contains("lighting") && !url.path.contains("Camerasetup") else { return nil }
                 
                 return VirtualObject(url: url)
             }
         }
-        else  // 單人模式載入列表
+        else  // 單人模式載入列表，可以載入下載項目
         {
             let fileManager = FileManager.default
             let documentsURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0]

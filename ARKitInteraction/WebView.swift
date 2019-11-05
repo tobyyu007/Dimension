@@ -18,7 +18,7 @@ class WebView: UIViewController, WKNavigationDelegate, UIWebViewDelegate
     {
         super.viewDidLoad()
         webView.delegate = self
-        webView.loadRequest(URLRequest(url: URL(string: "https://ttyl.ddns.net/ttyl/model/uploads/leroy/")!))
+        webView.loadRequest(URLRequest(url: URL(string: "https://ttyl.ddns.net/ttyl/model")!))
     }
     
     
@@ -91,7 +91,7 @@ class WebView: UIViewController, WKNavigationDelegate, UIWebViewDelegate
                     let documentsDirectoryStr = URL(string: documentsDirectory) // String 轉為 URL
                     let modelassetsdir:String = documentsDirectoryStr!.appendingPathComponent("Models.scnassets").path  // 加入指定檔案路徑
                     let filePath : String = String.localizedStringWithFormat("%@/%@", modelassetsdir, urlToDownload.lastPathComponent)
-                    
+                    2
                     urlData.write(toFile: filePath, atomically: true)
                     downloadingAlertController.dismiss(animated: true, completion: nil)
                 }

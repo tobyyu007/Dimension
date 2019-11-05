@@ -1,14 +1,16 @@
-/*
-See LICENSE folder for this sample’s licensing information.
+//
+//  MultiuserVirtualObjectARView.swift
+//  ARKitInteraction
+//
+//  Created by Toby Yu on 2019/10/15.
+//  Copyright © 2019 Apple. All rights reserved.
+//
 
-Abstract:
-A custom `ARSCNView` configured for the requirements of this project.
-*/
 
 import Foundation
 import ARKit
 
-class VirtualObjectARView: ARSCNView {
+class MultiuserVirtualObjectARView: ARSCNView {
 
     //var multipeerSession: MultipeerSession!
     
@@ -101,9 +103,9 @@ class VirtualObjectARView: ARSCNView {
         }
         
         // Create a new anchor with the object's current transform and add it to the session
-        VirtualObjectARView.modelURL = object.referenceURL
-        VirtualObjectARView.modelName = object.referenceURL.lastPathComponent.replacingOccurrences(of: ".scn", with: "")
-        let newAnchor = ARAnchor(name: VirtualObjectARView.modelName, transform: object.simdWorldTransform)
+        MultiuserVirtualObjectARView.modelURL = object.referenceURL
+        MultiuserVirtualObjectARView.modelName = object.referenceURL.lastPathComponent.replacingOccurrences(of: ".scn", with: "")
+        let newAnchor = ARAnchor(name: MultiuserVirtualObjectARView.modelName, transform: object.simdWorldTransform)
         let position = object.simdWorldTransform
         
         session.add(anchor: newAnchor)
@@ -163,3 +165,12 @@ class VirtualObjectARView: ARSCNView {
     }
 }
 
+extension SCNView {
+    /**
+     Type conversion wrapper for original `unprojectPoint(_:)` method.
+     Used in contexts where sticking to SIMD float3 type is helpful.
+     */
+    func unprojectPoint(_ point: float3) -> float3 {
+        return float3(unprojectPoint(SCNVector3(point)))
+    }
+}

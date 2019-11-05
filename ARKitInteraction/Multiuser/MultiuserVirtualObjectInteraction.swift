@@ -9,7 +9,7 @@ import UIKit
 import ARKit
 
 /// - Tag: VirtualObjectInteraction
-class VirtualObjectInteraction: NSObject, UIGestureRecognizerDelegate {
+class MultiuserVirtualObjectInteraction: NSObject, UIGestureRecognizerDelegate {
     
     /// Developer setting to translate assuming the detected plane extends infinitely.
     let translateAssumingInfinitePlane = true
@@ -193,5 +193,14 @@ class VirtualObjectInteraction: NSObject, UIGestureRecognizerDelegate {
 }
 
 /// Extends `UIGestureRecognizer` to provide the center point resulting from multiple touches.
+extension UIGestureRecognizer {
+    func center(in view: UIView) -> CGPoint {
+        let first = CGRect(origin: location(ofTouch: 0, in: view), size: .zero)
 
+        let touchBounds = (1..<numberOfTouches).reduce(first) { touchBounds, index in
+            return touchBounds.union(CGRect(origin: location(ofTouch: index, in: view), size: .zero))
+        }
 
+        return CGPoint(x: touchBounds.midX, y: touchBounds.midY)
+    }
+}

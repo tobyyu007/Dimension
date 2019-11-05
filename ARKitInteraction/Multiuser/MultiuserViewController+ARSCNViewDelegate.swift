@@ -61,7 +61,8 @@ extension MultiuserViewController: ARSCNViewDelegate, ARSessionDelegate {
         {
             if let name = anchor.name, name.hasPrefix(VirtualObjectARView.modelName)
             {
-                node.addChildNode(loadModel(""))
+                node.addChildNode(loadModel(name))
+                
             }
         }
     }

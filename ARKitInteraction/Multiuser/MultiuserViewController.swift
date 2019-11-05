@@ -18,7 +18,7 @@ class MultiuserViewController: UIViewController{
     @IBOutlet var sceneView: VirtualObjectARView!
     
     @IBOutlet weak var addObjectButton: UIButton!
-    
+     
     @IBOutlet weak var blurView: UIVisualEffectView!
     
     @IBOutlet weak var spinner: UIActivityIndicatorView!
@@ -72,7 +72,7 @@ class MultiuserViewController: UIViewController{
     // MARK: - ARKit Configuration Properties
     
     /// A type which manages gesture manipulation of virtual content in the scene.
-    lazy var virtualObjectInteraction = VirtualObjectInteraction(sceneView: sceneView)
+    lazy var virtualObjectInteraction = MultiuserVirtualObjectInteraction(sceneView: sceneView)
     
     /// Coordinates the loading and unloading of reference nodes for virtual objects.
     let virtualObjectLoader = VirtualObjectLoader()
@@ -272,55 +272,57 @@ class MultiuserViewController: UIViewController{
     
     var mapProvider: MCPeerID?
     var modelProvider: MCPeerID?
-    
+    static var receivedata: Bool = true
     
     /// - Tag: ReceiveData
     static var received: Bool = false  // 是否有收到地圖
     var receivedMap: Bool = false // 是否有收到 worldMap -> 開啟即時傳送功能
     
     func receivedData(_ data: Data, from peer: MCPeerID) {
-        if !receivedMap  // 收到 world map 更新
+        if MultiuserViewController.receivedata
         {
-            do
+            if !receivedMap  // 收到 world map 更新
             {
-                if let worldMap = try NSKeyedUnarchiver.unarchivedObject(ofClass: ARWorldMap.self, from: data) {
-                    // Run the session with the received world map.
-                    MultiuserViewController.received = true
-                    let configuration = ARWorldTrackingConfiguration()
-                    configuration.planeDetection = .horizontal
-                    configuration.initialWorldMap = worldMap
-                    sceneView.session.run(configuration, options: [.resetTracking, .removeExistingAnchors])
-                    
-                    // Remember who provided the map for showing UI feedback.
-                    mapProvider = peer
-                    receivedMap = true
+                do
+                {
+                    if let worldMap = try NSKeyedUnarchiver.unarchivedObject(ofClass: ARWorldMap.self, from: data) {
+                        // Run the session with the received world map.
+                        MultiuserViewController.received = true
+                        let configuration = ARWorldTrackingConfiguration()
+                        configuration.planeDetection = .horizontal
+                        configuration.initialWorldMap = worldMap
+                        sceneView.session.run(configuration, options: [.resetTracking, .removeExistingAnchors])
+                        
+                        // Remember who provided the map for showing UI feedback.
+                        mapProvider = peer
+                        receivedMap = true
+                    }
+                }
+                catch
+                {
+                    print("can't decode data recieved from \(peer)")
                 }
             }
-            catch
+            else  // 收到 model 更新
             {
-                print("can't decode data recieved from \(peer)")
+                do
+                {
+                    if let anchor = try NSKeyedUnarchiver.unarchivedObject(ofClass: ARAnchor.self, from: data) {
+                        // Add anchor to the session, ARSCNView delegate adds visible content.
+                        MultiuserViewController.received = true
+                        modelProvider = peer
+                        sceneView.session.add(anchor: anchor)
+                    }
+                    else {
+                        print("unknown data recieved from \(peer)")
+                    }
+                }
+                catch
+                {
+                    print("can't decode data recieved from \(peer)")
+                }
             }
         }
-        else  // 收到 model 更新
-        {
-            do
-            {
-                if let anchor = try NSKeyedUnarchiver.unarchivedObject(ofClass: ARAnchor.self, from: data) {
-                    // Add anchor to the session, ARSCNView delegate adds visible content.
-                    MultiuserViewController.received = true
-                    modelProvider = peer
-                    sceneView.session.add(anchor: anchor)
-                }
-                else {
-                    print("unknown data recieved from \(peer)")
-                }
-            }
-            catch
-            {
-                print("can't decode data recieved from \(peer)")
-            }
-        }
-        
     }
     
     /// - Tag: PlaceCharacter
@@ -332,15 +334,17 @@ class MultiuserViewController: UIViewController{
             else { return }
         
         // Place an anchor for a virtual character. The model appears in renderer(_:didAdd:for:).
-        let anchor = ARAnchor(name: "VirtualObjectARView.modelName", transform: hitTestResult.worldTransform)
+        let anchor = ARAnchor(name: "123", transform: hitTestResult.worldTransform)
         session.add(anchor: anchor)
-        
+        session.remove(anchor: anchor)
+        print("刪除1")
+        session.remove(anchor: anchor)
+        print("刪除2")
         // Send the anchor info to peers, so they can place the same content.
         guard let data = try? NSKeyedArchiver.archivedData(withRootObject: anchor, requiringSecureCoding: true)
             else { fatalError("can't encode anchor") }
         MultiuserViewController.multipeerSession.sendToAllPeers(data)
     }
-    
     
     // MARK: - Multiuser shared session
     
@@ -397,6 +401,7 @@ class MultiuserViewController: UIViewController{
         {
             let referenceNode = SCNReferenceNode(url: VirtualObjectARView.modelURL)!
             referenceNode.load()
+            print("test")
             return referenceNode
         }
         else // 從別人下載地圖載入模型的情況
