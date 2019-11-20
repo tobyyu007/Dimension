@@ -11,6 +11,7 @@ import ARKit
 /// - Tag: VirtualObjectInteraction
 class MultiuserVirtualObjectInteraction: NSObject, UIGestureRecognizerDelegate {
     
+    
     /// Developer setting to translate assuming the detected plane extends infinitely.
     let translateAssumingInfinitePlane = true
     
@@ -46,10 +47,13 @@ class MultiuserVirtualObjectInteraction: NSObject, UIGestureRecognizerDelegate {
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTap(_:)))
         
+        let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(longPressed(_:)))
+        
         // Add gestures to the `sceneView`.
         sceneView.addGestureRecognizer(panGesture)
         sceneView.addGestureRecognizer(rotationGesture)
         sceneView.addGestureRecognizer(tapGesture)
+        sceneView.addGestureRecognizer(longPressRecognizer)
     }
     
     // MARK: - Gesture Actions
@@ -134,6 +138,12 @@ class MultiuserVirtualObjectInteraction: NSObject, UIGestureRecognizerDelegate {
             translate(object, basedOn: touchLocation, infinitePlane: false, allowAnimation: false)
             sceneView.addOrUpdateAnchor(for: object)
         }
+    }
+    
+    @objc
+    func longPressed(_ gesture: UILongPressGestureRecognizer)
+    {
+        
     }
     
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {

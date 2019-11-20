@@ -60,9 +60,15 @@ class VirtualObject: SCNReferenceNode {
     var allowedAlignments: [ARPlaneAnchor.Alignment] {
         if modelName == "sticky note" {
             return [.horizontal, .vertical]
-        } else if modelName == "painting" {
+        }
+        else if modelName == "painting" {
             return [.vertical]
-        } else {
+        }
+        else if modelName.contains("_V")
+        {
+            return [.vertical]
+        }
+        else {
             return [.horizontal]
         }
     }

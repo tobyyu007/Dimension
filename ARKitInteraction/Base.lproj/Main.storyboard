@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15400" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="C50-Ey-w0r">
-    <device id="ipad11_0rounded" orientation="portrait" layout="fullscreen" appearance="light"/>
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15404"/>
@@ -13,11 +13,11 @@
             <objects>
                 <viewController id="C50-Ey-w0r" customClass="Main" customModule="ARKitInteraction" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="92q-6p-UFd">
-                        <rect key="frame" x="0.0" y="0.0" width="834" height="1194"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" layoutMarginsFollowReadableWidth="YES" image="首頁圖片" adjustsImageSizeForAccessibilityContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vYj-Um-PQ1">
-                                <rect key="frame" x="0.0" y="100" width="834" height="520.5"/>
+                                <rect key="frame" x="0.0" y="144" width="414" height="258.5"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="vYj-Um-PQ1" secondAttribute="height" multiplier="125:78" id="iZ9-tp-9Rp"/>
                                 </constraints>
@@ -25,7 +25,7 @@
                                 <variation key="heightClass=compact-widthClass=compact" insetsLayoutMarginsFromSafeArea="YES" layoutMarginsFollowReadableWidth="YES"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageSizeForAccessibilityContentSizeCategory="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h4H-bi-STF">
-                                <rect key="frame" x="87" y="662.5" width="659" height="659"/>
+                                <rect key="frame" x="87" y="444.5" width="239" height="239"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="h4H-bi-STF" secondAttribute="height" multiplier="1:1" id="0bY-QD-vCV"/>
                                 </constraints>
@@ -65,19 +65,19 @@
             <objects>
                 <viewController id="6CI-nN-JEK" customClass="StatusViewController" customModule="ARKitInteraction" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="qGC-YD-HJv">
-                        <rect key="frame" x="0.0" y="0.0" width="834" height="85"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="85"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <visualEffectView hidden="YES" opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" verticalHuggingPriority="1000" verticalCompressionResistancePriority="100" translatesAutoresizingMaskIntoConstraints="NO" id="roP-wr-ly0" userLabel="Message Panel">
-                                <rect key="frame" x="16" y="20" width="125" height="32"/>
+                                <rect key="frame" x="16" y="64" width="125" height="32"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="vZR-g8-tk0">
                                     <rect key="frame" x="0.0" y="0.0" width="125" height="32"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Yzo-gs-k48">
-                                            <rect key="frame" x="0.0" y="0.0" width="125" height="32.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="125" height="32"/>
                                             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="feA-95-qbv">
-                                                <rect key="frame" x="0.0" y="0.0" width="125" height="32.5"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="125" height="32"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="750" verticalCompressionResistancePriority="250" text="Tracking status" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="d3c-PE-zwi" userLabel="Messages label">
@@ -117,7 +117,7 @@
                                 </userDefinedRuntimeAttributes>
                             </visualEffectView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="bottom" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FI0-Ur-AY9" userLabel="Restart Experience Button Icon">
-                                <rect key="frame" x="790" y="0.0" width="44" height="59"/>
+                                <rect key="frame" x="370" y="44" width="44" height="59"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="59" id="OUD-vm-pll"/>
                                     <constraint firstAttribute="width" constant="44" id="g7U-4s-s4o"/>
@@ -157,24 +157,24 @@
             <objects>
                 <viewController storyboardIdentifier="model_place_page" modalPresentationStyle="fullScreen" id="gB5-vl-nmG" customClass="MultiuserViewController" customModule="ARKitInteraction" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="5Q1-Z8-ar5">
-                        <rect key="frame" x="0.0" y="0.0" width="834" height="1194"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <sceneKitView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" wantsMultisampling="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OH2-Z3-Vvr" customClass="VirtualObjectARView" customModule="ARKitInteraction" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="834" height="1194"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                 <gestureRecognizers/>
                             </sceneKitView>
                             <visualEffectView hidden="YES" opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ej2-0j-ale">
-                                <rect key="frame" x="0.0" y="0.0" width="834" height="1194"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="bw0-nb-Siy">
-                                    <rect key="frame" x="0.0" y="0.0" width="834" height="1194"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <gestureRecognizers/>
                                 </view>
                                 <blurEffect style="light"/>
                             </visualEffectView>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="d0C-E3-eV9">
-                                <rect key="frame" x="0.0" y="0.0" width="834" height="85"/>
+                                <rect key="frame" x="0.0" y="44" width="414" height="85"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="85" id="CD8-OT-odO"/>
                                 </constraints>
@@ -183,7 +183,7 @@
                                 </connections>
                             </containerView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8zi-pg-GTr" userLabel="Add Object Button">
-                                <rect key="frame" x="163.5" y="1111" width="507" height="48"/>
+                                <rect key="frame" x="163.5" y="799" width="87" height="48"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="48" id="T4g-5U-Rkl"/>
                                 </constraints>
@@ -195,7 +195,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wV9-Ui-217" userLabel="更多模型">
-                                <rect key="frame" x="532" y="1666" width="52" height="52"/>
+                                <rect key="frame" x="73" y="797" width="52" height="52"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal" image="magnifyingglass.circle.fill" catalog="system">
                                     <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="font">
@@ -208,7 +208,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KOB-al-gjj" userLabel="Send Map Button" customClass="RoundedButton" customModule="ARKitInteraction" customModuleProvider="target">
-                                <rect key="frame" x="347" y="1067" width="140" height="34"/>
+                                <rect key="frame" x="137" y="755" width="140" height="34"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="20" id="65g-4Z-mzt"/>
                                     <constraint firstAttribute="height" constant="34" id="7Zq-Oq-LIY"/>
@@ -222,15 +222,15 @@
                                 </connections>
                             </button>
                             <activityIndicatorView hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="7Cj-Ok-XiG">
-                                <rect key="frame" x="166" y="1113.5" width="502" height="43"/>
+                                <rect key="frame" x="166" y="801.5" width="82" height="43"/>
                             </activityIndicatorView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C9W-A6-asP">
-                                <rect key="frame" x="396" y="1038" width="42" height="21"/>
+                                <rect key="frame" x="186" y="726" width="42" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9BP-vR-6An" userLabel="場景選項">
-                                <rect key="frame" x="711" y="1666" width="52" height="52"/>
+                                <rect key="frame" x="291" y="797" width="52" height="52"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="52" id="vhd-9E-U9t"/>
                                 </constraints>
@@ -303,7 +303,7 @@
             <objects>
                 <tableViewController id="G78-RB-bme" customClass="VirtualObjectSelectionViewController" customModule="ARKitInteraction" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" bouncesZoom="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="45" sectionHeaderHeight="28" sectionFooterHeight="28" id="z7Q-aR-snw">
-                        <rect key="frame" x="0.0" y="0.0" width="250" height="230"/>
+                        <rect key="frame" x="0.0" y="0.0" width="250" height="250"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
@@ -368,7 +368,7 @@
             <objects>
                 <navigationController wantsFullScreenLayout="YES" modalPresentationStyle="fullScreen" id="pXB-Nf-DCX" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="2F0-jz-IZe">
-                        <rect key="frame" x="0.0" y="0.0" width="834" height="50"/>
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
@@ -384,11 +384,11 @@
             <objects>
                 <viewController storyboardIdentifier="Multiuser Web Browser" title="Multiuser Web Browser" modalPresentationStyle="fullScreen" useStoryboardIdentifierAsRestorationIdentifier="YES" id="y7M-vp-5UF" customClass="WebView" customModule="ARKitInteraction" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="wCJ-Vg-yNw">
-                        <rect key="frame" x="0.0" y="0.0" width="712" height="1006.5"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dSR-fN-YmP">
-                                <rect key="frame" x="0.0" y="956.5" width="712" height="50"/>
+                                <rect key="frame" x="0.0" y="759" width="414" height="49"/>
                                 <items>
                                     <barButtonItem title=" ❮" id="EtQ-yM-PrP" colorLabel="IBBuiltInLabel-Orange">
                                         <connections>
@@ -416,7 +416,7 @@
                                 </items>
                             </toolbar>
                             <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xEe-db-A5m">
-                                <rect key="frame" x="0.0" y="56" width="712" height="900.5"/>
+                                <rect key="frame" x="0.0" y="56" width="414" height="703"/>
                                 <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </webView>
                         </subviews>
@@ -457,11 +457,11 @@
             <objects>
                 <viewController modalPresentationStyle="fullScreen" id="XcN-OJ-TDJ" customClass="ARLibrary" customModule="ARKitInteraction" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="SKu-XQ-OOn">
-                        <rect key="frame" x="0.0" y="0.0" width="712" height="1006.5"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="pk4-Lb-NUZ">
-                                <rect key="frame" x="0.0" y="56" width="712" height="950.5"/>
+                                <rect key="frame" x="0.0" y="56" width="414" height="752"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="grC-9n-6rz">
                                     <size key="itemSize" width="321" height="107"/>
@@ -471,7 +471,7 @@
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="LibraryCell" id="5lV-6S-Nnb" customClass="LibraryCollectionViewCell" customModule="ARKitInteraction" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="321" height="107"/>
+                                        <rect key="frame" x="46.5" y="0.0" width="321" height="107"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
                                             <rect key="frame" x="0.0" y="0.0" width="321" height="107"/>
@@ -579,15 +579,15 @@
             <objects>
                 <tableViewController modalPresentationStyle="fullScreen" id="DD4-Cm-Yfv" customClass="multiuserSceneLibrary" customModule="ARKitInteraction" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="zmj-Px-y3C">
-                        <rect key="frame" x="0.0" y="0.0" width="712" height="1006.5"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" id="OZg-kG-6Si">
-                                <rect key="frame" x="0.0" y="28" width="712" height="43.5"/>
+                                <rect key="frame" x="0.0" y="28" width="414" height="43.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="OZg-kG-6Si" id="xeG-CM-b4H">
-                                    <rect key="frame" x="0.0" y="0.0" width="712" height="43.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
                             </tableViewCell>
@@ -617,7 +617,7 @@
             <objects>
                 <navigationController storyboardIdentifier="Multiuser Scene Library" modalPresentationStyle="fullScreen" id="9cs-9V-eJx" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="958-NO-LwK">
-                        <rect key="frame" x="0.0" y="0.0" width="834" height="50"/>
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
@@ -639,6 +639,6 @@
         <image name="首頁圖片" width="512" height="512"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Wq8-Kp-XUV"/>
+        <segue reference="CBf-ON-h0K"/>
     </inferredMetricsTieBreakers>
 </document>

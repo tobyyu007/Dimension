@@ -234,7 +234,8 @@ class MultiuserViewController: UIViewController{
         
         // Perform hit testing only when ARKit tracking is in a good state.
         /// 在這裡與原本的 ViewController 不同，將原本只在 normal state 才會執行的限制移除，這樣才可以在收到別人的 map 後繼續執行
-        if let camera = session.currentFrame?.camera, let result = self.sceneView.smartHitTest(screenCenter)
+        if let camera = session.currentFrame?.camera, case .normal = camera.trackingState,
+            let result = self.sceneView.smartHitTest(screenCenter)
         {
             updateQueue.async
                 {
@@ -400,8 +401,7 @@ class MultiuserViewController: UIViewController{
         if VirtualObjectARView.modelName != nil  // "+" 放置模型的情況
         {
             let referenceNode = SCNReferenceNode(url: VirtualObjectARView.modelURL)!
-            referenceNode.load()
-            print("test")
+            //referenceNode.load()
             return referenceNode
         }
         else // 從別人下載地圖載入模型的情況
