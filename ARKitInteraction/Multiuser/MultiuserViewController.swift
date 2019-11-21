@@ -136,6 +136,7 @@ class MultiuserViewController: UIViewController{
         MultiuserViewController.multiuser = true
         MultiuserViewController.multipeerSession = MultipeerSession(receivedDataHandler: receivedData)
         
+        
         sceneView.delegate = self
         sceneView.session.delegate = self
         
@@ -158,6 +159,8 @@ class MultiuserViewController: UIViewController{
         
         //multipeerSession = MultipeerSession(receivedDataHandler: receivedData)
         VirtualObject.availableObjects = VirtualObject.updateReferenceURL() // 每次進入首頁時更新 referenceURL -> 為了讓選單不要出現下載項目
+        
+        checkDelete()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -190,6 +193,35 @@ class MultiuserViewController: UIViewController{
     }
     
     // MARK: - Scene content setup
+    
+    var timer = Timer()
+    static var showDelete = false
+    
+    func checkDelete(){
+        // Scheduling timer to Call the function "checkDelete" with the interval of 1 seconds
+        timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(self.updateCounting), userInfo: nil, repeats: true)
+    }
+
+    @objc func updateCounting(){
+        //print(MultiuserViewController.showDelete)
+        if(MultiuserViewController.showDelete)
+        {
+            let multiusermode = UIAlertController(title:"刪除模型", message: "你確定要刪除該模型嗎",preferredStyle: .alert)
+            
+            let okaction = UIAlertAction(title: "是", style: .cancel) { (_) in
+                MultiuserViewController.showDelete = false
+            }
+            
+            let denyaction = UIAlertAction(title: "否", style: .default) { (_) in
+                MultiuserViewController.showDelete = false
+            }
+            
+            multiusermode.addAction(okaction)
+            multiusermode.addAction(denyaction)
+            self.present(multiusermode, animated: true, completion: nil)
+        }
+    }
+    
     
     func setupCamera() {
         guard let camera = sceneView.pointOfView?.camera else {

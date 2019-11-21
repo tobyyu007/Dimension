@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		147062641F06FA790003EE03 /* VirtualObjectSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147062631F06FA790003EE03 /* VirtualObjectSelection.swift */; };
 		148832411EFC3B250043E0AB /* FocusSquareSegment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148832401EFC3B250043E0AB /* FocusSquareSegment.swift */; };
-		3929C48C1E89EC2C00E00B60 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3929C48B1E89EC2C00E00B60 /* AppDelegate.swift */; };
 		3929C4911E89EC2C00E00B60 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3929C48F1E89EC2C00E00B60 /* Main.storyboard */; };
 		3929C4931E89EC2C00E00B60 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3929C4921E89EC2C00E00B60 /* Assets.xcassets */; };
 		3929C49F1E89EE4400E00B60 /* Models.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = 3929C49E1E89EE4400E00B60 /* Models.scnassets */; };
@@ -35,6 +34,7 @@
 		DACB585E2302BAA800640AC0 /* MultipeerSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACB585A2302BAA800640AC0 /* MultipeerSession.swift */; };
 		DACB585F2302BAA800640AC0 /* RoundedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACB585B2302BAA800640AC0 /* RoundedButton.swift */; };
 		DACB58602302BAA800640AC0 /* MultiuserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACB585C2302BAA800640AC0 /* MultiuserViewController.swift */; };
+		DAD5A4872385637C00110AD4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD5A4862385637C00110AD4 /* AppDelegate.swift */; };
 		DAF19CB022FB3B85005AF6F2 /* ARLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF19CAF22FB3B85005AF6F2 /* ARLibrary.swift */; };
 		DAF19CB222FB3BDA005AF6F2 /* LibraryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF19CB122FB3BDA005AF6F2 /* LibraryCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
@@ -44,7 +44,6 @@
 		147062631F06FA790003EE03 /* VirtualObjectSelection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VirtualObjectSelection.swift; sourceTree = "<group>"; };
 		148832401EFC3B250043E0AB /* FocusSquareSegment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusSquareSegment.swift; sourceTree = "<group>"; };
 		3929C4881E89EC2C00E00B60 /* ARKitInteraction.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ARKitInteraction.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		3929C48B1E89EC2C00E00B60 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3929C4901E89EC2C00E00B60 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		3929C4921E89EC2C00E00B60 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3929C4971E89EC2C00E00B60 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -72,6 +71,7 @@
 		DACB585A2302BAA800640AC0 /* MultipeerSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultipeerSession.swift; sourceTree = "<group>"; };
 		DACB585B2302BAA800640AC0 /* RoundedButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoundedButton.swift; sourceTree = "<group>"; };
 		DACB585C2302BAA800640AC0 /* MultiuserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultiuserViewController.swift; sourceTree = "<group>"; };
+		DAD5A4862385637C00110AD4 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DAF19CAF22FB3B85005AF6F2 /* ARLibrary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARLibrary.swift; sourceTree = "<group>"; };
 		DAF19CB122FB3BDA005AF6F2 /* LibraryCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryCollectionViewCell.swift; sourceTree = "<group>"; };
 		F84AB7F0F84AC1A000000001 /* LICENSE.txt */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
@@ -149,8 +149,8 @@
 			isa = PBXGroup;
 			children = (
 				DACB58582302BA9600640AC0 /* Multiuser */,
-				3929C48B1E89EC2C00E00B60 /* AppDelegate.swift */,
 				73A0F62C235763A200E1C600 /* Main.swift */,
+				DAD5A4862385637C00110AD4 /* AppDelegate.swift */,
 				DA51BEA12340AAF500B704AA /* SceneLibrary.swift */,
 				DA6D8A5822F5D29700952962 /* WebView.swift */,
 				DAF19CAF22FB3B85005AF6F2 /* ARLibrary.swift */,
@@ -292,6 +292,7 @@
 				DAA5C2842305CE4000988D6C /* MultiuserViewController+ObjectSelection.swift in Sources */,
 				DAB06CBB22F6D0A00035C60B /* FileTableViewCell.swift in Sources */,
 				DAB06CBA22F6D0A00035C60B /* FileBrowserTableViewController.swift in Sources */,
+				DAD5A4872385637C00110AD4 /* AppDelegate.swift in Sources */,
 				DA6D8A5922F5D29700952962 /* WebView.swift in Sources */,
 				DACB585F2302BAA800640AC0 /* RoundedButton.swift in Sources */,
 				DACB58602302BAA800640AC0 /* MultiuserViewController.swift in Sources */,
@@ -308,7 +309,6 @@
 				C8D71A001F3B7D3D0086AD64 /* VirtualObject.swift in Sources */,
 				C42A71BD1E9C0AF200944367 /* FocusSquare.swift in Sources */,
 				73631A692355A1D0006117B8 /* VirtualObjectARView.swift in Sources */,
-				3929C48C1E89EC2C00E00B60 /* AppDelegate.swift in Sources */,
 				C46356681EF9CC530080C8D9 /* VirtualObjectLoader.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -456,7 +456,7 @@
 				INFOPLIST_FILE = "$(SRCROOT)/ARKitInteraction/Resources/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.example.apple-samplecode.arkit-sample-app${SAMPLE_CODE_DISAMBIGUATOR}";
+				PRODUCT_BUNDLE_IDENTIFIER = com.Dimension.TTYL;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos;
@@ -478,7 +478,7 @@
 				INFOPLIST_FILE = "$(SRCROOT)/ARKitInteraction/Resources/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.example.apple-samplecode.arkit-sample-app${SAMPLE_CODE_DISAMBIGUATOR}";
+				PRODUCT_BUNDLE_IDENTIFIER = com.Dimension.TTYL;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos;

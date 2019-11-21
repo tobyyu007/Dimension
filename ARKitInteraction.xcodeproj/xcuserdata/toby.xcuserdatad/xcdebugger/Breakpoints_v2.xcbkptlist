@@ -59,7 +59,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "042C7F66-A1A3-4D86-9D56-E7E15F8B8278"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ARKitInteraction/Virtual Objects/VirtualObject.swift"
@@ -75,7 +75,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "5B7FF087-D83D-4A9D-AF95-8301E05E22AA"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ARKitInteraction/Virtual Objects/VirtualObject.swift"
@@ -84,6 +84,22 @@
             startingLineNumber = "33"
             endingLineNumber = "33"
             landmarkName = "updateReferenceURL()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "630744C7-3DAF-410E-8567-D7AECC161691"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ARKitInteraction/Multiuser/MultiuserViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "207"
+            endingLineNumber = "207"
+            landmarkName = "updateCounting()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

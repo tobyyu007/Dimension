@@ -8,6 +8,8 @@ Coordinates movement and gesture interactions with virtual objects.
 import UIKit
 import ARKit
 
+
+
 /// - Tag: VirtualObjectInteraction
 class MultiuserVirtualObjectInteraction: NSObject, UIGestureRecognizerDelegate {
     
@@ -140,10 +142,49 @@ class MultiuserVirtualObjectInteraction: NSObject, UIGestureRecognizerDelegate {
         }
     }
     
+    
     @objc
+    /// 長按螢幕
     func longPressed(_ gesture: UILongPressGestureRecognizer)
     {
+        func getAnchor(_ worldMap: ARWorldMap)
+        {
+            //print(worldMap.anchors)
+            let anchors = worldMap.anchors
+            var objectLocation: [simd_float4x4]
+            var anchor_name: [String]
+            for index in 0...anchors.count-1
+            {
+                if(anchors[index].name != nil)
+                {
+                    anchor_name.insert(anchors[index].name!, at: index)
+                    objectLocation[index] = anchors[index].transform
+                }
+            }
+            
+            
+            // Hit test to find a place for a virtual object.
+            guard let hitTestResult = sceneView
+                .hitTest(gesture.location(in: sceneView), types: [.existingPlaneUsingGeometry, .estimatedVerticalPlane, .estimatedHorizontalPlane])
+                .first(where: { $0.type == .existingPlaneUsingGeometry })
+                else { return }
+            
+            //print("touchLocation is")
+            //print(hitTestResult.worldTransform)
+            let touchLocation = hitTestResult.worldTransform
+            
+            if (simd_almost_equal_elements(touchLocation, objectLocation, 0.1))
+            {
+                MultiuserViewController.showDelete = true
+            }
+        }
         
+        sceneView.session.getCurrentWorldMap { (worldMap, error) in
+            guard let worldMap = worldMap else {
+                return print("Error")
+            }
+            getAnchor(worldMap)
+        }
     }
     
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
