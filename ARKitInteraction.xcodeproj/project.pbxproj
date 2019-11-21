@@ -35,6 +35,7 @@
 		DACB585F2302BAA800640AC0 /* RoundedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACB585B2302BAA800640AC0 /* RoundedButton.swift */; };
 		DACB58602302BAA800640AC0 /* MultiuserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DACB585C2302BAA800640AC0 /* MultiuserViewController.swift */; };
 		DAD5A4872385637C00110AD4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD5A4862385637C00110AD4 /* AppDelegate.swift */; };
+		DAD5A4892386853500110AD4 /* multiuserModelMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD5A4882386853500110AD4 /* multiuserModelMenu.swift */; };
 		DAF19CB022FB3B85005AF6F2 /* ARLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF19CAF22FB3B85005AF6F2 /* ARLibrary.swift */; };
 		DAF19CB222FB3BDA005AF6F2 /* LibraryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF19CB122FB3BDA005AF6F2 /* LibraryCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
@@ -72,6 +73,7 @@
 		DACB585B2302BAA800640AC0 /* RoundedButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoundedButton.swift; sourceTree = "<group>"; };
 		DACB585C2302BAA800640AC0 /* MultiuserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultiuserViewController.swift; sourceTree = "<group>"; };
 		DAD5A4862385637C00110AD4 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		DAD5A4882386853500110AD4 /* multiuserModelMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = multiuserModelMenu.swift; sourceTree = "<group>"; };
 		DAF19CAF22FB3B85005AF6F2 /* ARLibrary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARLibrary.swift; sourceTree = "<group>"; };
 		DAF19CB122FB3BDA005AF6F2 /* LibraryCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryCollectionViewCell.swift; sourceTree = "<group>"; };
 		F84AB7F0F84AC1A000000001 /* LICENSE.txt */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
@@ -197,6 +199,7 @@
 				DA51BEA323410CF900B704AA /* multiuserSceneLibrary.swift */,
 				7386BE6B2355810A00A6A6D1 /* MultiuserVirtualObjectARView.swift */,
 				7386BE6D2355814E00A6A6D1 /* MultiuserVirtualObjectInteraction.swift */,
+				DAD5A4882386853500110AD4 /* multiuserModelMenu.swift */,
 			);
 			path = Multiuser;
 			sourceTree = "<group>";
@@ -302,6 +305,7 @@
 				39C0B95A1E9C6B1F003FCA0C /* Utilities.swift in Sources */,
 				147062641F06FA790003EE03 /* VirtualObjectSelection.swift in Sources */,
 				7386BE6E2355814E00A6A6D1 /* MultiuserVirtualObjectInteraction.swift in Sources */,
+				DAD5A4892386853500110AD4 /* multiuserModelMenu.swift in Sources */,
 				DAF19CB222FB3BDA005AF6F2 /* LibraryCollectionViewCell.swift in Sources */,
 				DAF19CB022FB3B85005AF6F2 /* ARLibrary.swift in Sources */,
 				148832411EFC3B250043E0AB /* FocusSquareSegment.swift in Sources */,

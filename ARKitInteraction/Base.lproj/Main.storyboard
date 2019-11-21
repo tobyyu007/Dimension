@@ -292,6 +292,7 @@
                             <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
                         </segue>
                         <segue destination="9cs-9V-eJx" kind="showDetail" identifier="multiusercameraToSceneLibrary" id="DTa-Z9-sMf"/>
+                        <segue destination="Tey-P9-mV1" kind="show" identifier="showModelMenu" id="9BW-Cx-XBK"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mqN-EZ-8Zk" sceneMemberID="firstResponder"/>
@@ -628,6 +629,52 @@
             </objects>
             <point key="canvasLocation" x="870" y="-1715"/>
         </scene>
+        <!--模型管理-->
+        <scene sceneID="mga-mG-aQv">
+            <objects>
+                <tableViewController modalPresentationStyle="fullScreen" id="1Tm-Jn-afu" customClass="multiuserModelMenu" customModule="ARKitInteraction" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="KrB-Ul-xNj">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" id="G87-Lz-J5v">
+                                <rect key="frame" x="0.0" y="28" width="414" height="43.5"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="G87-Lz-J5v" id="9UQ-jp-OXE">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="1Tm-Jn-afu" id="ISk-hq-uHQ"/>
+                            <outlet property="delegate" destination="1Tm-Jn-afu" id="l9F-ij-hNK"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="模型管理" id="Ekz-b9-aSN"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="f3N-ZO-Cwr" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="870" y="-117"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="xpj-Ue-JI3">
+            <objects>
+                <navigationController modalPresentationStyle="pageSheet" id="Tey-P9-mV1" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="i0e-6P-9wG"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="ihM-jE-Clg">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="56"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="1Tm-Jn-afu" kind="relationship" relationship="rootViewController" id="POs-aA-Gyc"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="SM4-R3-75v" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="57" y="-117"/>
+        </scene>
     </scenes>
     <resources>
         <image name="add" width="48" height="48"/>
@@ -639,6 +686,6 @@
         <image name="首頁圖片" width="512" height="512"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="CBf-ON-h0K"/>
+        <segue reference="Wq8-Kp-XUV"/>
     </inferredMetricsTieBreakers>
 </document>

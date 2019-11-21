@@ -195,30 +195,42 @@ class MultiuserViewController: UIViewController{
     // MARK: - Scene content setup
     
     var timer = Timer()
-    static var showDelete = false
+    static var showModelMenu = false
     
     func checkDelete(){
         // Scheduling timer to Call the function "checkDelete" with the interval of 1 seconds
-        timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(self.updateCounting), userInfo: nil, repeats: true)
+        timer = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(self.updateCounting), userInfo: nil, repeats: true)
     }
+    
+    static var deleteModel = false // 從 modelMenu 收到刪除 model 的指令
 
     @objc func updateCounting(){
-        //print(MultiuserViewController.showDelete)
-        if(MultiuserViewController.showDelete)
+
+        if(MultiuserViewController.showModelMenu)
         {
-            let multiusermode = UIAlertController(title:"刪除模型", message: "你確定要刪除該模型嗎",preferredStyle: .alert)
-            
-            let okaction = UIAlertAction(title: "是", style: .cancel) { (_) in
-                MultiuserViewController.showDelete = false
+            MultiuserViewController.showModelMenu = false
+            self.performSegue(withIdentifier: "showModelMenu", sender: self)
+        }
+        if(MultiuserViewController.deleteModel)
+        {
+            var modelNameToDel = multiuserModelMenu.delModelName
+            if (modelNameToDel.characters.contains(" "))  // 當 model 名稱有空格的情況
+            {
+                if var index = modelNameToDel.index(of: " ") {
+                    index = modelNameToDel.index(after: index)
+                    let substring = modelNameToDel[index...]   // ab
+                    modelNameToDel = String(substring)
+                }
             }
-            
-            let denyaction = UIAlertAction(title: "否", style: .default) { (_) in
-                MultiuserViewController.showDelete = false
+            print(modelNameToDel)
+            print("mNTD")
+            self.sceneView.scene.rootNode.enumerateChildNodes { (node, _) in
+                print(node.name)
+                if node.name == modelNameToDel{
+                   node.removeFromParentNode()
+                }
             }
-            
-            multiusermode.addAction(okaction)
-            multiusermode.addAction(denyaction)
-            self.present(multiusermode, animated: true, completion: nil)
+            MultiuserViewController.deleteModel = false
         }
     }
     

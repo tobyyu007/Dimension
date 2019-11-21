@@ -36,8 +36,6 @@ extension MultiuserViewController: VirtualObjectSelectionViewControllerDelegate 
     // MARK: - VirtualObjectSelectionViewControllerDelegate
     
     func virtualObjectSelectionViewController(_: VirtualObjectSelectionViewController, didSelectObject object: VirtualObject) {
-        print("object is: ")
-        print(object.referenceURL.lastPathComponent.replacingOccurrences(of: ".scn", with: ""))
         let selectedModelName = object.referenceURL.lastPathComponent.replacingOccurrences(of: ".scn", with: "")
         virtualObjectLoader.loadVirtualObject(object, loadedHandler: { [unowned self] loadedObject in
             do {

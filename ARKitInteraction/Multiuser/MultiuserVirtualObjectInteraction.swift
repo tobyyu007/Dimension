@@ -50,6 +50,8 @@ class MultiuserVirtualObjectInteraction: NSObject, UIGestureRecognizerDelegate {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTap(_:)))
         
         let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(longPressed(_:)))
+        longPressRecognizer.minimumPressDuration = 0.5
+        longPressRecognizer.delaysTouchesBegan = true
         
         // Add gestures to the `sceneView`.
         sceneView.addGestureRecognizer(panGesture)
@@ -143,47 +145,51 @@ class MultiuserVirtualObjectInteraction: NSObject, UIGestureRecognizerDelegate {
     }
     
     
+    static var objectLocation = [simd_float4x4]()
+    static var anchor_name = [String]()
+    static var modelAnchors = [ARAnchor]()
+    static var modelCount = 0
+    
     @objc
     /// 長按螢幕
     func longPressed(_ gesture: UILongPressGestureRecognizer)
     {
-        func getAnchor(_ worldMap: ARWorldMap)
-        {
-            //print(worldMap.anchors)
-            let anchors = worldMap.anchors
-            var objectLocation: [simd_float4x4]
-            var anchor_name: [String]
-            for index in 0...anchors.count-1
+        if gesture.state != UIGestureRecognizer.State.ended {
+            //When lognpress is start or running
+        }
+        else {
+            func getAnchor(_ worldMap: ARWorldMap)
             {
-                if(anchors[index].name != nil)
+                //print(worldMap.anchors)
+                let anchors = worldMap.anchors
+                for index in 0...anchors.count-1
                 {
-                    anchor_name.insert(anchors[index].name!, at: index)
-                    objectLocation[index] = anchors[index].transform
+                    if(anchors[index].name != nil)
+                    {
+                        MultiuserVirtualObjectInteraction.anchor_name.insert(anchors[index].name!, at: MultiuserVirtualObjectInteraction.modelCount)
+                        MultiuserVirtualObjectInteraction.objectLocation.insert(anchors[index].transform, at: MultiuserVirtualObjectInteraction.modelCount)
+                        MultiuserVirtualObjectInteraction.modelAnchors.insert(anchors[index], at: MultiuserVirtualObjectInteraction.modelCount)
+                        MultiuserVirtualObjectInteraction.modelCount += 1
+                    }
+                }
+                
+                if(!MultiuserVirtualObjectInteraction.anchor_name.isEmpty)
+                {
+                    MultiuserViewController.showModelMenu = true
+                    MultiuserVirtualObjectInteraction.modelCount = 0
                 }
             }
             
-            
-            // Hit test to find a place for a virtual object.
-            guard let hitTestResult = sceneView
-                .hitTest(gesture.location(in: sceneView), types: [.existingPlaneUsingGeometry, .estimatedVerticalPlane, .estimatedHorizontalPlane])
-                .first(where: { $0.type == .existingPlaneUsingGeometry })
-                else { return }
-            
-            //print("touchLocation is")
-            //print(hitTestResult.worldTransform)
-            let touchLocation = hitTestResult.worldTransform
-            
-            if (simd_almost_equal_elements(touchLocation, objectLocation, 0.1))
+            if(!MultiuserViewController.showModelMenu)
             {
-                MultiuserViewController.showDelete = true
+                sceneView.session.getCurrentWorldMap {(worldMap, error) in
+                    guard let worldMap = worldMap else {
+                        return print("Error")
+                    }
+                    getAnchor(worldMap)
+                }
             }
-        }
-        
-        sceneView.session.getCurrentWorldMap { (worldMap, error) in
-            guard let worldMap = worldMap else {
-                return print("Error")
-            }
-            getAnchor(worldMap)
+            
         }
     }
     
