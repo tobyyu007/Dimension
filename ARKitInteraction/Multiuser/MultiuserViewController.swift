@@ -523,11 +523,25 @@ class MultiuserViewController: UIViewController{
             // 切換 storyboard 到場景庫
             self.performSegue(withIdentifier: "multiusercameraToSceneLibrary", sender: self)  // storyboard 從 AR 相機切換到 Scene Library
         }
+        let datamanager = UIAlertAction(title: "檔案管理員", style: .default)
+        {
+            action -> Void in
+            // 切換 storyboard 到檔案管理員
+            self.performSegue(withIdentifier: "modelmanager", sender: self)  // storyboard 從 AR 相機切換到檔案管理員
+        }
+        let return_to_menu = UIAlertAction(title: "回主畫面", style: .default)
+        {
+            action -> Void in
+            // 切換 storyboard 到主畫面
+            self.performSegue(withIdentifier: "initialize", sender: self)  // storyboard 從 AR 相機切換到 主畫面
+        }
         
         let cancelAction = UIAlertAction(title: "取消", style: .cancel)
         
         actionSheet.addAction(saveAction)
         actionSheet.addAction(readAction)
+        actionSheet.addAction(datamanager)
+        actionSheet.addAction(return_to_menu)
         actionSheet.addAction(cancelAction)
         
         if let popoverController = actionSheet.popoverPresentationController {

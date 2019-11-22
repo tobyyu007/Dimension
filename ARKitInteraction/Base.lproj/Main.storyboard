@@ -11,7 +11,7 @@
         <!--Main-->
         <scene sceneID="fe0-E8-QuU">
             <objects>
-                <viewController id="C50-Ey-w0r" customClass="Main" customModule="ARKitInteraction" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController modalPresentationStyle="fullScreen" id="C50-Ey-w0r" customClass="Main" customModule="Dimension" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="92q-6p-UFd">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -32,9 +32,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="50"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal" image="play.rectangle.fill" catalog="system">
-                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="font">
-                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="80"/>
-                                    </preferredSymbolConfiguration>
+                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="100"/>
                                 </state>
                                 <connections>
                                     <action selector="start:" destination="C50-Ey-w0r" eventType="touchUpInside" id="doH-0A-qOQ"/>
@@ -52,6 +50,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="gls-Ka-uKy"/>
                     </view>
+                    <navigationItem key="navigationItem" id="ofT-V7-T5Y"/>
                     <connections>
                         <segue destination="gB5-vl-nmG" kind="showDetail" identifier="mainToCamera" id="Wq8-Kp-XUV"/>
                     </connections>
@@ -63,7 +62,7 @@
         <!--Status View Controller-->
         <scene sceneID="wfb-A0-ZE5">
             <objects>
-                <viewController id="6CI-nN-JEK" customClass="StatusViewController" customModule="ARKitInteraction" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="6CI-nN-JEK" customClass="StatusViewController" customModule="Dimension" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="qGC-YD-HJv">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="85"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -155,12 +154,12 @@
         <!--Multiuser View Controller-->
         <scene sceneID="uFc-b4-I5i">
             <objects>
-                <viewController storyboardIdentifier="model_place_page" modalPresentationStyle="fullScreen" id="gB5-vl-nmG" customClass="MultiuserViewController" customModule="ARKitInteraction" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="model_place_page" modalPresentationStyle="fullScreen" id="gB5-vl-nmG" customClass="MultiuserViewController" customModule="Dimension" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="5Q1-Z8-ar5">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <sceneKitView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" wantsMultisampling="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OH2-Z3-Vvr" customClass="VirtualObjectARView" customModule="ARKitInteraction" customModuleProvider="target">
+                            <sceneKitView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" wantsMultisampling="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OH2-Z3-Vvr" customClass="VirtualObjectARView" customModule="Dimension" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                 <gestureRecognizers/>
                             </sceneKitView>
@@ -198,16 +197,14 @@
                                 <rect key="frame" x="73" y="797" width="52" height="52"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal" image="magnifyingglass.circle.fill" catalog="system">
-                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="font">
-                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="75"/>
-                                    </preferredSymbolConfiguration>
+                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="50"/>
                                 </state>
                                 <connections>
                                     <action selector="moreModels:" destination="gB5-vl-nmG" eventType="touchUpInside" id="1Qw-br-2Mu"/>
                                     <segue destination="pXB-Nf-DCX" kind="showDetail" id="amy-4T-ODC"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KOB-al-gjj" userLabel="Send Map Button" customClass="RoundedButton" customModule="ARKitInteraction" customModuleProvider="target">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KOB-al-gjj" userLabel="Send Map Button" customClass="RoundedButton" customModule="Dimension" customModuleProvider="target">
                                 <rect key="frame" x="137" y="755" width="140" height="34"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="20" id="65g-4Z-mzt"/>
@@ -236,9 +233,7 @@
                                 </constraints>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal" image="viewfinder.circle.fill" catalog="system">
-                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="font">
-                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="75"/>
-                                    </preferredSymbolConfiguration>
+                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="50"/>
                                 </state>
                                 <connections>
                                     <action selector="sceneControl:" destination="gB5-vl-nmG" eventType="touchUpInside" id="kFt-TY-VMd"/>
@@ -293,6 +288,8 @@
                         </segue>
                         <segue destination="9cs-9V-eJx" kind="showDetail" identifier="multiusercameraToSceneLibrary" id="DTa-Z9-sMf"/>
                         <segue destination="Tey-P9-mV1" kind="show" identifier="showModelMenu" id="9BW-Cx-XBK"/>
+                        <segue destination="C50-Ey-w0r" kind="showDetail" identifier="initialize" id="OgZ-kb-xGG"/>
+                        <segue destination="cp5-8r-M7B" kind="show" identifier="modelmanager" id="Np5-2u-mJX"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mqN-EZ-8Zk" sceneMemberID="firstResponder"/>
@@ -302,14 +299,14 @@
         <!--Virtual Object Selection View Controller-->
         <scene sceneID="PFN-bT-JUz">
             <objects>
-                <tableViewController id="G78-RB-bme" customClass="VirtualObjectSelectionViewController" customModule="ARKitInteraction" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="G78-RB-bme" customClass="VirtualObjectSelectionViewController" customModule="Dimension" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" bouncesZoom="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="45" sectionHeaderHeight="28" sectionFooterHeight="28" id="z7Q-aR-snw">
                         <rect key="frame" x="0.0" y="0.0" width="250" height="250"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="ObjectCell" id="w7p-Ee-sGS" customClass="ObjectCell" customModule="ARKitInteraction" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="ObjectCell" id="w7p-Ee-sGS" customClass="ObjectCell" customModule="Dimension" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="250" height="45"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="w7p-Ee-sGS" id="e68-x3-ozM">
@@ -383,7 +380,7 @@
         <!--Multiuser Web Browser-->
         <scene sceneID="c1R-fR-CVR">
             <objects>
-                <viewController storyboardIdentifier="Multiuser Web Browser" title="Multiuser Web Browser" modalPresentationStyle="fullScreen" useStoryboardIdentifierAsRestorationIdentifier="YES" id="y7M-vp-5UF" customClass="WebView" customModule="ARKitInteraction" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Multiuser Web Browser" title="Multiuser Web Browser" modalPresentationStyle="fullScreen" useStoryboardIdentifierAsRestorationIdentifier="YES" id="y7M-vp-5UF" customClass="WebView" customModule="Dimension" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="wCJ-Vg-yNw">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -439,11 +436,6 @@
                                 <segue destination="gB5-vl-nmG" kind="showDetail" id="a2X-xm-PmA"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" systemItem="organize" id="l2m-P2-qCS">
-                            <connections>
-                                <segue destination="XcN-OJ-TDJ" kind="show" id="eBg-T9-dcp"/>
-                            </connections>
-                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="webView" destination="xEe-db-A5m" id="IpK-e7-74d"/>
@@ -456,7 +448,7 @@
         <!--My Dimension Library-->
         <scene sceneID="Zdh-5G-px0">
             <objects>
-                <viewController modalPresentationStyle="fullScreen" id="XcN-OJ-TDJ" customClass="ARLibrary" customModule="ARKitInteraction" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController modalPresentationStyle="fullScreen" id="XcN-OJ-TDJ" customClass="ARLibrary" customModule="Dimension" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="SKu-XQ-OOn">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -471,7 +463,7 @@
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="LibraryCell" id="5lV-6S-Nnb" customClass="LibraryCollectionViewCell" customModule="ARKitInteraction" customModuleProvider="target">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="LibraryCell" id="5lV-6S-Nnb" customClass="LibraryCollectionViewCell" customModule="Dimension" customModuleProvider="target">
                                         <rect key="frame" x="46.5" y="0.0" width="321" height="107"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
@@ -564,8 +556,13 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="J1e-nH-N2q"/>
                     </view>
-                    <navigationItem key="navigationItem" title="My Dimension Library" id="pRM-Xt-8CI">
-                        <barButtonItem key="backBarButtonItem" title="Dimension" id="6jx-14-S6F"/>
+                    <navigationItem key="navigationItem" title="My Dimension Library" id="bc4-RR-NQr">
+                        <barButtonItem key="backBarButtonItem" title="Back" id="HqG-1e-6A0"/>
+                        <barButtonItem key="leftBarButtonItem" title="返回" id="nJx-0T-hu1">
+                            <connections>
+                                <segue destination="gB5-vl-nmG" kind="showDetail" id="4FV-ou-ah7"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="collectionView" destination="pk4-Lb-NUZ" id="hqi-fc-dBv"/>
@@ -573,12 +570,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pBt-52-A43" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2561" y="-858"/>
+            <point key="canvasLocation" x="2452" y="-92"/>
         </scene>
         <!--場景庫-->
         <scene sceneID="4sv-kL-TW6">
             <objects>
-                <tableViewController modalPresentationStyle="fullScreen" id="DD4-Cm-Yfv" customClass="multiuserSceneLibrary" customModule="ARKitInteraction" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController modalPresentationStyle="fullScreen" id="DD4-Cm-Yfv" customClass="multiuserSceneLibrary" customModule="Dimension" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="zmj-Px-y3C">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -632,7 +629,7 @@
         <!--模型管理-->
         <scene sceneID="mga-mG-aQv">
             <objects>
-                <tableViewController modalPresentationStyle="fullScreen" id="1Tm-Jn-afu" customClass="multiuserModelMenu" customModule="ARKitInteraction" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="1Tm-Jn-afu" customClass="multiuserModelMenu" customModule="Dimension" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="KrB-Ul-xNj">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -675,6 +672,23 @@
             </objects>
             <point key="canvasLocation" x="57" y="-117"/>
         </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="Ptc-0j-3qa">
+            <objects>
+                <navigationController wantsFullScreenLayout="YES" modalPresentationStyle="pageSheet" id="cp5-8r-M7B" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="kV6-Zm-S7V"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Phe-AO-gq5">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="56"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="XcN-OJ-TDJ" kind="relationship" relationship="rootViewController" id="avk-QG-s2e"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Y8C-uK-YCq" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1686" y="-92"/>
+        </scene>
     </scenes>
     <resources>
         <image name="add" width="48" height="48"/>
@@ -683,7 +697,7 @@
         <image name="restart" width="20" height="23"/>
         <image name="restartPressed" width="20" height="23"/>
         <image name="viewfinder.circle.fill" catalog="system" width="64" height="60"/>
-        <image name="首頁圖片" width="512" height="512"/>
+        <image name="首頁圖片" width="180" height="180"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="Wq8-Kp-XUV"/>
