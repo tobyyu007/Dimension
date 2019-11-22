@@ -21,6 +21,9 @@ class WebView: UIViewController, WKNavigationDelegate, UIWebViewDelegate
         webView.loadRequest(URLRequest(url: URL(string: "https://ttyl.ddns.net/ttyl/model")!))
     }
     
+    @IBAction func doneButton(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
+    }
     
     override func didReceiveMemoryWarning()
     {

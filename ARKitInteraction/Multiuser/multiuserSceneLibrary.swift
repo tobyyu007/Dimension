@@ -13,6 +13,9 @@ var multiuserloadScene = false  // 更新場景指示
 class multiuserSceneLibrary: UITableViewController
 {
     // MARK: - scene 列表抓取
+    @IBAction func cancelButton(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
+    }
     
     /// 儲存場景資訊
     var scenes: [String] = []

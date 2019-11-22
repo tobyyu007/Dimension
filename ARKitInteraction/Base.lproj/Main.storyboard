@@ -364,9 +364,9 @@
         <!--Navigation Controller-->
         <scene sceneID="opc-oM-wOh">
             <objects>
-                <navigationController wantsFullScreenLayout="YES" modalPresentationStyle="fullScreen" id="pXB-Nf-DCX" sceneMemberID="viewController">
+                <navigationController wantsFullScreenLayout="YES" modalPresentationStyle="pageSheet" id="pXB-Nf-DCX" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="2F0-jz-IZe">
-                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="56"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
@@ -433,7 +433,7 @@
                     <navigationItem key="navigationItem" id="3mh-eW-FKB">
                         <barButtonItem key="leftBarButtonItem" systemItem="done" id="DRk-js-69x">
                             <connections>
-                                <segue destination="gB5-vl-nmG" kind="showDetail" id="a2X-xm-PmA"/>
+                                <action selector="doneButton:" destination="y7M-vp-5UF" id="ceP-V4-BqX"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -556,11 +556,10 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="J1e-nH-N2q"/>
                     </view>
-                    <navigationItem key="navigationItem" title="My Dimension Library" id="bc4-RR-NQr">
-                        <barButtonItem key="backBarButtonItem" title="Back" id="HqG-1e-6A0"/>
-                        <barButtonItem key="leftBarButtonItem" title="返回" id="nJx-0T-hu1">
+                    <navigationItem key="navigationItem" title="My Dimension Library" id="S6F-Tx-LlM">
+                        <barButtonItem key="leftBarButtonItem" title="返回" id="i1c-kx-Ilo">
                             <connections>
-                                <segue destination="gB5-vl-nmG" kind="showDetail" id="4FV-ou-ah7"/>
+                                <action selector="backToView:" destination="XcN-OJ-TDJ" id="W4D-he-tqK"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -596,9 +595,9 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="場景庫" id="mTn-PF-59H">
-                        <barButtonItem key="leftBarButtonItem" title="返回" id="YOH-pN-m57">
+                        <barButtonItem key="leftBarButtonItem" title="返回" style="plain" id="2Ly-O3-RoK">
                             <connections>
-                                <segue destination="gB5-vl-nmG" kind="showDetail" id="NhY-HK-CWX"/>
+                                <action selector="cancelButton:" destination="DD4-Cm-Yfv" id="j1G-Xe-Ysu"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -613,9 +612,9 @@
         <!--Navigation Controller-->
         <scene sceneID="lJy-Kw-GGe">
             <objects>
-                <navigationController storyboardIdentifier="Multiuser Scene Library" modalPresentationStyle="fullScreen" id="9cs-9V-eJx" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="Multiuser Scene Library" modalPresentationStyle="pageSheet" id="9cs-9V-eJx" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="958-NO-LwK">
-                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="56"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
@@ -626,7 +625,7 @@
             </objects>
             <point key="canvasLocation" x="870" y="-1715"/>
         </scene>
-        <!--模型管理-->
+        <!--當前地圖上的模型-->
         <scene sceneID="mga-mG-aQv">
             <objects>
                 <tableViewController id="1Tm-Jn-afu" customClass="multiuserModelMenu" customModule="Dimension" customModuleProvider="target" sceneMemberID="viewController">
@@ -649,7 +648,13 @@
                             <outlet property="delegate" destination="1Tm-Jn-afu" id="l9F-ij-hNK"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="模型管理" id="Ekz-b9-aSN"/>
+                    <navigationItem key="navigationItem" title="當前地圖上的模型" id="Ekz-b9-aSN">
+                        <barButtonItem key="leftBarButtonItem" title="返回" style="plain" id="2Gl-yu-hqA">
+                            <connections>
+                                <action selector="cancelbutton:" destination="1Tm-Jn-afu" id="8iD-at-EfB"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="f3N-ZO-Cwr" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -700,6 +705,6 @@
         <image name="首頁圖片" width="180" height="180"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Wq8-Kp-XUV"/>
+        <segue reference="CBf-ON-h0K"/>
     </inferredMetricsTieBreakers>
 </document>

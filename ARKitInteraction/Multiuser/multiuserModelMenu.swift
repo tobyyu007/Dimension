@@ -13,10 +13,12 @@ import SceneKit
 class multiuserModelMenu: UITableViewController
 {
     @IBOutlet var sceneView: VirtualObjectARView!
+    @IBAction func cancelbutton(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print(MultiuserVirtualObjectInteraction.anchor_name)
     }
     
     override func viewWillDisappear(_ animated: Bool)
@@ -50,6 +52,7 @@ class multiuserModelMenu: UITableViewController
     }
     
     static var delModelName: String = ""
+    static var deleteModel = false // 選單選擇刪除 model
     
     /// 選擇了一個項目
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
@@ -64,27 +67,28 @@ class multiuserModelMenu: UITableViewController
         let deleteAction = UIAlertAction(title: "刪除", style: .destructive){ (_) in
             multiuserModelMenu.delModelName = modelName
             MultiuserViewController.deleteModel = true
+            self.dismiss(animated: true, completion: nil)
         }
         
         alertController.addAction(deleteAction)
         
         // 建立按鈕2
-        let moveAction = UIAlertAction(
-            title: "移動",
-            style: .default,
-            handler: nil)
+        let moveAction = UIAlertAction(title: "移動", style: .default)
+        { (_) in
+            multiuserModelMenu.deleteModel = true
+        }
         
         alertController.addAction(moveAction)
         
-        let cancelAction = UIAlertAction(
-            title: "取消",
-            style: .cancel,
-            handler: nil)
+        let cancelAction = UIAlertAction(title: "取消", style: .cancel)
+        {(_) in
+        }
         
         alertController.addAction(cancelAction)
 
         // 顯示提示框
         self.present(alertController, animated: true, completion: nil)
+        tableView.deselectRow(at: indexPath, animated: true)
     }
     
     override func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle

@@ -545,8 +545,9 @@ class MultiuserViewController: UIViewController{
         actionSheet.addAction(cancelAction)
         
         if let popoverController = actionSheet.popoverPresentationController {
-          popoverController.sourceView = self.view
-          popoverController.sourceRect = CGRect(x: 750, y: 50, width: 0, height: 0)
+            popoverController.sourceView = self.view
+            popoverController.sourceRect = CGRect(x: 820, y: 980, width: 0, height: 0)
+            popoverController.permittedArrowDirections = []
         }
         
         self.present(actionSheet, animated: true, completion: nil)

@@ -129,18 +129,27 @@ class MultiuserVirtualObjectInteraction: NSObject, UIGestureRecognizerDelegate {
         
         gesture.rotation = 0
     }
+
     
     @objc
     func didTap(_ gesture: UITapGestureRecognizer) {
         let touchLocation = gesture.location(in: sceneView)
         
-        if let tappedObject = sceneView.virtualObject(at: touchLocation) {
-            // Select a new object.
-            selectedObject = tappedObject
-        } else if let object = selectedObject {
-            // Teleport the object to whereever the user touched the screen.
-            translate(object, basedOn: touchLocation, infinitePlane: false, allowAnimation: false)
-            sceneView.addOrUpdateAnchor(for: object)
+        if(!multiuserModelMenu.deleteModel) // 原本的模型移動方式
+        {
+            print("STO")
+            print(VirtualObject?.self)
+            print("tracked")
+            print(trackedObject)
+            if let tappedObject = sceneView.virtualObject(at: touchLocation) {
+                // Select a new object.
+                selectedObject = tappedObject
+            }
+            else if let object = selectedObject {
+                // Teleport the object to whereever the user touched the screen.
+                translate(object, basedOn: touchLocation, infinitePlane: false, allowAnimation: false)
+                sceneView.addOrUpdateAnchor(for: object)
+            }
         }
     }
     
@@ -164,7 +173,7 @@ class MultiuserVirtualObjectInteraction: NSObject, UIGestureRecognizerDelegate {
                 let anchors = worldMap.anchors
                 for index in 0...anchors.count-1
                 {
-                    if(anchors[index].name != nil)
+                    if(anchors[index].name != nil) // 當有加入模型才會顯示選單
                     {
                         MultiuserVirtualObjectInteraction.anchor_name.insert(anchors[index].name!, at: MultiuserVirtualObjectInteraction.modelCount)
                         MultiuserVirtualObjectInteraction.objectLocation.insert(anchors[index].transform, at: MultiuserVirtualObjectInteraction.modelCount)

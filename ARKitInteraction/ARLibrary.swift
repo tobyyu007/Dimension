@@ -16,7 +16,11 @@ import QuickLook
 class ARLibrary: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, QLPreviewControllerDelegate, QLPreviewControllerDataSource
 {
     @IBOutlet var collectionView: UICollectionView!
-
+    @IBAction func backToView(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    
     /// 儲存 models 資訊
     var models: [String] = []
     
