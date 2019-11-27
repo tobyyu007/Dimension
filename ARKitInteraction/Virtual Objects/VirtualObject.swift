@@ -208,6 +208,7 @@ class VirtualObject: SCNReferenceNode {
         }
         
         SCNTransaction.commit()
+        MultiuserVirtualObjectInteraction.moved = true
     }
     
     /// - Tag: AdjustOntoPlaneAnchor

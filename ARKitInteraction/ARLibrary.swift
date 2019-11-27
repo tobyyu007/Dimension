@@ -81,7 +81,8 @@ class ARLibrary: UIViewController, UICollectionViewDelegate, UICollectionViewDat
         if let cell = cell {
             //cell.modelThumbnail.image = thumbnails[indexPath.item]
             cell.modelThumbnail.image = thumbnails[4]  // 列表 model 圖片
-            cell.modelTitle.text = models[indexPath.item]  // 列表 model 名稱
+            let title = models[indexPath.item]
+            cell.modelTitle.text = title.capitalized  // 列表 model 名稱
             //cell.modelTitle.text = title.capitalized
             
             //delete button part
@@ -118,7 +119,7 @@ class ARLibrary: UIViewController, UICollectionViewDelegate, UICollectionViewDat
         }
         else // usdz 檔，使用 Quick View 預覽
         {
-            present(previewController, animated: true)
+            present(previewController, animated: true, completion: nil)
         }
     }
     
@@ -142,6 +143,7 @@ class ARLibrary: UIViewController, UICollectionViewDelegate, UICollectionViewDat
                 let modelLocation: String = urlPath!.path
                 if modelLocation.contains(models[thumbnailIndex])
                 {
+                    print("model")
                     print(modelLocation)
                     if !modelLocation.contains(".usdz")
                     {
@@ -171,7 +173,7 @@ class ARLibrary: UIViewController, UICollectionViewDelegate, UICollectionViewDat
                 let modelLocation: String = urlPath!.path
                 if modelLocation.contains(models[thumbnailIndex])
                 {
-                    path = path + "/" + filepath  // 結合出完整的路徑
+                    path = "file:///" + path + "/" + filepath  // 結合出完整的路徑
                     return URL(string: path)! as QLPreviewItem  // 傳回選擇的檔案的路徑
                 }
             }

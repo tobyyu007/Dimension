@@ -27,7 +27,7 @@ extension MultiuserViewController: UIGestureRecognizerDelegate {
     
     /// Determines if the tap gesture for presenting the `VirtualObjectSelectionViewController` should be used.
     func gestureRecognizerShouldBegin(_: UIGestureRecognizer) -> Bool {
-        return virtualObjectLoader.loadedObjects.isEmpty
+        return VirtualObjectLoader.loadedObjects.isEmpty
     }
     
     func gestureRecognizer(_: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith _: UIGestureRecognizer) -> Bool {
@@ -80,7 +80,7 @@ extension MultiuserViewController: UIPopoverPresentationControllerDelegate {
         self.objectsViewController = objectsViewController
         
         // Set all rows of currently placed objects to selected.
-        for object in virtualObjectLoader.loadedObjects {
+        for object in VirtualObjectLoader.loadedObjects {
             guard let index = VirtualObject.availableObjects.index(of: object) else { continue }
             objectsViewController.selectedVirtualObjectRows.insert(index)
         }

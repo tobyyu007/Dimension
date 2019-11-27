@@ -24,7 +24,7 @@
                                 <edgeInsets key="layoutMargins" top="8" left="8" bottom="8" right="8"/>
                                 <variation key="heightClass=compact-widthClass=compact" insetsLayoutMarginsFromSafeArea="YES" layoutMarginsFollowReadableWidth="YES"/>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageSizeForAccessibilityContentSizeCategory="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h4H-bi-STF">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" adjustsImageSizeForAccessibilityContentSizeCategory="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h4H-bi-STF">
                                 <rect key="frame" x="87" y="444.5" width="239" height="239"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="h4H-bi-STF" secondAttribute="height" multiplier="1:1" id="0bY-QD-vCV"/>
@@ -221,6 +221,13 @@
                             <activityIndicatorView hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="7Cj-Ok-XiG">
                                 <rect key="frame" x="166" y="801.5" width="82" height="43"/>
                             </activityIndicatorView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qUW-Yp-Kbk">
+                                <rect key="frame" x="10" y="437" width="396" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="1" green="0.12057040970000001" blue="0.10829339659999999" alpha="0.84705882349999995" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C9W-A6-asP">
                                 <rect key="frame" x="186" y="726" width="42" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -281,20 +288,20 @@
                         <outlet property="addObjectButton" destination="8zi-pg-GTr" id="bw4-L9-3VE"/>
                         <outlet property="mappingStatusLabel" destination="C9W-A6-asP" id="bTu-op-wTV"/>
                         <outlet property="sceneView" destination="OH2-Z3-Vvr" id="tMN-NO-x1a"/>
+                        <outlet property="selectedmodellabel" destination="qUW-Yp-Kbk" id="xsy-wd-uHw"/>
                         <outlet property="sendMapButton" destination="KOB-al-gjj" id="DUD-yX-stN"/>
                         <outlet property="spinner" destination="7Cj-Ok-XiG" id="RV6-IL-Dr6"/>
                         <segue destination="G78-RB-bme" kind="popoverPresentation" identifier="showObjects" popoverAnchorView="8zi-pg-GTr" id="YZS-4C-Wyg">
                             <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
                         </segue>
                         <segue destination="9cs-9V-eJx" kind="showDetail" identifier="multiusercameraToSceneLibrary" id="DTa-Z9-sMf"/>
-                        <segue destination="Tey-P9-mV1" kind="show" identifier="showModelMenu" id="9BW-Cx-XBK"/>
                         <segue destination="C50-Ey-w0r" kind="showDetail" identifier="initialize" id="OgZ-kb-xGG"/>
                         <segue destination="cp5-8r-M7B" kind="show" identifier="modelmanager" id="Np5-2u-mJX"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mqN-EZ-8Zk" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="56.799999999999997" y="-866.74876847290648"/>
+            <point key="canvasLocation" x="56.521739130434788" y="-867.1875"/>
         </scene>
         <!--Virtual Object Selection View Controller-->
         <scene sceneID="PFN-bT-JUz">
@@ -380,7 +387,7 @@
         <!--Multiuser Web Browser-->
         <scene sceneID="c1R-fR-CVR">
             <objects>
-                <viewController storyboardIdentifier="Multiuser Web Browser" title="Multiuser Web Browser" modalPresentationStyle="fullScreen" useStoryboardIdentifierAsRestorationIdentifier="YES" id="y7M-vp-5UF" customClass="WebView" customModule="Dimension" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Multiuser Web Browser" title="Multiuser Web Browser" useStoryboardIdentifierAsRestorationIdentifier="YES" id="y7M-vp-5UF" customClass="WebView" customModule="Dimension" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="wCJ-Vg-yNw">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -448,7 +455,7 @@
         <!--My Dimension Library-->
         <scene sceneID="Zdh-5G-px0">
             <objects>
-                <viewController modalPresentationStyle="fullScreen" id="XcN-OJ-TDJ" customClass="ARLibrary" customModule="Dimension" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="XcN-OJ-TDJ" customClass="ARLibrary" customModule="Dimension" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="SKu-XQ-OOn">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -574,7 +581,7 @@
         <!--場景庫-->
         <scene sceneID="4sv-kL-TW6">
             <objects>
-                <tableViewController modalPresentationStyle="fullScreen" id="DD4-Cm-Yfv" customClass="multiuserSceneLibrary" customModule="Dimension" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="DD4-Cm-Yfv" customClass="multiuserSceneLibrary" customModule="Dimension" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="zmj-Px-y3C">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -625,58 +632,6 @@
             </objects>
             <point key="canvasLocation" x="870" y="-1715"/>
         </scene>
-        <!--當前地圖上的模型-->
-        <scene sceneID="mga-mG-aQv">
-            <objects>
-                <tableViewController id="1Tm-Jn-afu" customClass="multiuserModelMenu" customModule="Dimension" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="KrB-Ul-xNj">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" id="G87-Lz-J5v">
-                                <rect key="frame" x="0.0" y="28" width="414" height="43.5"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="G87-Lz-J5v" id="9UQ-jp-OXE">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </tableViewCellContentView>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="1Tm-Jn-afu" id="ISk-hq-uHQ"/>
-                            <outlet property="delegate" destination="1Tm-Jn-afu" id="l9F-ij-hNK"/>
-                        </connections>
-                    </tableView>
-                    <navigationItem key="navigationItem" title="當前地圖上的模型" id="Ekz-b9-aSN">
-                        <barButtonItem key="leftBarButtonItem" title="返回" style="plain" id="2Gl-yu-hqA">
-                            <connections>
-                                <action selector="cancelbutton:" destination="1Tm-Jn-afu" id="8iD-at-EfB"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="f3N-ZO-Cwr" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="870" y="-117"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="xpj-Ue-JI3">
-            <objects>
-                <navigationController modalPresentationStyle="pageSheet" id="Tey-P9-mV1" sceneMemberID="viewController">
-                    <navigationItem key="navigationItem" id="i0e-6P-9wG"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="ihM-jE-Clg">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="56"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <connections>
-                        <segue destination="1Tm-Jn-afu" kind="relationship" relationship="rootViewController" id="POs-aA-Gyc"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="SM4-R3-75v" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="57" y="-117"/>
-        </scene>
         <!--Navigation Controller-->
         <scene sceneID="Ptc-0j-3qa">
             <objects>
@@ -705,6 +660,6 @@
         <image name="首頁圖片" width="180" height="180"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="CBf-ON-h0K"/>
+        <segue reference="Wq8-Kp-XUV"/>
     </inferredMetricsTieBreakers>
 </document>

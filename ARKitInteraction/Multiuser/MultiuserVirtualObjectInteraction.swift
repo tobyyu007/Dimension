@@ -26,6 +26,10 @@ class MultiuserVirtualObjectInteraction: NSObject, UIGestureRecognizerDelegate {
      */
     var selectedObject: VirtualObject?
     
+    static var can_move=false
+    var is_longpressed=false
+    static var moved = false // 移動完了 -> 重新 sendWorldMap (為了 startMulti 使用)
+    
     /// The object that is tracked for use by the pan and rotation gestures.
     private var trackedObject: VirtualObject? {
         didSet {
@@ -82,6 +86,8 @@ class MultiuserVirtualObjectInteraction: NSObject, UIGestureRecognizerDelegate {
 
             gesture.setTranslation(.zero, in: sceneView)
             
+            MultiuserVirtualObjectInteraction.moved = true
+            
         case .changed:
             // Ignore changes to the pan gesture until the threshold for displacment has been exceeded.
             break
@@ -137,18 +143,18 @@ class MultiuserVirtualObjectInteraction: NSObject, UIGestureRecognizerDelegate {
         
         if(!multiuserModelMenu.deleteModel) // 原本的模型移動方式
         {
-            print("STO")
-            print(VirtualObject?.self)
-            print("tracked")
-            print(trackedObject)
             if let tappedObject = sceneView.virtualObject(at: touchLocation) {
                 // Select a new object.
                 selectedObject = tappedObject
             }
             else if let object = selectedObject {
                 // Teleport the object to whereever the user touched the screen.
+                if(MultiuserVirtualObjectInteraction.can_move==true){
                 translate(object, basedOn: touchLocation, infinitePlane: false, allowAnimation: false)
-                sceneView.addOrUpdateAnchor(for: object)
+                    sceneView.addOrUpdateAnchor(for: object)
+                    MultiuserVirtualObjectInteraction.can_move=false
+                    MultiuserVirtualObjectInteraction.moved = true
+                }
             }
         }
     }
@@ -167,38 +173,54 @@ class MultiuserVirtualObjectInteraction: NSObject, UIGestureRecognizerDelegate {
             //When lognpress is start or running
         }
         else {
-            func getAnchor(_ worldMap: ARWorldMap)
+            /*  func getAnchor(_ worldMap: ARWorldMap)
+             {
+             //print(worldMap.anchors)
+             let anchors = worldMap.anchors
+             for index in 0...anchors.count-1
+             {
+             if(anchors[index].name != nil) // 當有加入模型才會顯示選單
+             {
+             MultiuserVirtualObjectInteraction.anchor_name.insert(anchors[index].name!, at: MultiuserVirtualObjectInteraction.modelCount)
+             MultiuserVirtualObjectInteraction.objectLocation.insert(anchors[index].transform, at: MultiuserVirtualObjectInteraction.modelCount)
+             MultiuserVirtualObjectInteraction.modelAnchors.insert(anchors[index], at: MultiuserVirtualObjectInteraction.modelCount)
+             MultiuserVirtualObjectInteraction.modelCount += 1
+             }
+             }
+             
+             if(!MultiuserVirtualObjectInteraction.anchor_name.isEmpty)
+             {
+             MultiuserViewController.showModelMenu = true
+             MultiuserVirtualObjectInteraction.modelCount = 0
+             }
+             }
+             
+             if(!MultiuserViewController.showModelMenu)
+             {
+             sceneView.session.getCurrentWorldMap {(worldMap, error) in
+             guard let worldMap = worldMap else {
+             return print("Error")
+             }
+             getAnchor(worldMap)
+             }
+             }*/
+            
+            is_longpressed=true
+            /*var index = 0
+            for i in 0...VirtualObjectLoader.loadedObjects.count-1
             {
-                //print(worldMap.anchors)
-                let anchors = worldMap.anchors
-                for index in 0...anchors.count-1
+                if VirtualObjectLoader.loadedObjects[i].modelName == selectedObject?.modelName
                 {
-                    if(anchors[index].name != nil) // 當有加入模型才會顯示選單
-                    {
-                        MultiuserVirtualObjectInteraction.anchor_name.insert(anchors[index].name!, at: MultiuserVirtualObjectInteraction.modelCount)
-                        MultiuserVirtualObjectInteraction.objectLocation.insert(anchors[index].transform, at: MultiuserVirtualObjectInteraction.modelCount)
-                        MultiuserVirtualObjectInteraction.modelAnchors.insert(anchors[index], at: MultiuserVirtualObjectInteraction.modelCount)
-                        MultiuserVirtualObjectInteraction.modelCount += 1
-                    }
-                }
-                
-                if(!MultiuserVirtualObjectInteraction.anchor_name.isEmpty)
-                {
-                    MultiuserViewController.showModelMenu = true
-                    MultiuserVirtualObjectInteraction.modelCount = 0
+                    index = i
                 }
             }
-            
-            if(!MultiuserViewController.showModelMenu)
-            {
-                sceneView.session.getCurrentWorldMap {(worldMap, error) in
-                    guard let worldMap = worldMap else {
-                        return print("Error")
-                    }
-                    getAnchor(worldMap)
-                }
+            VirtualObjectLoader.loadedObjects[index].removeFromParentNode()
+            VirtualObjectLoader.loadedObjects[index].unload()
+            VirtualObjectLoader.loadedObjects.remove(at: index)
+            if let anchor = selectedObject?.anchor {
+                sceneView.session.remove(anchor: anchor)
             }
-            
+            selectedObject = nil*/
         }
     }
     

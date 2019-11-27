@@ -115,7 +115,7 @@ class VirtualObjectSelectionViewController: UITableViewController {
         }
         
         cell.modelName = virtualObjects[indexPath.row].modelName
-
+        
         if selectedVirtualObjectRows.contains(indexPath.row) {
             cell.accessoryType = .checkmark
         } else {
@@ -128,7 +128,7 @@ class VirtualObjectSelectionViewController: UITableViewController {
         } else {
             cell.vibrancyView.alpha = 0.1
         }
-
+ 
         return cell
     }
     

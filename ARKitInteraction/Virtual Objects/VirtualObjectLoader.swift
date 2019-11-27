@@ -13,7 +13,7 @@ import ARKit
  objects quickly once they are needed.
 */
 class VirtualObjectLoader {
-    private(set) var loadedObjects = [VirtualObject]()
+    static var loadedObjects = [VirtualObject]()
     
     private(set) var isLoading = false
     
@@ -26,7 +26,13 @@ class VirtualObjectLoader {
     func loadVirtualObject(_ object: VirtualObject, loadedHandler: @escaping (VirtualObject) -> Void) {
         isLoading = true
         
-        loadedObjects.append(object)
+        VirtualObjectLoader.loadedObjects.append(object)
+        print("new")
+        for i in 0...VirtualObjectLoader.loadedObjects.count-1
+        {
+            print(VirtualObjectLoader.loadedObjects[i].modelName)
+            print(VirtualObjectLoader.loadedObjects[i].anchor)
+        }
         
         // Load the content into the reference node.
         DispatchQueue.global(qos: .userInitiated).async {
@@ -41,16 +47,16 @@ class VirtualObjectLoader {
     
     func removeAllVirtualObjects() {
         // Reverse the indices so we don't trample over indices as objects are removed.
-        for index in loadedObjects.indices.reversed() {
+        for index in VirtualObjectLoader.loadedObjects.indices.reversed() {
             removeVirtualObject(at: index)
         }
     }
     
     func removeVirtualObject(at index: Int) {
-        guard loadedObjects.indices.contains(index) else { return }
+        guard VirtualObjectLoader.loadedObjects.indices.contains(index) else { return }
         
-        loadedObjects[index].removeFromParentNode()
-        loadedObjects[index].unload()
-        loadedObjects.remove(at: index)
+        VirtualObjectLoader.loadedObjects[index].removeFromParentNode()
+        VirtualObjectLoader.loadedObjects[index].unload()
+        VirtualObjectLoader.loadedObjects.remove(at: index)
     }
 }

@@ -10,10 +10,9 @@ import ARKit
 extension MultiuserViewController: ARSCNViewDelegate, ARSessionDelegate {
     
     // MARK: - ARSCNViewDelegate
-    
     func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval) {
         
-        let isAnyObjectInView = virtualObjectLoader.loadedObjects.contains { object in
+        let isAnyObjectInView = VirtualObjectLoader.loadedObjects.contains { object in
             return sceneView.isNode(object, insideFrustumOf: sceneView.pointOfView!)
         }
         
@@ -52,29 +51,35 @@ extension MultiuserViewController: ARSCNViewDelegate, ARSessionDelegate {
             }
         }
         */
-        
-        if VirtualObjectARView.modelName == nil && MultiuserViewController.received == true && anchor.name != nil  // 從別人下載地圖載入模型的情況
+        if(dup_load)
         {
-            node.addChildNode(loadModel(anchor.name!))
+            if let name = anchor.name, name.hasPrefix(VirtualObjectARView.modelName) {
+                print("pooh3"+VirtualObjectARView.modelName)
+                node.addChildNode(loadRedPandaModel())
+                //node.addChildNode(loadModel(name))
+                dup_load = false
+            }
         }
         else  // "+" 放置模型的情況
         {
-            if let name = anchor.name, name.hasPrefix(VirtualObjectARView.modelName)
+            DispatchQueue.main.async {
+            if let name = anchor.name
             {
-                node.addChildNode(loadModel(name))
-                
+                node.addChildNode(self.loadModel(name))
+            }
             }
         }
     }
+
     
     func renderer(_ renderer: SCNSceneRenderer, didUpdate node: SCNNode, for anchor: ARAnchor) {
         updateQueue.async {
             if let planeAnchor = anchor as? ARPlaneAnchor {
-                for object in self.virtualObjectLoader.loadedObjects {
+                for object in VirtualObjectLoader.loadedObjects {
                     object.adjustOntoPlaneAnchor(planeAnchor, using: node)
                 }
             } else {
-                if let objectAtAnchor = self.virtualObjectLoader.loadedObjects.first(where: { $0.anchor == anchor }) {
+                if let objectAtAnchor = VirtualObjectLoader.loadedObjects.first(where: { $0.anchor == anchor }) {
                     objectAtAnchor.simdPosition = anchor.transform.translation
                     objectAtAnchor.anchor = anchor
                 }
@@ -92,7 +97,7 @@ extension MultiuserViewController: ARSCNViewDelegate, ARSessionDelegate {
             statusViewController.cancelScheduledMessage(for: .trackingStateEscalation)
             
             // Unhide content after successful relocalization.
-            virtualObjectLoader.loadedObjects.forEach { $0.isHidden = false }
+            VirtualObjectLoader.loadedObjects.forEach { $0.isHidden = false }
         }
         updateSessionInfoLabel(for: session.currentFrame!, trackingState: camera.trackingState)
     }
@@ -127,13 +132,27 @@ extension MultiuserViewController: ARSCNViewDelegate, ARSessionDelegate {
             sendMapButton.isEnabled = !MultiuserViewController.multipeerSession.connectedPeers.isEmpty
         }
         //print(for: frame, trackingState: frame.camera.trackingState)
+        if MultiuserViewController.receivedata == false
+        {
+            sendMapButton.isEnabled = false
+        }
         mappingStatusLabel.text = frame.worldMappingStatus.description
         updateSessionInfoLabel(for: frame, trackingState: frame.camera.trackingState)
+        if let select_name=virtualObjectInteraction.selectedObject?.modelName
+        {
+            selectedmodellabel.text = " "
+            //selectedmodellabel.text = "selected object: "+select_name
+        }
+        else
+        {
+            selectedmodellabel.text = " "
+            //selectedmodellabel.text = "WTF"
+        }
     }
     
     func sessionWasInterrupted(_ session: ARSession) {
         // Hide content before going into the background.
-        virtualObjectLoader.loadedObjects.forEach { $0.isHidden = true }
+        VirtualObjectLoader.loadedObjects.forEach { $0.isHidden = true }
     }
     
     func sessionShouldAttemptRelocalization(_ session: ARSession) -> Bool {

@@ -19,7 +19,7 @@ class multiuserSceneLibrary: UITableViewController
     
     /// 儲存場景資訊
     var scenes: [String] = []
-    
+    static var is_loadscene=false
     /// 從 Documents 中抓 model 列表
     func getScenes()
     {
@@ -129,6 +129,7 @@ class multiuserSceneLibrary: UITableViewController
         
         multiuserSceneLibrary.multiuserselectedSceneURL = documentsURL
         multiuserloadScene = true
+        multiuserSceneLibrary.is_loadscene=true
         performSegue(withIdentifier: "multiuserbackToCamera", sender: self)  // 切換 storyboard 回 AR 相機畫面
     }
     

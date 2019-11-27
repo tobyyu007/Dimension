@@ -99,6 +99,8 @@ class MultiuserVirtualObjectARView: ARSCNView {
     func addOrUpdateAnchor(for object: VirtualObject) {
         // If the anchor is not nil, remove it from the session.
         if let anchor = object.anchor {
+            print("anchor")
+            print(anchor)
             session.remove(anchor: anchor)
         }
         
@@ -109,14 +111,13 @@ class MultiuserVirtualObjectARView: ARSCNView {
         let position = object.simdWorldTransform
         
         session.add(anchor: newAnchor)
-        
-        if MultiuserViewController.received == true
+        print(newAnchor)
+        if MultiuserViewController.receivedata == true
         {
             // Send the anchor info to peers, so they can place the same content.
             guard let data = try? NSKeyedArchiver.archivedData(withRootObject: newAnchor, requiringSecureCoding: true)
                 else { fatalError("can't encode anchor") }
             MultiuserViewController.multipeerSession.sendToAllPeers(data)
-            MultiuserViewController.received = false
         }
         
         

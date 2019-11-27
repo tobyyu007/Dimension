@@ -27,6 +27,9 @@ class MultiuserViewController: UIViewController{
     
     @IBOutlet weak var mappingStatusLabel: UILabel!
     
+    @IBOutlet weak var selectedmodellabel: UILabel!
+    
+    var node:SCNNode!
     // MARK: - UI Elements
     
     // 場景路徑
@@ -177,6 +180,7 @@ class MultiuserViewController: UIViewController{
                 let worldMap = self.unarchive(worldMapData: worldMapData) else { return }
             self.resetTrackingConfiguration(with: worldMap)
             multiuserloadScene = false
+            multiuserSceneLibrary.is_loadscene=false
         }
         else // 正常開啟狀況
         {
@@ -199,11 +203,84 @@ class MultiuserViewController: UIViewController{
     
     func checkDelete(){
         // Scheduling timer to Call the function "checkDelete" with the interval of 1 seconds
-        timer = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(self.updateCounting), userInfo: nil, repeats: true)
+        timer = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(self.longpressed_show), userInfo: nil, repeats: true)
+    }
+    
+    func shareSessionForDeleteOrMove() {
+        session.getCurrentWorldMap { worldMap, error in
+            guard let map = worldMap
+                else { print("Error1: \(error!.localizedDescription)"); return }
+            guard let data = try? NSKeyedArchiver.archivedData(withRootObject: map, requiringSecureCoding: true)
+                else { fatalError("can't encode map") }
+            MultiuserViewController.multipeerSession.sendToAllPeers(data)
+            MultiuserViewController.updateWorldMapInMulti = true
+        }
+    }
+    
+    @objc func longpressed_show(){
+        
+        if virtualObjectInteraction.is_longpressed==true
+        {
+            let alertController = UIAlertController(
+                title: "模型操作",
+                message: "",
+                preferredStyle: .alert)
+            
+            /*
+             建立[取消]按鈕
+             注意 style .cancel 的按鈕在多選項畫面時，都會固定在「最下方」
+             即使這段程式碼是在 最前面
+             */
+            let cancelAction = UIAlertAction(
+                title: "取消",
+                style: .cancel,
+                handler: nil)
+            
+            alertController.addAction(cancelAction)
+            
+            // 建立按鈕1
+            let okAction = UIAlertAction(title: "刪除",style: .default){ (_) in
+                var index = 0
+                for i in 0...VirtualObjectLoader.loadedObjects.count-1
+                {
+                    if VirtualObjectLoader.loadedObjects[i].modelName == self.virtualObjectInteraction.selectedObject?.modelName
+                    {
+                        index = i
+                    }
+                }
+                VirtualObjectLoader.loadedObjects[index].removeFromParentNode()
+                VirtualObjectLoader.loadedObjects[index].unload()
+                VirtualObjectLoader.loadedObjects.remove(at: index)
+                if let anchor = self.virtualObjectInteraction.selectedObject?.anchor {
+                    self.sceneView.session.remove(anchor: anchor)
+                }
+                self.virtualObjectInteraction.selectedObject = nil
+                MultiuserVirtualObjectInteraction.moved = true
+            }
+            
+            alertController.addAction(okAction)
+            
+            // 建立按鈕2
+            let ok1Action = UIAlertAction(title: "移動",style: .default){ (_) in
+                    MultiuserVirtualObjectInteraction.can_move=true
+            }
+            
+            alertController.addAction(ok1Action)
+            
+            // 顯示提示框
+            self.present(alertController, animated: true, completion: nil)
+            virtualObjectInteraction.is_longpressed=false
+        }
+        
+        if MultiuserVirtualObjectInteraction.moved
+        {
+            self.shareSessionForDeleteOrMove()
+            MultiuserVirtualObjectInteraction.moved = false
+        }
     }
     
     static var deleteModel = false // 從 modelMenu 收到刪除 model 的指令
-
+    
     @objc func updateCounting(){
 
         if(MultiuserViewController.showModelMenu)
@@ -222,8 +299,6 @@ class MultiuserViewController: UIViewController{
                     modelNameToDel = String(substring)
                 }
             }
-            print(modelNameToDel)
-            print("mNTD")
             self.sceneView.scene.rootNode.enumerateChildNodes { (node, _) in
                 print(node.name)
                 if node.name == modelNameToDel{
@@ -320,19 +395,18 @@ class MultiuserViewController: UIViewController{
     static var receivedata: Bool = true
     
     /// - Tag: ReceiveData
-    static var received: Bool = false  // 是否有收到地圖
-    var receivedMap: Bool = false // 是否有收到 worldMap -> 開啟即時傳送功能
+    static var startMulti: Bool = false // 開收到 worldMap -> 開始即時 (最新版)
+    static var updateWorldMapInMulti: Bool = false // In startMulti 模式後，再更新或移動 model
     
     func receivedData(_ data: Data, from peer: MCPeerID) {
         if MultiuserViewController.receivedata
         {
-            if !receivedMap  // 收到 world map 更新
+            if !MultiuserViewController.startMulti // 收到 world map 更新 或 In startMulti 模式後，再更新或移動 model
             {
                 do
                 {
                     if let worldMap = try NSKeyedUnarchiver.unarchivedObject(ofClass: ARWorldMap.self, from: data) {
                         // Run the session with the received world map.
-                        MultiuserViewController.received = true
                         let configuration = ARWorldTrackingConfiguration()
                         configuration.planeDetection = .horizontal
                         configuration.initialWorldMap = worldMap
@@ -340,21 +414,23 @@ class MultiuserViewController: UIViewController{
                         
                         // Remember who provided the map for showing UI feedback.
                         mapProvider = peer
-                        receivedMap = true
+                        MultiuserViewController.startMulti = true
+                        VirtualObjectARView.modelName = nil
+                        MultiuserViewController.updateWorldMapInMulti = false
                     }
                 }
                 catch
                 {
-                    print("can't decode data recieved from \(peer)")
+                    print("can't decode map data recieved from \(peer)")
                 }
             }
             else  // 收到 model 更新
             {
                 do
                 {
+                    VirtualObjectARView.modelName = nil
                     if let anchor = try NSKeyedUnarchiver.unarchivedObject(ofClass: ARAnchor.self, from: data) {
                         // Add anchor to the session, ARSCNView delegate adds visible content.
-                        MultiuserViewController.received = true
                         modelProvider = peer
                         sceneView.session.add(anchor: anchor)
                     }
@@ -364,7 +440,26 @@ class MultiuserViewController: UIViewController{
                 }
                 catch
                 {
-                    print("can't decode data recieved from \(peer)")
+                    do
+                    {
+                        if let worldMap = try NSKeyedUnarchiver.unarchivedObject(ofClass: ARWorldMap.self, from: data) {
+                            // Run the session with the received world map.
+                            let configuration = ARWorldTrackingConfiguration()
+                            configuration.planeDetection = .horizontal
+                            configuration.initialWorldMap = worldMap
+                            sceneView.session.run(configuration, options: [.resetTracking, .removeExistingAnchors])
+                            
+                            // Remember who provided the map for showing UI feedback.
+                            mapProvider = peer
+                            MultiuserViewController.startMulti = true
+                            VirtualObjectARView.modelName = nil
+                            MultiuserViewController.updateWorldMapInMulti = false
+                        }
+                    }
+                    catch
+                    {
+                        print("can't decode map data recieved from \(peer)")
+                    }
                 }
             }
         }
@@ -401,6 +496,7 @@ class MultiuserViewController: UIViewController{
             guard let data = try? NSKeyedArchiver.archivedData(withRootObject: map, requiringSecureCoding: true)
                 else { fatalError("can't encode map") }
             MultiuserViewController.multipeerSession.sendToAllPeers(data)
+            MultiuserViewController.startMulti = true
         }
     }
 
@@ -432,19 +528,56 @@ class MultiuserViewController: UIViewController{
         
         statusViewController.showMessage(message, autoHide: true)
     }
-    
     @IBAction func moreModels(_ sender: UIButton) // 按下“更多”按鈕
     {
         
     }
     
-    
+    var dup_load=false
     /// 根據 modelName 載入模型 (同時運作在放置以及下載模型中）
+    
     func loadModel(_ anchorName: String) -> SCNNode {
         //let sceneURL = Bundle.main.url(forResource: "max", withExtension: "scn", subdirectory: "Assets.scnassets")!
-        if VirtualObjectARView.modelName != nil  // "+" 放置模型的情況
+        
+        if multiuserSceneLibrary.is_loadscene==true
+        {
+            var modelURL: URL?
+            let documentsURL = Bundle.main.url(forResource: "Models.scnassets", withExtension: nil)!
+            let path:String = documentsURL.path  // URL 轉成 String
+            let enumerator = FileManager.default.enumerator(atPath: path)
+            let filePaths = enumerator?.allObjects as! [String]
+            for filepath in filePaths
+            {
+                if filepath.contains("usdz") || filepath.contains("scn") // 只抓取副檔名為 "usdz" 以及 "scn" 的檔案
+                {
+                    if filepath.contains(anchorName)
+                    {
+                        var newPath = "file:///private" + path + "/" + filepath  // 結合出完整的路徑
+                        newPath = newPath.replacingOccurrences(of: " ", with: "%20")  // 修正路徑中有空格的問題
+                        modelURL = URL(string: newPath)
+                        break
+                    }
+                }
+            }
+            let referenceNode = SCNReferenceNode(url: modelURL!)!
+            referenceNode.load()
+            return referenceNode
+        }
+        else if VirtualObjectARView.modelName != nil  // "+" 放置模型的情況
         {
             let referenceNode = SCNReferenceNode(url: VirtualObjectARView.modelURL)!
+            print(dup_load)
+            if (dup_load)
+            {
+                let hitTestResult = sceneView
+                    .hitTest(screenCenter, types: [.existingPlaneUsingGeometry, .estimatedHorizontalPlane])
+                    .first
+                
+                // Place an anchor for a virtual character. The model appears in renderer(_:didAdd:for:).
+                print("pooh2"+VirtualObjectARView.modelName)
+                let anchor = ARAnchor(name: VirtualObjectARView.modelName, transform: hitTestResult!.worldTransform)
+                sceneView.session.add(anchor: anchor)
+            }
             //referenceNode.load()
             return referenceNode
         }
@@ -585,5 +718,31 @@ class MultiuserViewController: UIViewController{
     func archive(worldMap: ARWorldMap) throws {
         let data = try NSKeyedArchiver.archivedData(withRootObject: worldMap, requiringSecureCoding: true)
         try data.write(to: self.worldMapURL, options: [.atomic])
+    }
+    
+    func loadRedPandaModel() -> SCNNode {
+        let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+        var path:String = documentsURL.path  // URL 轉成 String
+        let enumerator = FileManager.default.enumerator(atPath: path)
+        let filePaths = enumerator?.allObjects as! [String]
+        for filepath in filePaths
+        {
+            let urlPath = URL(string: filepath)  // String 轉成 URLma
+           
+            if (urlPath?.pathExtension == "usdz" || urlPath?.pathExtension == "scn" && (urlPath?.path.contains(VirtualObjectARView.modelName))!) // 只抓取副檔名為 "usdz" 以及 "scn" 的檔案
+            {
+                //var/mobile/Containers/Data/Application/09C3D7E3-B7A8-4EC0-B8A0-04E4E9E1F9D0/Documents/Models.scnassets/cup/cup.scn
+                path = "file://"+path + "/" + filepath  // 結合出完整的路徑
+                print(URL(string: path))
+                let referenceNode = SCNReferenceNode(url: URL(string: path)!)!
+                referenceNode.load()
+                return referenceNode
+            }
+        }
+        let sceneURL = Bundle.main.url(forResource: "max", withExtension: "scn", subdirectory: "Assets.scnassets")!
+        print(sceneURL)
+        let referenceNode = SCNReferenceNode(url: sceneURL)!
+        referenceNode.load()
+        return referenceNode
     }
 }

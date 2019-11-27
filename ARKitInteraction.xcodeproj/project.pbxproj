@@ -38,6 +38,8 @@
 		DAD5A4892386853500110AD4 /* multiuserModelMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD5A4882386853500110AD4 /* multiuserModelMenu.swift */; };
 		DAF19CB022FB3B85005AF6F2 /* ARLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF19CAF22FB3B85005AF6F2 /* ARLibrary.swift */; };
 		DAF19CB222FB3BDA005AF6F2 /* LibraryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAF19CB122FB3BDA005AF6F2 /* LibraryCollectionViewCell.swift */; };
+		EA96A3F8238BB9BE002283C7 /* Assets.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = EA96A3F7238BB9BE002283C7 /* Assets.scnassets */; };
+		EAA3D8C9238B1E0A008D17AB /* models in Resources */ = {isa = PBXBuildFile; fileRef = EAA3D8C8238B1E0A008D17AB /* models */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -76,6 +78,8 @@
 		DAD5A4882386853500110AD4 /* multiuserModelMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = multiuserModelMenu.swift; sourceTree = "<group>"; };
 		DAF19CAF22FB3B85005AF6F2 /* ARLibrary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARLibrary.swift; sourceTree = "<group>"; };
 		DAF19CB122FB3BDA005AF6F2 /* LibraryCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryCollectionViewCell.swift; sourceTree = "<group>"; };
+		EA96A3F7238BB9BE002283C7 /* Assets.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = Assets.scnassets; sourceTree = "<group>"; };
+		EAA3D8C8238B1E0A008D17AB /* models */ = {isa = PBXFileReference; lastKnownFileType = folder; path = models; sourceTree = "<group>"; };
 		F84AB7F0F84AC1A000000001 /* LICENSE.txt */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -119,6 +123,8 @@
 		1488324C1EFC3ED00043E0AB /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				EA96A3F7238BB9BE002283C7 /* Assets.scnassets */,
+				EAA3D8C8238B1E0A008D17AB /* models */,
 				3929C49E1E89EE4400E00B60 /* Models.scnassets */,
 				3929C4921E89EC2C00E00B60 /* Assets.xcassets */,
 				3929C4971E89EC2C00E00B60 /* Info.plist */,
@@ -275,6 +281,8 @@
 			files = (
 				3929C49F1E89EE4400E00B60 /* Models.scnassets in Resources */,
 				39D8DC1B1E8ADAE600386B05 /* LaunchScreen.storyboard in Resources */,
+				EAA3D8C9238B1E0A008D17AB /* models in Resources */,
+				EA96A3F8238BB9BE002283C7 /* Assets.scnassets in Resources */,
 				8A50E8962386FB6F0053889A /* Assets.xcassets in Resources */,
 				3929C4911E89EC2C00E00B60 /* Main.storyboard in Resources */,
 			);
@@ -460,7 +468,7 @@
 				INFOPLIST_FILE = "$(SRCROOT)/ARKitInteraction/Resources/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.Dimension.TTYL;
+				PRODUCT_BUNDLE_IDENTIFIER = "dimes-ttyl.toby";
 				PRODUCT_NAME = Dimension;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos;
@@ -482,7 +490,7 @@
 				INFOPLIST_FILE = "$(SRCROOT)/ARKitInteraction/Resources/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.Dimension.TTYL;
+				PRODUCT_BUNDLE_IDENTIFIER = "dimes-ttyl.toby";
 				PRODUCT_NAME = Dimension;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos;
