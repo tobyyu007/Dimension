@@ -504,7 +504,7 @@ class MultiuserViewController: UIViewController{
     
     func updateSessionInfoLabel(for frame: ARFrame, trackingState: ARCamera.TrackingState) {
         // Update the UI to provide feedback on the state of the AR experience.
-        let message: String
+        var message: String
         
         switch trackingState {
         case .normal where !MultiuserViewController.multipeerSession.connectedPeers.isEmpty && mapProvider == nil:
@@ -525,8 +525,9 @@ class MultiuserViewController: UIViewController{
             message = ""
             
         }
-        
+        message += "\n" + "hello"
         statusViewController.showMessage(message, autoHide: true)
+        
     }
     @IBAction func moreModels(_ sender: UIButton) // 按下“更多”按鈕
     {
