@@ -50,6 +50,7 @@ class VirtualObjectLoader {
         for index in VirtualObjectLoader.loadedObjects.indices.reversed() {
             removeVirtualObject(at: index)
         }
+        MultiuserViewController.statusBarMessage = ""
     }
     
     func removeVirtualObject(at index: Int) {

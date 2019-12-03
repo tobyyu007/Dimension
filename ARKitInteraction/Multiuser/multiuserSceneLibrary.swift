@@ -8,8 +8,6 @@
 
 import UIKit
 
-var multiuserloadScene = false  // 更新場景指示
-
 class multiuserSceneLibrary: UITableViewController
 {
     // MARK: - scene 列表抓取
@@ -19,7 +17,6 @@ class multiuserSceneLibrary: UITableViewController
     
     /// 儲存場景資訊
     var scenes: [String] = []
-    static var is_loadscene=false
     /// 從 Documents 中抓 model 列表
     func getScenes()
     {
@@ -128,8 +125,7 @@ class multiuserSceneLibrary: UITableViewController
         documentsURL = documentsURL.appendingPathComponent(fileName)
         
         multiuserSceneLibrary.multiuserselectedSceneURL = documentsURL
-        multiuserloadScene = true
-        multiuserSceneLibrary.is_loadscene=true
+        MultiuserViewController.multiuserloadScene = true
         performSegue(withIdentifier: "multiuserbackToCamera", sender: self)  // 切換 storyboard 回 AR 相機畫面
     }
     

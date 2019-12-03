@@ -138,16 +138,6 @@ extension MultiuserViewController: ARSCNViewDelegate, ARSessionDelegate {
         }
         mappingStatusLabel.text = frame.worldMappingStatus.description
         updateSessionInfoLabel(for: frame, trackingState: frame.camera.trackingState)
-        if let select_name=virtualObjectInteraction.selectedObject?.modelName
-        {
-            selectedmodellabel.text = " "
-            //selectedmodellabel.text = "selected object: "+select_name
-        }
-        else
-        {
-            selectedmodellabel.text = " "
-            //selectedmodellabel.text = "WTF"
-        }
     }
     
     func sessionWasInterrupted(_ session: ARSession) {

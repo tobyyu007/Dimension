@@ -112,7 +112,7 @@ class MultiuserVirtualObjectARView: ARSCNView {
         
         session.add(anchor: newAnchor)
         print(newAnchor)
-        if MultiuserViewController.receivedata == true
+        if MultiuserViewController.startMulti == true
         {
             // Send the anchor info to peers, so they can place the same content.
             guard let data = try? NSKeyedArchiver.archivedData(withRootObject: newAnchor, requiringSecureCoding: true)

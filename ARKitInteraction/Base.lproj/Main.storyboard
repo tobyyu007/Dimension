@@ -31,9 +31,7 @@
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="50"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <state key="normal" image="play.rectangle.fill" catalog="system">
-                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="100"/>
-                                </state>
+                                <state key="normal" image="play.rectangle.fill"/>
                                 <connections>
                                     <action selector="start:" destination="C50-Ey-w0r" eventType="touchUpInside" id="doH-0A-qOQ"/>
                                 </connections>
@@ -196,9 +194,7 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wV9-Ui-217" userLabel="更多模型">
                                 <rect key="frame" x="73" y="797" width="52" height="52"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <state key="normal" image="magnifyingglass.circle.fill" catalog="system">
-                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="50"/>
-                                </state>
+                                <state key="normal" image="magnifyingglass.circle.fill"/>
                                 <connections>
                                     <action selector="moreModels:" destination="gB5-vl-nmG" eventType="touchUpInside" id="1Qw-br-2Mu"/>
                                     <segue destination="pXB-Nf-DCX" kind="showDetail" id="amy-4T-ODC"/>
@@ -221,13 +217,6 @@
                             <activityIndicatorView hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="7Cj-Ok-XiG">
                                 <rect key="frame" x="166" y="801.5" width="82" height="43"/>
                             </activityIndicatorView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qUW-Yp-Kbk">
-                                <rect key="frame" x="10" y="437" width="396" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="1" green="0.12057040970000001" blue="0.10829339659999999" alpha="0.84705882349999995" colorSpace="custom" customColorSpace="sRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C9W-A6-asP">
                                 <rect key="frame" x="186" y="726" width="42" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -239,9 +228,7 @@
                                     <constraint firstAttribute="width" constant="52" id="vhd-9E-U9t"/>
                                 </constraints>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <state key="normal" image="viewfinder.circle.fill" catalog="system">
-                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="50"/>
-                                </state>
+                                <state key="normal" image="viewfinder.circle.fill"/>
                                 <connections>
                                     <action selector="sceneControl:" destination="gB5-vl-nmG" eventType="touchUpInside" id="kFt-TY-VMd"/>
                                 </connections>
@@ -288,7 +275,6 @@
                         <outlet property="addObjectButton" destination="8zi-pg-GTr" id="bw4-L9-3VE"/>
                         <outlet property="mappingStatusLabel" destination="C9W-A6-asP" id="bTu-op-wTV"/>
                         <outlet property="sceneView" destination="OH2-Z3-Vvr" id="tMN-NO-x1a"/>
-                        <outlet property="selectedmodellabel" destination="qUW-Yp-Kbk" id="xsy-wd-uHw"/>
                         <outlet property="sendMapButton" destination="KOB-al-gjj" id="DUD-yX-stN"/>
                         <outlet property="spinner" destination="7Cj-Ok-XiG" id="RV6-IL-Dr6"/>
                         <segue destination="G78-RB-bme" kind="popoverPresentation" identifier="showObjects" popoverAnchorView="8zi-pg-GTr" id="YZS-4C-Wyg">
@@ -652,11 +638,11 @@
     </scenes>
     <resources>
         <image name="add" width="48" height="48"/>
-        <image name="magnifyingglass.circle.fill" catalog="system" width="64" height="60"/>
-        <image name="play.rectangle.fill" catalog="system" width="64" height="46"/>
+        <image name="magnifyingglass.circle.fill" width="64" height="60"/>
+        <image name="play.rectangle.fill" width="64" height="46"/>
         <image name="restart" width="20" height="23"/>
         <image name="restartPressed" width="20" height="23"/>
-        <image name="viewfinder.circle.fill" catalog="system" width="64" height="60"/>
+        <image name="viewfinder.circle.fill" width="64" height="60"/>
         <image name="首頁圖片" width="180" height="180"/>
     </resources>
     <inferredMetricsTieBreakers>

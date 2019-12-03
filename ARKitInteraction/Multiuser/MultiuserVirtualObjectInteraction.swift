@@ -20,6 +20,9 @@ class MultiuserVirtualObjectInteraction: NSObject, UIGestureRecognizerDelegate {
     /// The scene view to hit test against when moving virtual content.
     let sceneView: VirtualObjectARView
     
+    var currentAngleY: Float = 0.0
+    
+    var currentNode: SCNReferenceNode!
     /**
      The object that has been most recently intereacted with.
      The `selectedObject` can be moved at any time with the tap gesture.
@@ -131,9 +134,9 @@ class MultiuserVirtualObjectInteraction: NSObject, UIGestureRecognizerDelegate {
           To make rotation also work correctly when looking from below the object one would have to
           flip the sign of the angle depending on whether the object is above or below the camera...
          */
-        trackedObject?.objectRotation -= Float(gesture.rotation)
-        
+        trackedObject?.eulerAngles.y -= Float(gesture.rotation)
         gesture.rotation = 0
+        MultiuserVirtualObjectInteraction.moved = true
     }
 
     

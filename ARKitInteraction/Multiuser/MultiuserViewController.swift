@@ -27,9 +27,11 @@ class MultiuserViewController: UIViewController{
     
     @IBOutlet weak var mappingStatusLabel: UILabel!
     
-    @IBOutlet weak var selectedmodellabel: UILabel!
     
+    
+    static var message: String = ""
     var node:SCNNode!
+    static var multiuserloadScene = false
     // MARK: - UI Elements
     
     // 場景路徑
@@ -132,13 +134,16 @@ class MultiuserViewController: UIViewController{
         sceneView.session.run(configuration, options: options)
     }
     
+    
     override func viewDidLoad() {
         
         super.viewDidLoad()
-        
+        MultiuserViewController.startMulti=false
+        MultiuserViewController.updateWorldMapInMulti=false
         MultiuserViewController.multiuser = true
         MultiuserViewController.multipeerSession = MultipeerSession(receivedDataHandler: receivedData)
-        
+        dup_load = false
+        MultiuserViewController.statusBarMessage = ""
         
         sceneView.delegate = self
         sceneView.session.delegate = self
@@ -171,16 +176,14 @@ class MultiuserViewController: UIViewController{
         
         // Prevent the screen from being dimmed to avoid interuppting the AR experience.
         UIApplication.shared.isIdleTimerDisabled = true
-        
         sceneView.debugOptions = [ARSCNDebugOptions.showFeaturePoints]
-        
-        if multiuserloadScene // 如果是讀取場景
+        if MultiuserViewController.multiuserloadScene // 如果是讀取場景
         {
             guard let worldMapData = self.retrieveWorldMapData(from: multiuserSceneLibrary.multiuserselectedSceneURL),
                 let worldMap = self.unarchive(worldMapData: worldMapData) else { return }
             self.resetTrackingConfiguration(with: worldMap)
-            multiuserloadScene = false
-            multiuserSceneLibrary.is_loadscene=false
+            MultiuserViewController.multiuserloadScene = false
+            VirtualObjectARView.modelName = nil
         }
         else // 正常開啟狀況
         {
@@ -207,18 +210,26 @@ class MultiuserViewController: UIViewController{
     }
     
     func shareSessionForDeleteOrMove() {
-        session.getCurrentWorldMap { worldMap, error in
-            guard let map = worldMap
-                else { print("Error1: \(error!.localizedDescription)"); return }
-            guard let data = try? NSKeyedArchiver.archivedData(withRootObject: map, requiringSecureCoding: true)
-                else { fatalError("can't encode map") }
-            MultiuserViewController.multipeerSession.sendToAllPeers(data)
-            MultiuserViewController.updateWorldMapInMulti = true
+        if MultiuserViewController.startMulti==true
+        {
+            session.getCurrentWorldMap { worldMap, error in
+                guard let map = worldMap
+                    else { print("Error1: \(error!.localizedDescription)"); return }
+                guard let data = try? NSKeyedArchiver.archivedData(withRootObject: map, requiringSecureCoding: true)
+                    else { fatalError("can't encode map") }
+                MultiuserViewController.multipeerSession.sendToAllPeers(data)
+                MultiuserViewController.updateWorldMapInMulti = true
+            }
         }
     }
     
     @objc func longpressed_show(){
-        
+        if ARLibrary.arlibrary_to_view_updatetable==true
+        {
+            self.viewDidLoad()
+            self.viewDidAppear(true)                    //直接更新列表
+            ARLibrary.arlibrary_to_view_updatetable=false
+        }
         if virtualObjectInteraction.is_longpressed==true
         {
             let alertController = UIAlertController(
@@ -254,6 +265,7 @@ class MultiuserViewController: UIViewController{
                 if let anchor = self.virtualObjectInteraction.selectedObject?.anchor {
                     self.sceneView.session.remove(anchor: anchor)
                 }
+                MultiuserViewController.statusBarMessage = ""
                 self.virtualObjectInteraction.selectedObject = nil
                 MultiuserVirtualObjectInteraction.moved = true
             }
@@ -280,35 +292,6 @@ class MultiuserViewController: UIViewController{
     }
     
     static var deleteModel = false // 從 modelMenu 收到刪除 model 的指令
-    
-    @objc func updateCounting(){
-
-        if(MultiuserViewController.showModelMenu)
-        {
-            MultiuserViewController.showModelMenu = false
-            self.performSegue(withIdentifier: "showModelMenu", sender: self)
-        }
-        if(MultiuserViewController.deleteModel)
-        {
-            var modelNameToDel = multiuserModelMenu.delModelName
-            if (modelNameToDel.characters.contains(" "))  // 當 model 名稱有空格的情況
-            {
-                if var index = modelNameToDel.index(of: " ") {
-                    index = modelNameToDel.index(after: index)
-                    let substring = modelNameToDel[index...]   // ab
-                    modelNameToDel = String(substring)
-                }
-            }
-            self.sceneView.scene.rootNode.enumerateChildNodes { (node, _) in
-                print(node.name)
-                if node.name == modelNameToDel{
-                   node.removeFromParentNode()
-                }
-            }
-            MultiuserViewController.deleteModel = false
-        }
-    }
-    
     
     func setupCamera() {
         guard let camera = sceneView.pointOfView?.camera else {
@@ -405,6 +388,7 @@ class MultiuserViewController: UIViewController{
             {
                 do
                 {
+                    virtualObjectLoader.removeAllVirtualObjects()
                     if let worldMap = try NSKeyedUnarchiver.unarchivedObject(ofClass: ARWorldMap.self, from: data) {
                         // Run the session with the received world map.
                         let configuration = ARWorldTrackingConfiguration()
@@ -440,8 +424,9 @@ class MultiuserViewController: UIViewController{
                 }
                 catch
                 {
-                    do
+                    do // 傳過一次 worldmap 再傳一次的情況
                     {
+                        virtualObjectLoader.removeAllVirtualObjects()
                         if let worldMap = try NSKeyedUnarchiver.unarchivedObject(ofClass: ARWorldMap.self, from: data) {
                             // Run the session with the received world map.
                             let configuration = ARWorldTrackingConfiguration()
@@ -465,27 +450,6 @@ class MultiuserViewController: UIViewController{
         }
     }
     
-    /// - Tag: PlaceCharacter
-    @objc func handleSceneTap(_ sender: UITapGestureRecognizer) {
-        // Hit test to find a place for a virtual object.
-        guard let hitTestResult = sceneView
-            .hitTest(sender.location(in: sceneView), types: [.existingPlaneUsingGeometry, .estimatedHorizontalPlane])
-            .first
-            else { return }
-        
-        // Place an anchor for a virtual character. The model appears in renderer(_:didAdd:for:).
-        let anchor = ARAnchor(name: "123", transform: hitTestResult.worldTransform)
-        session.add(anchor: anchor)
-        session.remove(anchor: anchor)
-        print("刪除1")
-        session.remove(anchor: anchor)
-        print("刪除2")
-        // Send the anchor info to peers, so they can place the same content.
-        guard let data = try? NSKeyedArchiver.archivedData(withRootObject: anchor, requiringSecureCoding: true)
-            else { fatalError("can't encode anchor") }
-        MultiuserViewController.multipeerSession.sendToAllPeers(data)
-    }
-    
     // MARK: - Multiuser shared session
     
     /// - Tag: GetWorldMap
@@ -502,31 +466,35 @@ class MultiuserViewController: UIViewController{
 
     // MARK: - AR session management
     
+    static var statusBarMessage = ""
     func updateSessionInfoLabel(for frame: ARFrame, trackingState: ARCamera.TrackingState) {
         // Update the UI to provide feedback on the state of the AR experience.
-        var message: String
-        
+        var state = ""
+        if MultiuserViewController.statusBarMessage != ""
+        {
+            state = MultiuserViewController.statusBarMessage
+        }
         switch trackingState {
         case .normal where !MultiuserViewController.multipeerSession.connectedPeers.isEmpty && mapProvider == nil:
             let peerNames = MultiuserViewController.multipeerSession.connectedPeers.map({ $0.displayName }).joined(separator: ", ")
-            message = "Connected with \(peerNames)."
+            state += "\nConnected with \(peerNames)."
             
         case .limited(.initializing) where modelProvider != nil,
              .limited(.relocalizing) where modelProvider != nil:
-            message = "Received model from \(modelProvider!.displayName)."
+            state += "\nReceived model from \(modelProvider!.displayName)."
             
         case .limited(.initializing) where mapProvider != nil,
              .limited(.relocalizing) where mapProvider != nil:
-            message = "Received map from \(mapProvider!.displayName)."
+            state += "\nReceived map from \(mapProvider!.displayName)."
             
         default:
             // No feedback needed when tracking is normal and planes are visible.
             // (Nor when in unreachable limited-tracking states.)
-            message = ""
+            print("")
             
         }
-        message += "\n" + "hello"
-        statusViewController.showMessage(message, autoHide: true)
+        MultiuserViewController.message = state
+        statusViewController.showMessage(MultiuserViewController.message, autoHide: true)
         
     }
     @IBAction func moreModels(_ sender: UIButton) // 按下“更多”按鈕
@@ -539,36 +507,12 @@ class MultiuserViewController: UIViewController{
     
     func loadModel(_ anchorName: String) -> SCNNode {
         //let sceneURL = Bundle.main.url(forResource: "max", withExtension: "scn", subdirectory: "Assets.scnassets")!
-        
-        if multiuserSceneLibrary.is_loadscene==true
-        {
-            var modelURL: URL?
-            let documentsURL = Bundle.main.url(forResource: "Models.scnassets", withExtension: nil)!
-            let path:String = documentsURL.path  // URL 轉成 String
-            let enumerator = FileManager.default.enumerator(atPath: path)
-            let filePaths = enumerator?.allObjects as! [String]
-            for filepath in filePaths
-            {
-                if filepath.contains("usdz") || filepath.contains("scn") // 只抓取副檔名為 "usdz" 以及 "scn" 的檔案
-                {
-                    if filepath.contains(anchorName)
-                    {
-                        var newPath = "file:///private" + path + "/" + filepath  // 結合出完整的路徑
-                        newPath = newPath.replacingOccurrences(of: " ", with: "%20")  // 修正路徑中有空格的問題
-                        modelURL = URL(string: newPath)
-                        break
-                    }
-                }
-            }
-            let referenceNode = SCNReferenceNode(url: modelURL!)!
-            referenceNode.load()
-            return referenceNode
-        }
-        else if VirtualObjectARView.modelName != nil  // "+" 放置模型的情況
+        print("dup load")
+        print(dup_load)
+         if VirtualObjectARView.modelName != nil  // "+" 放置模型的情況
         {
             let referenceNode = SCNReferenceNode(url: VirtualObjectARView.modelURL)!
-            print(dup_load)
-            if (dup_load)
+            if (dup_load) // 重複放模型的狀況
             {
                 let hitTestResult = sceneView
                     .hitTest(screenCenter, types: [.existingPlaneUsingGeometry, .estimatedHorizontalPlane])
@@ -578,6 +522,9 @@ class MultiuserViewController: UIViewController{
                 print("pooh2"+VirtualObjectARView.modelName)
                 let anchor = ARAnchor(name: VirtualObjectARView.modelName, transform: hitTestResult!.worldTransform)
                 sceneView.session.add(anchor: anchor)
+                guard let data = try? NSKeyedArchiver.archivedData(withRootObject: anchor, requiringSecureCoding: true)
+                    else { fatalError("can't encode anchor") }
+                MultiuserViewController.multipeerSession.sendToAllPeers(data)
             }
             //referenceNode.load()
             return referenceNode

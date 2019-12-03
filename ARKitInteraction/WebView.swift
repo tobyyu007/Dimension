@@ -22,6 +22,7 @@ class WebView: UIViewController, WKNavigationDelegate, UIWebViewDelegate
     }
     
     @IBAction func doneButton(_ sender: Any) {
+        ARLibrary.arlibrary_to_view_updatetable=true  //更新模型列表
         self.dismiss(animated: true, completion: nil)
     }
     

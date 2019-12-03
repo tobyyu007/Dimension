@@ -9,7 +9,7 @@ import UIKit
 import ARKit
 
 // MARK: - ObjectCell
-
+//let image_select=UIImage(named: "\(456).png")
 class ObjectCell: UITableViewCell {
     static let reuseIdentifier = "ObjectCell"
     
@@ -20,7 +20,7 @@ class ObjectCell: UITableViewCell {
     var modelName = "" {
         didSet {
             objectTitleLabel.text = modelName.capitalized
-            objectImageView.image = UIImage(named: modelName)
+            objectImageView.image = UIImage(named: "\(456).png")
         }
     }
 }
@@ -57,7 +57,7 @@ class VirtualObjectSelectionViewController: UITableViewController {
         preferredContentSize = CGSize(width: 250, height: tableView.contentSize.height)
     }
     
-    func updateObjectAvailability(for planeAnchor: ARPlaneAnchor?) { // 不用理會，李慧下去就要瘋了
+    func updateObjectAvailability(for planeAnchor: ARPlaneAnchor?) { //
         var newEnabledVirtualObjectRows = Set<Int>()
         for (row, object) in VirtualObject.availableObjects.enumerated() {
             // 每一個 object (model) 開一個 VirtualObject Class，row 為對應 class 號碼

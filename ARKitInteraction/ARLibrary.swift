@@ -15,14 +15,17 @@ import QuickLook
 
 class ARLibrary: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, QLPreviewControllerDelegate, QLPreviewControllerDataSource
 {
+    static var arlibrary_to_view_updatetable:Bool = false
     @IBOutlet var collectionView: UICollectionView!
     @IBAction func backToView(_ sender: Any) {
+        ARLibrary.arlibrary_to_view_updatetable=true
         self.dismiss(animated: true, completion: nil)
     }
     
     
     /// 儲存 models 資訊
     var models: [String] = []
+    var models_index: [Bool] = []
     
     /// 從 Documents 中抓 model 列表
     func getModels()
@@ -35,16 +38,18 @@ class ARLibrary: UIViewController, UICollectionViewDelegate, UICollectionViewDat
         var scnFilePaths = [String]()
         for filePath in filePaths
         {
-            print(filePath)
             if filePath.contains(".usdz") || filePath.contains(".scn") && !filePath.contains("lighting") && !filePath.contains("CameraSetup") // 只抓取副檔名為 "usdz" 以及 "scn" 的檔案
             {
                 let newfilePath = filePath.replacingOccurrences(of: " ", with: "%20")  // 修正路徑中有空格的問題
+                //print(filePath)
                 let urlPath = URL(string: newfilePath)  // String 轉成 URL
                 var file = String(urlPath?.lastPathComponent.replacingOccurrences(of: ".scn", with: "") ?? "")
                 file = file.replacingOccurrences(of: ".usdz", with: "")
                 if file != ""  // 因為 31 行的關係，可能為空值
                 {
+                    //print(file)
                     scnFilePaths.append(file)
+                    models_index.append(false)
                 }
             }
         }
@@ -55,7 +60,7 @@ class ARLibrary: UIViewController, UICollectionViewDelegate, UICollectionViewDat
     
     var thumbnails = [UIImage]()
     var thumbnailIndex = 0
-    
+    let image_ar=UIImage(named: "\(123).png")
     override func viewDidLoad() {
         super.viewDidLoad()
         getModels()
@@ -64,6 +69,7 @@ class ARLibrary: UIViewController, UICollectionViewDelegate, UICollectionViewDat
                 thumbnails.append(thumbnail)
             }
         }
+
         
         collectionView.dataSource = self
         collectionView.delegate = self
@@ -80,9 +86,8 @@ class ARLibrary: UIViewController, UICollectionViewDelegate, UICollectionViewDat
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "LibraryCell", for: indexPath) as? LibraryCollectionViewCell
         if let cell = cell {
             //cell.modelThumbnail.image = thumbnails[indexPath.item]
-            cell.modelThumbnail.image = thumbnails[4]  // 列表 model 圖片
-            let title = models[indexPath.item]
-            cell.modelTitle.text = title.capitalized  // 列表 model 名稱
+            cell.modelThumbnail.image = image_ar  // 列表 model 圖片
+            cell.modelTitle.text = models[indexPath.item]  // 列表 model 名稱
             //cell.modelTitle.text = title.capitalized
             
             //delete button part
@@ -143,15 +148,18 @@ class ARLibrary: UIViewController, UICollectionViewDelegate, UICollectionViewDat
                 let modelLocation: String = urlPath!.path
                 if modelLocation.contains(models[thumbnailIndex])
                 {
-                    print("model")
-                    print(modelLocation)
-                    if !modelLocation.contains(".usdz")
+                    if models_index[thumbnailIndex]==false
                     {
-                        return true
-                    }
-                    else
-                    {
-                        return false
+                        print("model")
+                        print(modelLocation)
+                        if !modelLocation.contains(".usdz")
+                        {
+                            return true
+                        }
+                        else
+                        {
+                            return false
+                        }
                     }
                 }
             }
@@ -173,8 +181,11 @@ class ARLibrary: UIViewController, UICollectionViewDelegate, UICollectionViewDat
                 let modelLocation: String = urlPath!.path
                 if modelLocation.contains(models[thumbnailIndex])
                 {
-                    path = "file:///" + path + "/" + filepath  // 結合出完整的路徑
-                    return URL(string: path)! as QLPreviewItem  // 傳回選擇的檔案的路徑
+                    if models_index[thumbnailIndex]==false
+                    {
+                        path = "file:///" + path + "/" + filepath  // 結合出完整的路徑
+                        return URL(string: path)! as QLPreviewItem  // 傳回選擇的檔案的路徑
+                    }
                 }
             }
         }
@@ -215,14 +226,22 @@ extension ARLibrary: LibraryCollectionViewCellDelegate
             {
                 if filePath.contains(".usdz") || filePath.contains(".scn") // 只抓取副檔名為 "usdz" 以及 "scn" 的檔案
                 {
-                    let newfilePath = filePath.replacingOccurrences(of: " ", with: "%20")  // 修正路徑中有空格的問題
+                    //let newfilePath = filePath.replacingOccurrences(of: " ", with: "%20")  // 修正路徑中有空格的問題
+                    let newfilePath = filePath
                     if newfilePath.contains(models[indexPath.item])
                     {
-                        path = path + "/" + newfilePath  // 結合出完整的路徑
+                        if models_index[indexPath.item]==false
+                        {
+                            print(path)
+                            path = path + "/" + newfilePath  // 結合出完整的路徑
+                            models_index[indexPath.item]=true
+                        }
                     }
                 }
             }
             do {
+                print("path:")
+                print(path)
                 try FileManager.default.removeItem(atPath: path)
             }
             catch let error as NSError

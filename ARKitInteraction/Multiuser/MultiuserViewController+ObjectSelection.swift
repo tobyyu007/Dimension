@@ -37,6 +37,20 @@ extension MultiuserViewController: VirtualObjectSelectionViewControllerDelegate 
     
     func virtualObjectSelectionViewController(_: VirtualObjectSelectionViewController, didSelectObject object: VirtualObject) {
         let selectedModelName = object.referenceURL.lastPathComponent.replacingOccurrences(of: ".scn", with: "")
+       /* if VirtualObjectLoader.loadedObjects.count>0
+        {
+            for i in 0...VirtualObjectLoader.loadedObjects.count-1
+            {
+                if selectedModelName==VirtualObjectLoader.loadedObjects[i].modelName
+                {
+                    dup_load=true
+                }
+            }
+        }*/
+        MultiuserViewController.statusBarMessage = "Selected Object: "
+        MultiuserViewController.statusBarMessage += selectedModelName
+        statusViewController.showMessage(MultiuserViewController.message, autoHide: false)
+        print(MultiuserViewController.message)
         virtualObjectLoader.loadVirtualObject(object, loadedHandler: { [unowned self] loadedObject in
             do {
                 let scene = try SCNScene(url: object.referenceURL, options: nil)  // 使用該 object 的 referenceURL 來載入 model
@@ -67,7 +81,11 @@ extension MultiuserViewController: VirtualObjectSelectionViewControllerDelegate 
             session.remove(anchor: anchor)
         }*/
         var selectedModelName = object.referenceURL.lastPathComponent.replacingOccurrences(of: ".scn", with: "")
-        dup_load=true
+        MultiuserViewController.message = "Selected Object: "
+        MultiuserViewController.message+=selectedModelName
+        statusViewController.showMessage(MultiuserViewController.message, autoHide: false)
+        print(MultiuserViewController.message)
+        dup_load = true
         loadModel(selectedModelName)
         /*print(object.referenceURL)
         print(object.referenceURL.scheme)

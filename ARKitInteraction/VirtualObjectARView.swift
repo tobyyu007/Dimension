@@ -103,12 +103,14 @@ class VirtualObjectARView: ARSCNView {
         // Create a new anchor with the object's current transform and add it to the session
         VirtualObjectARView.modelURL = object.referenceURL
         VirtualObjectARView.modelName = object.referenceURL.lastPathComponent.replacingOccurrences(of: ".scn", with: "")
+        print("bitch")
+        print(VirtualObjectARView.modelName)
         let newAnchor = ARAnchor(name: VirtualObjectARView.modelName, transform: object.simdWorldTransform)
         let position = object.simdWorldTransform
         
         session.add(anchor: newAnchor)
         
-        if MultiuserViewController.receivedata == true
+        if MultiuserViewController.startMulti == true
         {
             // Send the anchor info to peers, so they can place the same content.
             guard let data = try? NSKeyedArchiver.archivedData(withRootObject: newAnchor, requiringSecureCoding: true)

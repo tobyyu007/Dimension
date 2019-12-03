@@ -119,6 +119,7 @@ class StatusViewController: UIViewController {
     
     @IBAction private func restartExperience(_ sender: UIButton) {
         restartExperienceHandler()
+        MultiuserViewController.statusBarMessage = ""
     }
     
     

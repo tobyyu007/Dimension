@@ -51,6 +51,11 @@ extension MultiuserViewController: UIGestureRecognizerDelegate {
         DispatchQueue.main.asyncAfter(deadline: .now() + 5.0) {
             self.isRestartAvailable = true
         }
+        
+        MultiuserViewController.startMulti=false
+        MultiuserViewController.updateWorldMapInMulti=false
+        MultiuserViewController.multiuser = true
+        dup_load = false
     }
 }
 

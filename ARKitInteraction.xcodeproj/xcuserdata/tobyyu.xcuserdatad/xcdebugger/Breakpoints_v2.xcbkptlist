@@ -7,38 +7,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "C0A0FFF4-8D97-482B-B087-CBFA5D34FD57"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "ARKitInteraction/Multiuser/MultiuserViewController.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "408"
-            endingLineNumber = "408"
-            landmarkName = "receivedData(_:from:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "70EDC4A2-A8AC-4721-B144-75084065F424"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "ARKitInteraction/Multiuser/MultiuserViewController.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "443"
-            endingLineNumber = "443"
-            landmarkName = "receivedData(_:from:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "C4AE47C9-AB7F-4913-9083-3FEE80E6A5AC"
             shouldBeEnabled = "No"
             ignoreCount = "0"
@@ -46,8 +14,8 @@
             filePath = "ARKitInteraction/VirtualObjectARView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "116"
-            endingLineNumber = "116"
+            startingLineNumber = "118"
+            endingLineNumber = "118"
             landmarkName = "addOrUpdateAnchor(for:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -55,16 +23,128 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "B092654E-A47C-4438-BB69-C3627A275C93"
+            uuid = "4D0A4193-1634-4CEC-8890-44200DBFEA57"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ARKitInteraction/Multiuser/MultiuserVirtualObjectARView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "118"
+            endingLineNumber = "118"
+            landmarkName = "addOrUpdateAnchor(for:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "9B4898A1-6F8D-432B-9A2A-8E37E41E4870"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ARKitInteraction/Multiuser/MultiuserViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "432"
-            endingLineNumber = "432"
-            landmarkName = "receivedData(_:from:)"
+            startingLineNumber = "182"
+            endingLineNumber = "182"
+            landmarkName = "viewDidAppear(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "035AAEEE-D6F2-4C9C-859F-A27065EDD933"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ARKitInteraction/Multiuser/MultiuserViewController+ARSCNViewDelegate.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "56"
+            endingLineNumber = "56"
+            landmarkName = "renderer(_:didAdd:for:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "1BFFBCF0-4964-4C8B-A5BD-D15E7449394E"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ARKitInteraction/Multiuser/MultiuserViewController+ARSCNViewDelegate.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "65"
+            endingLineNumber = "65"
+            landmarkName = "renderer(_:didAdd:for:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "1BFFBCF0-4964-4C8B-A5BD-D15E7449394E - 70122d49e0a736aa"
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Dimension.MultiuserViewController.renderer(_: __C.SCNSceneRenderer, didAdd: __C.SCNNode, for: __C.ARAnchor) -&gt; ()"
+                  moduleName = "Dimension"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/tobyyu/Downloads/Dimension-0.5.1-Correct/ARKitInteraction/Multiuser/MultiuserViewController+ARSCNViewDelegate.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "65"
+                  endingLineNumber = "65"
+                  offsetFromSymbolStart = "1800">
+               </Location>
+               <Location
+                  uuid = "1BFFBCF0-4964-4C8B-A5BD-D15E7449394E - 99ebd4dff0c4355e"
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 () -&gt; () in Dimension.MultiuserViewController.renderer(_: __C.SCNSceneRenderer, didAdd: __C.SCNNode, for: __C.ARAnchor) -&gt; ()"
+                  moduleName = "Dimension"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/tobyyu/Downloads/Dimension-0.5.1-Correct/ARKitInteraction/Multiuser/MultiuserViewController+ARSCNViewDelegate.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "66"
+                  endingLineNumber = "66"
+                  offsetFromSymbolStart = "180">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "5759CCEC-3C1F-4A9C-9883-68E171E81769"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ARKitInteraction/Multiuser/MultiuserViewController+ObjectSelection.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "83"
+            endingLineNumber = "83"
+            landmarkName = "virtualObjectSelectionViewController(_:didDeselectObject:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "CB3BE798-4954-4E28-A349-65FA00720EDE"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ARKitInteraction/Multiuser/MultiuserViewController+ObjectSelection.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "46"
+            endingLineNumber = "46"
+            landmarkName = "virtualObjectSelectionViewController(_:didSelectObject:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
