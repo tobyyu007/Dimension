@@ -1,10 +1,3 @@
-/*
-See LICENSE folder for this sample’s licensing information.
-
-Abstract:
-Corner segments for the focus square UI.
-*/
-
 import SceneKit
 
 extension FocusSquare {

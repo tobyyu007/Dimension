@@ -1,20 +1,10 @@
-/*
-See LICENSE folder for this sample’s licensing information.
-
-Abstract:
-Utility functions and type extensions used throughout the projects.
-*/
-
 import Foundation
 import ARKit
 
 // MARK: - float4x4 extensions
 
 extension float4x4 {
-    /**
-     Treats matrix as a (right-hand column-major convention) transform matrix
-     and factors out the translation component of the transform.
-    */
+
     var translation: float3 {
         get {
             let translation = columns.3

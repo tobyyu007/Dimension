@@ -1,10 +1,3 @@
-/*
-See LICENSE folder for this sample’s licensing information.
-
-Abstract:
-A custom `ARSCNView` configured for the requirements of this project.
-*/
-
 import Foundation
 import ARKit
 
@@ -40,10 +33,7 @@ class VirtualObjectARView: ARSCNView {
         
         if infinitePlane {
             
-            // 2. Check for a result on an existing plane, assuming its dimensions are infinite.
-            //    Loop through all hits against infinite existing planes and either return the
-            //    nearest one (vertical planes) or return the nearest one which is within 5 cm
-            //    of the object's position.
+            // 2. 測試所有存在的水平面，使用迴圈看過所有可能的放置點，return 最近的放置點或離你 5cm 以內的位置
             let infinitePlaneResults = hitTest(point, types: .existingPlane)
             
             for infinitePlaneResult in infinitePlaneResults {

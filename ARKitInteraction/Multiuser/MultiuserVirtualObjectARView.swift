@@ -41,11 +41,7 @@ class MultiuserVirtualObjectARView: ARSCNView {
         }
         
         if infinitePlane {
-            
-            // 2. Check for a result on an existing plane, assuming its dimensions are infinite.
-            //    Loop through all hits against infinite existing planes and either return the
-            //    nearest one (vertical planes) or return the nearest one which is within 5 cm
-            //    of the object's position.
+            // 2. 測試所有存在的水平面，使用迴圈看過所有可能的放置點，return 最近的放置點或離你 5cm 以內的位置
             let infinitePlaneResults = hitTest(point, types: .existingPlane)
             
             for infinitePlaneResult in infinitePlaneResults {
@@ -167,10 +163,6 @@ class MultiuserVirtualObjectARView: ARSCNView {
 }
 
 extension SCNView {
-    /**
-     Type conversion wrapper for original `unprojectPoint(_:)` method.
-     Used in contexts where sticking to SIMD float3 type is helpful.
-     */
     func unprojectPoint(_ point: float3) -> float3 {
         return float3(unprojectPoint(SCNVector3(point)))
     }

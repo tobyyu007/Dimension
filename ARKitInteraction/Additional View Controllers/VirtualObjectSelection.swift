@@ -1,10 +1,3 @@
-/*
-See LICENSE folder for this sample’s licensing information.
-
-Abstract:
-Popover view controller for choosing virtual objects to place in the AR scene.
-*/
-
 import UIKit
 import ARKit
 

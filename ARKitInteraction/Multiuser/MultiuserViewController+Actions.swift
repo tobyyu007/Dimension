@@ -1,10 +1,3 @@
-/*
-See LICENSE folder for this sample’s licensing information.
-
-Abstract:
-UI Actions for the main view controller.
-*/
-
 import UIKit
 import SceneKit
 
@@ -56,6 +49,7 @@ extension MultiuserViewController: UIGestureRecognizerDelegate {
         MultiuserViewController.updateWorldMapInMulti=false
         MultiuserViewController.multiuser = true
         dup_load = false
+        MultiuserViewController.changeStatusBar = false
     }
 }
 

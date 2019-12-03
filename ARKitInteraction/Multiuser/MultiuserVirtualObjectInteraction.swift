@@ -1,10 +1,3 @@
-/*
-See LICENSE folder for this sample’s licensing information.
-
-Abstract:
-Coordinates movement and gesture interactions with virtual objects.
-*/
-
 import UIKit
 import ARKit
 
@@ -23,17 +16,13 @@ class MultiuserVirtualObjectInteraction: NSObject, UIGestureRecognizerDelegate {
     var currentAngleY: Float = 0.0
     
     var currentNode: SCNReferenceNode!
-    /**
-     The object that has been most recently intereacted with.
-     The `selectedObject` can be moved at any time with the tap gesture.
-     */
+
     var selectedObject: VirtualObject?
     
     static var can_move=false
     var is_longpressed=false
     static var moved = false // 移動完了 -> 重新 sendWorldMap (為了 startMulti 使用)
     
-    /// The object that is tracked for use by the pan and rotation gestures.
     private var trackedObject: VirtualObject? {
         didSet {
             guard trackedObject != nil else { return }
@@ -90,6 +79,10 @@ class MultiuserVirtualObjectInteraction: NSObject, UIGestureRecognizerDelegate {
             gesture.setTranslation(.zero, in: sceneView)
             
             MultiuserVirtualObjectInteraction.moved = true
+            MultiuserViewController.statusBarMessage = "Selected Object: "
+            MultiuserViewController.statusBarMessage += selectedObject?.modelName ?? ""
+            MultiuserViewController.message = MultiuserViewController.statusBarMessage
+            MultiuserViewController.changeStatusBar = true
             
         case .changed:
             // Ignore changes to the pan gesture until the threshold for displacment has been exceeded.
@@ -108,15 +101,7 @@ class MultiuserVirtualObjectInteraction: NSObject, UIGestureRecognizerDelegate {
         }
     }
 
-    /**
-     If a drag gesture is in progress, update the tracked object's position by
-     converting the 2D touch location on screen (`currentTrackingPosition`) to
-     3D world space.
-     This method is called per frame (via `SCNSceneRendererDelegate` callbacks),
-     allowing drag gestures to move virtual objects regardless of whether one
-     drags a finger across the screen or moves the device through space.
-     - Tag: updateObjectToCurrentTrackingPosition
-     */
+    // 拖移手勢，轉換 2D 點擊位置到 3D world map 上的相對位置
     @objc
     func updateObjectToCurrentTrackingPosition() {
         guard let object = trackedObject, let position = currentTrackingPosition else { return }
@@ -128,12 +113,6 @@ class MultiuserVirtualObjectInteraction: NSObject, UIGestureRecognizerDelegate {
     func didRotate(_ gesture: UIRotationGestureRecognizer) {
         guard gesture.state == .changed else { return }
         
-        /*
-         - Note:
-          For looking down on the object (99% of all use cases), we need to subtract the angle.
-          To make rotation also work correctly when looking from below the object one would have to
-          flip the sign of the angle depending on whether the object is above or below the camera...
-         */
         trackedObject?.eulerAngles.y -= Float(gesture.rotation)
         gesture.rotation = 0
         MultiuserVirtualObjectInteraction.moved = true
@@ -155,6 +134,10 @@ class MultiuserVirtualObjectInteraction: NSObject, UIGestureRecognizerDelegate {
                 if(MultiuserVirtualObjectInteraction.can_move==true){
                 translate(object, basedOn: touchLocation, infinitePlane: false, allowAnimation: false)
                     sceneView.addOrUpdateAnchor(for: object)
+                    MultiuserViewController.statusBarMessage = "Selected Object: "
+                    MultiuserViewController.statusBarMessage += selectedObject?.modelName ?? ""
+                    MultiuserViewController.message = MultiuserViewController.statusBarMessage
+                    MultiuserViewController.changeStatusBar = true
                     MultiuserVirtualObjectInteraction.can_move=false
                     MultiuserVirtualObjectInteraction.moved = true
                 }
@@ -268,11 +251,6 @@ class MultiuserVirtualObjectInteraction: NSObject, UIGestureRecognizerDelegate {
         } else {
             return
         }
-
-        /*
-         Plane hit test results are generally smooth. If we did *not* hit a plane,
-         smooth the movement to prevent large jumps.
-         */
         let transform = result.worldTransform
         let isOnPlane = result.anchor is ARPlaneAnchor
         object.setTransform(transform,

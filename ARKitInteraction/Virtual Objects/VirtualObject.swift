@@ -1,10 +1,3 @@
-/*
-See LICENSE folder for this sample’s licensing information.
-
-Abstract:
-A `SCNReferenceNode` subclass for virtual objects placed into the AR scene.
-*/
-
 import Foundation
 import SceneKit
 import ARKit
@@ -119,9 +112,6 @@ class VirtualObject: SCNReferenceNode {
     }
     
     /**
-     Set the object's position based on the provided position relative to the `cameraTransform`.
-     If `smoothMovement` is true, the new position will be averaged with previous position to
-     avoid large jumps.
      
      - Tag: VirtualObjectSetPosition
      */
@@ -138,13 +128,6 @@ class VirtualObject: SCNReferenceNode {
             positionOffsetFromCamera = simd_normalize(positionOffsetFromCamera)
             positionOffsetFromCamera *= 10
         }
-        
-        /*
-         Compute the average distance of the object from the camera over the last ten
-         updates. Notice that the distance is applied to the vector from
-         the camera to the content, so it affects only the percieved distance to the
-         object. Averaging does _not_ make the content "lag".
-         */
         if smoothMovement {
             let hitTestResultDistance = simd_length(positionOffsetFromCamera)
             

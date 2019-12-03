@@ -31,7 +31,9 @@
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="50"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <state key="normal" image="play.rectangle.fill"/>
+                                <state key="normal" image="play.rectangle.fill" catalog="system">
+                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="100"/>
+                                </state>
                                 <connections>
                                     <action selector="start:" destination="C50-Ey-w0r" eventType="touchUpInside" id="doH-0A-qOQ"/>
                                 </connections>
@@ -194,7 +196,9 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wV9-Ui-217" userLabel="更多模型">
                                 <rect key="frame" x="73" y="797" width="52" height="52"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <state key="normal" image="magnifyingglass.circle.fill"/>
+                                <state key="normal" image="magnifyingglass.circle.fill" catalog="system">
+                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="50"/>
+                                </state>
                                 <connections>
                                     <action selector="moreModels:" destination="gB5-vl-nmG" eventType="touchUpInside" id="1Qw-br-2Mu"/>
                                     <segue destination="pXB-Nf-DCX" kind="showDetail" id="amy-4T-ODC"/>
@@ -228,7 +232,9 @@
                                     <constraint firstAttribute="width" constant="52" id="vhd-9E-U9t"/>
                                 </constraints>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <state key="normal" image="viewfinder.circle.fill"/>
+                                <state key="normal" image="viewfinder.circle.fill" catalog="system">
+                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="50"/>
+                                </state>
                                 <connections>
                                     <action selector="sceneControl:" destination="gB5-vl-nmG" eventType="touchUpInside" id="kFt-TY-VMd"/>
                                 </connections>
@@ -638,11 +644,11 @@
     </scenes>
     <resources>
         <image name="add" width="48" height="48"/>
-        <image name="magnifyingglass.circle.fill" width="64" height="60"/>
-        <image name="play.rectangle.fill" width="64" height="46"/>
+        <image name="magnifyingglass.circle.fill" catalog="system" width="64" height="60"/>
+        <image name="play.rectangle.fill" catalog="system" width="64" height="46"/>
         <image name="restart" width="20" height="23"/>
         <image name="restartPressed" width="20" height="23"/>
-        <image name="viewfinder.circle.fill" width="64" height="60"/>
+        <image name="viewfinder.circle.fill" catalog="system" width="64" height="60"/>
         <image name="首頁圖片" width="180" height="180"/>
     </resources>
     <inferredMetricsTieBreakers>

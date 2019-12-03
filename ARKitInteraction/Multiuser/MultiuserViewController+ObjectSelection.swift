@@ -1,10 +1,3 @@
-/*
-See LICENSE folder for this sample’s licensing information.
-
-Abstract:
-Methods on the main view controller for handling virtual object loading and movement
-*/
-
 import UIKit
 import ARKit
 
@@ -49,6 +42,7 @@ extension MultiuserViewController: VirtualObjectSelectionViewControllerDelegate 
         }*/
         MultiuserViewController.statusBarMessage = "Selected Object: "
         MultiuserViewController.statusBarMessage += selectedModelName
+        MultiuserViewController.message = MultiuserViewController.statusBarMessage
         statusViewController.showMessage(MultiuserViewController.message, autoHide: false)
         print(MultiuserViewController.message)
         virtualObjectLoader.loadVirtualObject(object, loadedHandler: { [unowned self] loadedObject in
@@ -83,6 +77,7 @@ extension MultiuserViewController: VirtualObjectSelectionViewControllerDelegate 
         var selectedModelName = object.referenceURL.lastPathComponent.replacingOccurrences(of: ".scn", with: "")
         MultiuserViewController.message = "Selected Object: "
         MultiuserViewController.message+=selectedModelName
+        MultiuserViewController.message = MultiuserViewController.statusBarMessage
         statusViewController.showMessage(MultiuserViewController.message, autoHide: false)
         print(MultiuserViewController.message)
         dup_load = true

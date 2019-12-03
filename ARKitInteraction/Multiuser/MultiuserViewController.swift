@@ -1,10 +1,3 @@
-/*
- See LICENSE folder for this sample’s licensing information.
- 
- Abstract:
- Main view controller for the AR experience.
- */
-
 import ARKit
 import SceneKit
 import UIKit
@@ -143,6 +136,7 @@ class MultiuserViewController: UIViewController{
         MultiuserViewController.multiuser = true
         MultiuserViewController.multipeerSession = MultipeerSession(receivedDataHandler: receivedData)
         dup_load = false
+        MultiuserViewController.changeStatusBar = false
         MultiuserViewController.statusBarMessage = ""
         
         sceneView.delegate = self
@@ -223,7 +217,14 @@ class MultiuserViewController: UIViewController{
         }
     }
     
+    static var changeStatusBar = false
+    
     @objc func longpressed_show(){
+        if MultiuserViewController.changeStatusBar
+        {
+            statusViewController.showMessage(MultiuserViewController.message, autoHide: true)
+            MultiuserViewController.changeStatusBar = false
+        }
         if ARLibrary.arlibrary_to_view_updatetable==true
         {
             self.viewDidLoad()
@@ -532,6 +533,7 @@ class MultiuserViewController: UIViewController{
         else // 從別人下載地圖載入模型的情況
         {
             /// 從內建的 Models.scnassets 中尋找所有模型，使用 anchorName 抓出該 model 的路徑
+            /*
             var modelURL: URL?
             let documentsURL = Bundle.main.url(forResource: "Models.scnassets", withExtension: nil)!
             let path:String = documentsURL.path  // URL 轉成 String
@@ -549,7 +551,29 @@ class MultiuserViewController: UIViewController{
                         break
                     }
                 }
+            }*/
+            
+            var modelURL: URL?
+            var documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+            documentsURL = documentsURL.appendingPathComponent("Models.scnassets")  // 加入指定檔案路徑
+            let path:String = documentsURL.path  // URL 轉成 String
+            let enumerator = FileManager.default.enumerator(atPath: path)
+            let filePaths = enumerator?.allObjects as! [String]
+            var scnFilePaths = [String]()
+            for filepath in filePaths
+            {
+                if filepath.contains("usdz") || filepath.contains("scn") // 只抓取副檔名為 "usdz" 以及 "scn" 的檔案
+                {
+                    if filepath.contains(anchorName)
+                    {
+                        var newPath = "file:///private" + path + "/" + filepath
+                        modelURL = URL(string: newPath)
+                        break
+                    }
+                }
             }
+                        
+            
             let referenceNode = SCNReferenceNode(url: modelURL!)!
             referenceNode.load()
             return referenceNode

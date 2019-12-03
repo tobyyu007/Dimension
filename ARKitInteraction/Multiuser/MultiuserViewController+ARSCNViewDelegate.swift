@@ -1,10 +1,3 @@
-/*
-See LICENSE folder for this sample’s licensing information.
-
-Abstract:
-ARSCNViewDelegate interactions for `ViewController`.
-*/
-
 import ARKit
 
 extension MultiuserViewController: ARSCNViewDelegate, ARSessionDelegate {
@@ -146,12 +139,6 @@ extension MultiuserViewController: ARSCNViewDelegate, ARSessionDelegate {
     }
     
     func sessionShouldAttemptRelocalization(_ session: ARSession) -> Bool {
-        /*
-         Allow the session to attempt to resume after an interruption.
-         This process may not succeed, so the app must be prepared
-         to reset the session if the relocalizing status continues
-         for a long time -- see `escalateFeedback` in `StatusViewController`.
-         */
         return true
     }
 }
