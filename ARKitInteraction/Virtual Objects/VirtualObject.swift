@@ -16,16 +16,16 @@ class VirtualObject: SCNReferenceNode {
     {
         if MultiuserViewController.receivedata == true  // 多人連線載入列表，不會載入下載項目
         {
-            let modelsURL = Bundle.main.url(forResource: "Models.scnassets", withExtension: nil)!
-            
-            let fileEnumerator = FileManager().enumerator(at: modelsURL, includingPropertiesForKeys: [])!
+            let fileManager = FileManager.default
+            let documentsURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0]
+            let fileEnumerator = FileManager().enumerator(at: documentsURL, includingPropertiesForKeys: [])!
             
             return fileEnumerator.compactMap { element in
                 let url = element as! URL
                 
-                guard url.pathExtension == "scn" || url.pathExtension == "usdz" || url.pathExtension == "dae" && !url.path.contains("lighting") && !url.path.contains("Camerasetup") else { return nil }
+                guard url.pathExtension == "usdz" || url.pathExtension == "scn" || url.pathExtension == "dae" && !url.path.contains("lighting") && !url.path.contains("CameraSetup") else { return nil }  //只抓取 scn 檔以及不要抓 "lighting" 和 "CameraSetup"
                 
-                return VirtualObject(url: url)
+                return VirtualObject(url: url)  // 回傳給 VirtualObject 中 modelName 的 referenceURL
             }
         }
         else  // 單人模式載入列表，可以載入下載項目
